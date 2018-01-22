@@ -1,0 +1,35 @@
+\begin{thebibliography}{1}
+
+\bibitem{lectures2015}
+Morten Hjorh-Jensen.
+\newblock {\em Computational Physics Lecture Notes}.
+\newblock University of Oslo Department of Physics, 2015.
+
+\bibitem{bayeshoff}
+Peter~D. Hoff.
+\newblock {\em A First Course in Bayesian Statistical Methods}.
+\newblock SpringerScience+BusinessMedia, 2009.
+
+\bibitem{jorgenthesis}
+Jørgen Høgberget.
+\newblock Quantum monte-carlo studies of generalized many-body systems.
+\newblock Master's thesis, University of Oslo, 2013.
+
+\bibitem{upennBayes}
+Mark Liberman and Stephen Isard.
+\newblock Joint probability, conditional probability and bayes' theorem.
+\newblock \url{http://www.ling.upenn.edu/courses/cogs501/Bayes1.html}, 2011.
+\newblock [Online; accessed 07-December-2017].
+
+\bibitem{gausbinRBM}
+Jan Melchior, Nan Wang, and Laurenz Wiskott.
+\newblock Gaussian-binary restricted boltzmann machines on modeling natural
+  image statistics.
+\newblock {\em PLOS ONE}, 2017.
+
+\bibitem{genlearnStanford}
+Andrew Yan-Tak Ng.
+\newblock {\em CS229 Lecture Notes Generative Learning Algorithms}.
+\newblock Stanford University Department of Computer Science, 2017.
+
+\end{thebibliography}

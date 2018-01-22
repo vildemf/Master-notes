@@ -1,0 +1,539 @@
+\documentclass[norsk,a4paper,11pt]{article}
+\usepackage[T1]{fontenc} %for å bruke æøå
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amsfonts, amssymb}
+\usepackage{graphicx} %for å inkludere grafikk
+\usepackage{verbatim} %for å inkludere filer med tegn LaTeX ikke liker
+\usepackage[font=scriptsize]{caption}
+\usepackage{subcaption}
+\usepackage[usenames, dvipsnames]{color}
+%\usepackage{hyperref}
+\usepackage{url}
+% By default the URLs are put in typewriter type in the body and the
+% bibliography of the document when using the \url command.  If you are
+% using many long URLs you may want to uncommennt the next line so they
+% are typeset a little smaller.
+% \renewcommand{\UrlFont}{\small\tt}
+\newcommand*\diff{\mathop{}\!\mathrm{d}}
+\def\mbf#1{\mathbf{#1}}
+\newcommand{\VV}{\mathbf{V}}
+\newcommand{\Vv}{\mathbf{v}}
+\newcommand{\VX}{\mathbf{X}}
+\newcommand{\Vx}{\mathbf{x}}
+\newcommand{\VH}{\mathbf{H}}
+\newcommand{\Vh}{\mathbf{h}}
+\newcommand{\VW}{\mathbf{W}}
+\newcommand{\Vwi}{\mathbf{w}_{i*}}
+\newcommand{\Vwj}{\mathbf{w}_{*j}}
+\newcommand{\Va}{\mathbf{a}}
+\newcommand{\Vb}{\mathbf{b}}
+
+\bibliographystyle{plain}
+
+
+\title{Thesis notes}
+\author{Vilde Flusgrud}
+
+\begin{document}
+\date{\today}
+\maketitle
+
+
+\section{Restricted Boltzmann Machine (RBM)}
+
+
+
+The joint probability distribution is defined as \cite{gausbinRBM}
+\begin{align}
+	F_{rbm}(\mathbf{V},\mathbf{H}) = \frac{1}{Z} e^{-\frac{1}{T_0}E(\mathbf{V},\mathbf{H})}
+\end{align}
+where
+\begin{align}
+	Z = \int \int \frac{1}{Z} e^{-\frac{1}{T_0}E(\mathbf{v},\mathbf{h})} \diff \mathbf{v} \diff \mathbf{h}
+\end{align}
+
+It is common to ignore $T_0$ by setting it to one.
+
+\section{Gaussian-Binary RBM}
+Here we have \cite{gausbinRBM}
+
+\begin{align}
+	E(\mathbf{V}, \mathbf{H}) = \sum_i^M \frac{(V_i - a_i)^2}{2\sigma_i^2} - \sum_j^N b_j H_j - \sum_{i,j}^{M,N} \frac{V_i w_{ij} H_j}{\sigma_i^2} 
+\end{align}
+
+If $\sigma_i = \sigma$ then
+
+\begin{align}
+	E(\mathbf{V}, \mathbf{H})= \frac{||\mathbf{V} - \mathbf{a}||^2}{2\sigma^2} - \mathbf{b}^T \mathbf{H} - \frac{\mathbf{V}^T \mathbf{W} \mathbf{H}}{\sigma^2}
+\end{align}
+
+OBS: in the eq above, check the factor two's in the denominator with $\sigma$.
+
+\color{Green}
+\subsection{$\psi = \sqrt{F_{rbm}}$ (the mistake)}
+\color{Black}
+
+Fill in more computations in these \cite{gausbinRBM}:
+\begin{align}
+	P(V_i|\mathbf{h}) &= \mathcal{N}(V_i; a_i+\mathbf{w}_{i*} \mathbf{h}, \sigma^2) \\
+	P(\mathbf{V}|\mathbf{h}) &= \prod_i^M \mathcal{N}(V_i; a_i+\mathbf{w}_{i*} \mathbf{h}, \sigma^2) \\
+	&= \mathcal{N} (\mathbf{V}; \mathbf{a}+\mathbf{W}\mathbf{h},\sigma^2)
+\end{align}
+
+\begin{align}
+	P(H_j|\mathbf{v}) &= \frac{e^{(b_j+\frac{\mathbf{v}^T\mathbf{w}_{*j}}{\sigma^2})H_j}}{\sum_{h_j}e^{(b_j+\frac{\mathbf{v}^T\mathbf{w}_{*j}}{\sigma^2})h_j}} \\
+	&= \frac{e^{(b_j+\frac{\mathbf{v}^T\mathbf{w}_{*j}}{\sigma^2})H_j}}{1+e^{b_j+\frac{\mathbf{v}^T\mathbf{w}_{*j}}{\sigma^2}}} \\
+	P(\mathbf{H}|\mathbf{v}) &= \prod_j^N \frac{e^{(b_j+\frac{\mathbf{v}^T\mathbf{w}_{*j}}{\sigma^2})H_j}}{1+e^{b_j+\frac{\mathbf{v}^T\mathbf{w}_{*j}}{\sigma^2}}} \\
+\end{align}
+Meaning
+\begin{align}
+	P(H_j=1|\mathbf{v}) &= \frac{e^{b_j+\frac{\mathbf{v}^T\mathbf{w}_{*j}}{\sigma^2}}}{1+e^{b_j+\frac{\mathbf{v}^T\mathbf{w}_{*j}}{\sigma^2}}} \\
+	&= \frac{1}{1+e^{-b_j-\frac{\mathbf{v}^T\mathbf{w}_{*j}}{\sigma^2}}} \\
+	P(H_j=0|\mathbf{v}) &= \frac{1}{1+e^{b_j+\frac{\mathbf{v}^T\mathbf{w}_{*j}}{\sigma^2}}} 
+\end{align}
+Some observations ($v$ being coordinate of a particle): \linebreak
+Something that will increase the probability of $H_j=1$ is any of the particles being far away from the origin in positive direction if $w_{ij}$ is positive, or in negative direction (if $w_{ij}$ is negative). If the particle is far in a direction opposite to the sign of $w_{ij}$ it decreases the probability of $H_j=1$.
+
+
+(Is this meaningful..? Shouldn't the placing of the coordinate system be arbitrary? Or does it have to do with the potential, what is the relationship between HO potential and location? Well yes it's centered at the origin for ground state. So what is the meaning of the hidden nodes having higher likelihood of being activated for the above mentioned cases..?)
+
+Then, when it's decided which $h$'s are activated and not, we move to $P(V_i|\mathbf{h})$. Here, an active $h$ means that its corresponding weight gets to contribute to the mean of the normal distribution of $v_i$. The weights $w_{*j}$ gets to contribute to the decision of $h_j$, while the weights $w_{i*}$ gets to contribute to the decision of $v_i$. So while the size of the sum $v^T w_{*j}$ contributed to the likelihood of $h_j$ being activated, $h_j$ only brings with it the weight $w_{ij}$ to skew the mean of the distribution of $v_i$.
+
+What is the meaning of this? What do we want given $h_j$ has been activated? It can be a sign that a lot of coordinates are far from origin in the direction of the weights $w_{*j}$. Thus, we want to skew the mean of $\mathbf{v}$ by the weights $\mathbf{w_{*j}}$ respectively. This will add to or subtract from the bias $\mathbf{a}$ to make up the mean of the distribution of the new positions. 
+
+We expect from the HO potential ground state that there should be most positions around the origin.
+
+Also, given this partly documented behaviour, how should we expect the weights $w_{i*}$ to be tuned (and the biases)?
+
+\color{Blue}
+\subsection{$\psi = F_{rbm}$ (correct)}
+\color{Black}
+Here $P(\VX)$ refers to the probability distribution we wish to sample from according to quantum mechanics given $\psi (\VX)$. We have $P(\VX, \VH) = |F_{rbm}(\VX, \VH)|^2 $. And $P(\VX) = |\psi (\VX)|^2 = |\sum_\Vh F_{rbm}(\VX, \Vh)|^2$. Question: If $F_{rbm}(\VX, \VH)$ is full on complex etc. Is it guaranteed that finding $P(\VX, \VH)$ and $P(\VX) $ 'independently', by way of $F_{rbm}$ as expressed above, gives the same result as if I were to find $P(\VX)$ from $\sum_\Vh P(\VX, \Vh)$ ? Should this be guaranteed? In the first case you first add the complex number, then take the modulus. In the second you first take the modulus, then add real numbers. The latter should possibly miss some information (the inference term). Is this OK? That $P(\VX, \VH)$ and $P(\VX)$ will not have the usual relation between them?
+
+How to sample from $P(X)$ given $P(X, H)$? When doing Gibbs sampling, according to Wikipedia (should find better source): "The marginal distribution of any subset of variables can be approximated by simply considering the samples for that subset of variables, ignoring the rest." Thus, when we use our samples of $\mathbf{x}$'s to calculate quantum mechanical variables, these samples are approximating the probability distribution $P(X)$ when they have been Gibbs sampled from $P(X, H)$. Let's find P(X, H):
+\begin{align}
+	P(\VX, \VH) &= |F_{rbm}|^2 \\
+	&= \frac{1}{Z^2} e^{-2E(\VX, \VH)} \\
+	&= \frac{1}{Z^2} e^{-\frac{|\VX - \Va|^2}{\sigma^2} + 2\Vb^T \VH + 2\frac{\VX^T \VW \VH}{\sigma^2}} \\
+\end{align}
+Then
+
+\subsubsection{Derive $P(\VX | \Vh)$}
+
+\begin{align}
+	P(\VX | \Vh) &= \frac{P(\VX, \Vh)}{\int P(\Vx, \Vh) \diff \Vx} \\
+	&= \frac{e^{2\Vb^T \Vh} \prod_i e^{-\frac{(X_i - a_i)^2}{\sigma^2} + 2\frac{X_i \Vwi \Vh}{\sigma^2}}}{e^{2\Vb^T \Vh} \int \prod_i e^{-\frac{(x_i - a_i)^2}{\sigma^2} + 2\frac{x_i \Vwi \Vh}{\sigma^2}} \diff \Vx } \\
+	&= \prod_i \frac{e^{-\frac{(X_i - a_i)^2}{\sigma^2} + 2\frac{X_i \Vwi \Vh}{\sigma^2}}}{\int e^{-\frac{(x_i - a_i)^2}{\sigma^2} + 2\frac{x_i \Vwi \Vh}{\sigma^2}} \diff x_i } \\
+\end{align}
+
+Remember that if two random events $A$ and $B$ are independent, their joint probability equals the product of their probabilitites: $P(A, B) = P(A)P(B)$. Since the $X_i$ are independent variables in the restricted Boltzmann machine, it makes sense that we see the following form above: $P(\VX | \Vh) = \prod_i P(X_i | \Vh) $. (correct?)
+
+We now want to rewrite the exponent to get the expression for $P(P(X_i | \Vh))$ into the form of a Gaussian distribution, which generally has the form
+\begin{align}
+	f(x|\mu, \sigma^2) = \frac{1}{\sqrt{2\pi \sigma^2}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}
+\end{align}
+
+We write
+\begin{align}
+	&-\frac{(X_i - a_i)^2}{\sigma^2} + 2\frac{X_i \Vwi \Vh}{\sigma^2} \\
+	= & \frac{1}{\sigma^2}(-X_i^2 + 2X_i a_i - a_i^2 + 2X_i \Vwi \Vh) \\
+	= & \frac{1}{\sigma^2}(-X_i^2 + 2X_i a_i - a_i^2 + 2X_i \Vwi  \Vh \\ &+ (\Vwi  \Vh)^2 - (\Vwi \Vh)^2 + 2(\Vwi  \Vh)a_i - 2(\Vwi  \Vh)a_i )\\
+	=& \frac{-(X_i - a_i- \Vwi \Vh)^2 + (\Vwi  \Vh)^2 + 2(\Vwi \Vh)a_i}{\sigma^2}
+\end{align}
+
+Inserting this back in, we find
+\begin{align}
+	P(\VX | \Vh) &= \prod_i \frac{e^{\frac{-(X_i - a_i- \Vwi \Vh)^2 + (\Vwi  \Vh)^2 + 2(\Vwi \Vh)a_i}{\sigma^2}}}{\int e^{\frac{-(x_i - a_i- \Vwi \Vh)^2 + (\Vwi  \Vh)^2 + 2(\Vwi \Vh)a_i}{\sigma^2}} \diff x_i } \\
+	&= \prod_i \frac{e^{\frac{(\Vwi  \Vh)^2 + 2(\Vwi \Vh)a_i}{\sigma^2}}e^{\frac{-(X_i - a_i- \Vwi \Vh)^2}{\sigma^2}}}{e^{\frac{(\Vwi  \Vh)^2 + 2(\Vwi \Vh)a_i}{\sigma^2}}\int e^{\frac{-(x_i - a_i- \Vwi \Vh)^2}{\sigma^2}} \diff x_i } \\
+	&= \prod_i \frac{e^{\frac{-(X_i - a_i- \Vwi \Vh)^2}{\sigma^2}}}{\int e^{\frac{-(x_i - a_i- \Vwi \Vh)^2}{\sigma^2}} \diff x_i } \\
+	&= \prod_i \mathcal{N} (X_i ;  a_i + \Vwi \Vh,  \frac{\sigma^2}{2}) \\
+	&= \mathcal{N} (\VX ; \Va + \VW \Vh, \frac{\sigma^2}{2}) \\
+	\text{and} \quad P(X_i | \Vh) &= \mathcal{N} (X_i ;  a_i + \Vwi \Vh,  \frac{\sigma^2}{2}) \\
+\end{align}
+
+\subsubsection{Derive $P(\VH | \Vx)$}
+
+
+\section{Quantum Mechanics (How to go from RBM to $\Psi$)}
+Find the marginal probability $P(X)$:
+\begin{align}
+	P(\mathbf{X}) &= \sum_\mathbf{h} P(\mathbf{X}, \mathbf{h}) \\
+				&= \frac{1}{Z}\sum_\mathbf{h} e^{-E(\mathbf{X}, \mathbf{h})}
+\end{align}
+Now, in this case where for the ground state the wave function is positive definite, we set
+
+\color{Green}
+\subsection{$\psi = \sqrt{F_{rbm}}$ (the mistake)}
+\color{Black}
+\begin{align}
+	|\Psi (\mathbf{X})|^2 &= F_{rbm}(\mathbf{X}) \\
+	\Rightarrow \Psi (\mathbf{X}) &= \sqrt{F_{rbm}(\mathbf{X})} \\
+	&= \frac{1}{\sqrt{Z}}\sqrt{\sum_{\{h_j\}} e^{-E(\mathbf{X}, \mathbf{h})}} \\
+	&= \frac{1}{\sqrt{Z}} \sqrt{\sum_{\{h_j\}} e^{-\sum_i^M \frac{(X_i - a_i)^2}{2\sigma^2} + \sum_j^N b_j h_j + \sum_{i,j}^{M,N} \frac{X_i w_{ij} h_j}{\sigma^2}} }\\
+	&= \frac{1}{\sqrt{Z}} e^{-\sum_i^M \frac{(X_i - a_i)^2}{4\sigma^2}} \sqrt{\sum_{\{h_j\}} \prod_j^N e^{b_j h_j + \sum_i^M \frac{X_i w_{ij} h_j}{\sigma^2}}} \\
+	&= \frac{1}{\sqrt{Z}} e^{-\sum_i^M \frac{(X_i - a_i)^2}{4\sigma^2}} \sqrt{\prod_j^N \sum_{h_j}  e^{b_j h_j + \sum_i^M \frac{X_i w_{ij} h_j}{\sigma^2}}} \\
+	&= \frac{1}{\sqrt{Z}} e^{-\sum_i^M \frac{(X_i - a_i)^2}{4\sigma^2}} \prod_j^N \sqrt{e^0 + e^{b_j + \sum_i^M \frac{X_i w_{ij}}{\sigma^2}}} \\
+	&= \frac{1}{\sqrt{Z}} e^{-\sum_i^M \frac{(X_i - a_i)^2}{4\sigma^2}} \prod_j^N \sqrt{1 + e^{b_j + \sum_i^M \frac{X_i w_{ij}}{\sigma^2}}} \\
+\end{align}
+
+\color{Blue}
+\subsection{$\psi = F_{rbm}$ (correct)}
+\color{Black}
+
+\begin{align}
+\Psi (\mathbf{X}) &= F_{rbm}(\mathbf{X}) \\
+&= \frac{1}{Z}\sum_{\{h_j\}} e^{-E(\mathbf{X}, \mathbf{h})} \\
+&= \frac{1}{Z} \sum_{\{h_j\}} e^{-\sum_i^M \frac{(X_i - a_i)^2}{2\sigma^2} + \sum_j^N b_j h_j + \sum_{i,j}^{M,N} \frac{X_i w_{ij} h_j}{\sigma^2}} \\
+&= \frac{1}{Z} e^{-\sum_i^M \frac{(X_i - a_i)^2}{2\sigma^2}} \prod_j^N (1 + e^{b_j + \sum_i^M \frac{X_i w_{ij}}{\sigma^2}}) \\
+\end{align}
+
+\subsection{Alternative, if $h_j \in \{-1, 1\}$, not $\{0, 1\}$}
+\begin{align}
+\Psi (\mathbf{X}) &= F_{rbm}(\mathbf{X}) \\
+&= \frac{1}{Z} \sum_{\{h_j\}} e^{-\sum_i^M \frac{(X_i - a_i)^2}{2\sigma^2} + \sum_j^N b_j h_j + \sum_{i,j}^{M,N} \frac{X_i w_{ij} h_j}{\sigma^2}} \\
+&= \frac{1}{Z} e^{-\sum_i^M \frac{(X_i - a_i)^2}{2\sigma^2}} \prod_j^N \sum_{h_j}  e^{b_j h_j + \sum_i^M \frac{X_i w_{ij} h_j}{\sigma^2}} \\
+&= \frac{1}{Z} e^{-\sum_i^M \frac{(X_i - a_i)^2}{2\sigma^2}} \prod_j^N ( e^{-b_j - \sum_i^M \frac{X_i w_{ij}}{\sigma^2}} + e^{b_j + \sum_i^M \frac{X_i w_{ij}}{\sigma^2}})  \\
+&= \frac{1}{Z} e^{-\sum_i^M \frac{(X_i - a_i)^2}{2\sigma^2}} \prod_j^N 2\cosh(b_j + \sum_i^M \frac{X_i w_{ij}}{\sigma^2})\\
+&= \frac{1}{Z} e^{-\sum_i^M \frac{(X_i - a_i)^2}{2\sigma^2}} \prod_j^N 2\cosh(b_j + \sum_i^M \frac{X_i w_{ij}}{\sigma^2}) \\
+\end{align}
+
+
+\section{Expressions needed for QMC}
+
+
+We have that the gradient is \cite{jorgenthesis}
+\begin{align}
+	G_i = \frac{\partial \langle E \rangle}{\partial \alpha_i}
+	= 2(\langle E \frac{1}{\Psi}\frac{\partial \Psi}{\partial \alpha_i} \rangle - \langle E \rangle \langle \frac{1}{\Psi}\frac{\partial \Psi}{\partial \alpha_i} \rangle )
+\end{align}
+where $\alpha_i = a_1,...,a_M,b_1,...,b_N,w_{11},...,w_{MN}$.
+
+We use that $\frac{1}{\Psi}\frac{\partial \Psi}{\partial \alpha_i} 
+	= \frac{\partial \ln{\Psi}}{\partial \alpha_i}$
+and first find 
+
+\color{Green}
+\subsection{$\psi = \sqrt{F_{rbm}}$ (the mistake)}
+\color{Black}
+\begin{align}
+	\ln{\Psi({\mathbf{X}})} &= -\frac{1}{2}\ln{Z} - \sum_m^M \frac{(X_m - a_m)^2}{4\sigma^2}
+	+ \frac{1}{2}\sum_n^N \ln({1 + e^{b_n + \sum_i^M \frac{X_i w_{in}}{\sigma^2}})}
+\end{align}
+
+Giving
+
+\begin{align}
+	\frac{\partial }{\partial a_m} \ln\Psi
+	&= 	\frac{1}{2\sigma^2} (X_m - a_m) \\
+	\frac{\partial }{\partial b_n} \ln\Psi
+	&=
+	\frac{1}{2(e^{-b_n-\frac{1}{\sigma^2}\sum_i^M X_i w_{in}} + 1)} \\
+	\frac{\partial }{\partial w_{mn}} \ln\Psi
+	&= \frac{X_m}{2\sigma^2(e^{-b_n-\frac{1}{\sigma^2}\sum_i^M X_i w_{in}} + 1)}
+\end{align}
+
+\color{Blue}
+\subsection{$\psi = F_{rbm}$ (correct)}
+\color{Black}
+\begin{align}
+	\ln{\Psi({\mathbf{X}})} &= -\ln{Z} - \sum_m^M \frac{(X_m - a_m)^2}{2\sigma^2}
+	+ \sum_n^N \ln({1 + e^{b_n + \sum_i^M \frac{X_i w_{in}}{\sigma^2}})}
+\end{align}
+
+Giving
+
+\begin{align}
+	\frac{\partial }{\partial a_m} \ln\Psi
+	&= 	\frac{1}{\sigma^2} (X_m - a_m) \\
+	\frac{\partial }{\partial b_n} \ln\Psi
+	&=
+	\frac{1}{e^{-b_n-\frac{1}{\sigma^2}\sum_i^M X_i w_{in}} + 1} \\
+	\frac{\partial }{\partial w_{mn}} \ln\Psi
+	&= \frac{X_m}{\sigma^2(e^{-b_n-\frac{1}{\sigma^2}\sum_i^M X_i w_{in}} + 1)}
+\end{align}
+
+\subsection{Local energy}
+We also need an expression for $E$, which here represents the local energy, $E=E_L$. It is given
+\begin{align}
+	E = \frac{1}{\Psi} \hat{\mathbf{H}} \Psi
+\end{align}
+
+\section{Harmonic Oscillator}
+The Hamiltonian for the Harmonic Oscillator system is \cite{lectures2015}
+\begin{align}
+	\hat{\mathbf{H}} = \sum_p^P (-\frac{1}{2}\nabla_p^2 + \frac{1}{2}\omega^2 r_p^2 ) + \sum_{p<q} \frac{1}{r_{pq}}
+\end{align}
+
+where the first summation term represents the standard harmonic oscillator part and the latter the repulsive interaction between two electrons. Natural units ($\hbar=c=e=m_e=1$) are used, and $P$ is the number of particles.
+
+Thus we get ($D$ being the number of dimensions)
+\begin{align}
+	E &= \frac{1}{\Psi} \mathbf{H} \Psi \\
+	&= \frac{1}{\Psi} (\sum_p^P (-\frac{1}{2}\nabla_p^2 + \frac{1}{2}\omega^2 r_p^2 ) + \sum_{p<q} \frac{1}{r_{pq}}) \Psi \\
+	&= -\frac{1}{2}\frac{1}{\Psi} \sum_p^P \nabla_p^2 \Psi 
+	+ \frac{1}{2}\omega^2 \sum_p^P  r_p^2  + \sum_{p<q} \frac{1}{r_{pq}} \\
+	&= -\frac{1}{2}\frac{1}{\Psi} \sum_p^P \sum_d^D \frac{\partial^2 \Psi}{\partial x_{pd}^2} + \frac{1}{2}\omega^2 \sum_p^P  r_p^2  + \sum_{p<q} \frac{1}{r_{pq}} \\
+	&= \frac{1}{2} \sum_p^P \sum_d^D (-(\frac{\partial}{\partial x_{pd}} \ln\Psi)^2 -\frac{\partial^2}{\partial x_{pd}^2} \ln\Psi + \omega^2 x_{pd}^2)  + \sum_{p<q} \frac{1}{r_{pq}} \\
+\end{align}
+
+Now if each visible node in the Boltzmann machine represents one coordinate of one particle, this can be written as
+
+\begin{align}
+	E &=
+	\frac{1}{2} \sum_m^M (-(\frac{\partial}{\partial v_m} \ln\Psi)^2 -\frac{\partial^2}{\partial v_m^2} \ln\Psi + \omega^2 v_m^2)  + \sum_{p<q} \frac{1}{r_{pq}}
+\end{align}
+
+Where we have that
+
+\color{Green}
+\subsection{$\psi = \sqrt{F_{rbm}}$ (the mistake)}
+\color{Black}
+\begin{align}
+	\frac{\partial}{\partial x_m} \ln\Psi
+	&= - \frac{1}{2\sigma^2}(x_m - a_m) + \frac{1}{2\sigma^2} \sum_n^N
+ 	\frac{w_{mn}}{e^{-b_n-\frac{1}{\sigma^2}\sum_i^M x_i w_{in}} + 1}
+	\\
+	\frac{\partial^2}{\partial x_m^2} \ln\Psi
+	&= - \frac{1}{2\sigma^2} + \frac{1}{2\sigma^4}\sum_n^N \omega_{mn}^2 \frac{e^{b_n + \frac{1}{\sigma^2}\sum_i^M x_i w_{in}}}{(e^{b_n + \frac{1}{\sigma^2}\sum_i^M x_i w_{in}} + 1)^2}
+\end{align}
+
+\color{Blue}
+\subsection{$\psi = F_{rbm}$ (correct)}
+\color{Black}
+\begin{align}
+	\frac{\partial}{\partial x_m} \ln\Psi
+	&= - \frac{1}{\sigma^2}(x_m - a_m) - \sum_n^N \frac{1}{e^{-b_n - \frac{1}{\sigma^2}\sum_i^M x_i w_{in}} + 1} \\
+	\frac{\partial^2}{\partial x_m^2} \ln\Psi
+	&= - \frac{1}{\sigma^2} + \frac{1}{\sigma^4}\sum_n^N \omega_{mn}^2 \frac{e^{b_n + \frac{1}{\sigma^2}\sum_i^M x_i w_{in}}}{(e^{b_n + \frac{1}{\sigma^2}\sum_i^M x_i w_{in}} + 1)^2}
+\end{align}
+
+\subsection{Monte Carlo}
+Having now the expressions for $E$ and $\frac{1}{\Psi} \frac{\partial\Psi}{\partial \alpha_i}$ needed for the gradient we can use the following formula to obtain their expectation values from a Monte Carlo simulation.
+\begin{align}
+	\langle U \rangle = \frac{1}{N}\sum_n^N U_n
+\end{align}
+where $N$ is the number of Monte Carlo samples and $U_n$ is the value calculated at each sampling.
+
+
+
+\section{Simplest case analytical}
+In the simplest case with zero hidden nodes ($N=0$) and one visible node ($M=1$) (meaning one particle in one dimension, no interaction) we get ($\sigma = 1$ and $\omega=1$):
+\begin{align}
+	\Psi = \frac{1}{Z} e^{-\frac{1}{2}(x-a)^2}
+\end{align}
+with normalizing giving
+\begin{align}
+	1=&\int_{-\infty}^\infty |\Psi|^2 \diff x \\
+	=&\frac{1}{Z^2} \int_{-\infty}^\infty e^{-(x-a)^2} \diff x \\
+	=&\frac{1}{Z^2} \sqrt{\pi} \\
+\Rightarrow	Z =& \sqrt{\sqrt{\pi}} \\
+\Rightarrow	\Psi =& \frac{1}{\sqrt{\sqrt{\pi}}} e^{-(x-a)^2}
+\end{align}
+
+Our goal is to solve $\frac{\partial \langle E_L \rangle}{\partial a} = 0$ for $a$.
+We have that
+\begin{align}
+	\langle E_L \rangle = \int_{-\infty}^\infty \Psi^* E_L \Psi \diff x
+\end{align}
+so we first find
+\begin{align}
+	E_L &= \frac{1}{\Psi} \hat{\mathbf{H}} \Psi \\
+	&= \frac{1}{2} \sum_m^M (-(\frac{\partial}{\partial v_m} \ln\Psi)^2 -\frac{\partial^2}{\partial v_m^2} \ln\Psi + \omega^2 v_m^2) \\
+	&= \frac{1}{2}(-(a-x)^2 -(-1) + x^2) \\
+	&= \frac{1}{2}(1 + x^2 -(a-x)^2)
+\end{align}
+
+Giving us the integral
+\begin{align}
+	\langle E_L \rangle &= \int_{-\infty}^\infty \Psi^* E_L \Psi \diff x \\
+	&= \frac{1}{2\sqrt{\pi}} \int_{-\infty}^\infty
+	(1 + x^2 - (a-x)^2)e^{-(a-x)^2} \diff x \\
+	&= \frac{1}{2\sqrt{\pi}} (\sqrt(\pi) + \frac{\sqrt{\pi}}{2}(2a^2 + 1) - \frac{\sqrt{\pi}}{2}) \\
+	&= \frac{1}{2}(1 + a^2)
+\end{align}
+
+We thus solve the initial equation to find
+\begin{align}
+	0 &= \frac{\partial \langle E_L \rangle}{\partial \alpha_i} \\
+	&= a \\
+	\Rightarrow a &=0
+\end{align}
+This gives the lowest energy as $E_L = \frac{1}{2}$ as expected.
+
+
+\section{Notes on Bayes' theory}
+Monte Carlo methods is an approach to Bayesian inference where one obtains a sample from the posterior.
+Bayesian inference is the process of inductive learning via Baye's rule.
+
+Bayesian learning - some definitions \cite{bayeshoff}: \linebreak
+Statistical induction = the process of learning about the general characteristics of a population from a subset ofmembers of that population. \linebreak
+$\theta$ = parameter which expresses numerical values of population characteristics \linebreak
+$y$ = dataset made up by numerical descriptions of a the subset of the population. \linebreak
+$\mathcal{Y}$ = The sample space = the set of all possible datasets, from which a single $y$ will result. \linebreak
+$\Theta$ = The parameter space = the set of possible parameter values \linebreak
+1.) For each numerical value $\theta \in \Theta$, our \textbf{prior distribution} $p(\theta)$ describes our belief that $\theta$ represents the true population characteristics. \linebreak
+2.) For each $\theta \in \Theta$ and $y \in \mathcal{Y}$, our \textbf{sampling model} $p(y|\theta)$ describes our belief that $y$ would be the outcome of our study if we knew $\theta$ to be true.\linebreak
+3.) Once we obtain the data $y$, the last step is to update our beliefs about $\theta$: For each numerical value of $\theta \in \Theta$, our \textbf{posterior distribution} $p(\theta|y)$ describes our belief that $\theta$ is the true value, having observed dataset $y$. \linebreak \linebreak
+Obtain the \textbf{posterior distribution} from the \textbf{prior distribution} and \textbf{sampling model} via \textbf{Bayes' rule}:
+\begin{align}
+	p(\theta|y) = \frac{p(y|\theta) p(\theta)}{\int_\Theta p(y|\tilde{\theta})p(\tilde{\theta})d\tilde{\theta}}
+\end{align}
+
+
+\section{Relating this to RBM/some general probability notes}
+Probability of intersection of two events is the same as the joint probability: $P(A \cap B) = P(A, B)$. Probability of a continious variable means it's a probability distribution function (PDF).
+
+The product rule gives (where we used that joint probability is symmetrical, $P(A,B)=P(B,A)$):
+\begin{align}
+	P(A, B) &= P(B|A)P(A) \\
+	P(B, A) &= P(A|B)P(B) \\
+	\Rightarrow P(B|A)P(A) &= P(A|B)P(B) \\
+	\Rightarrow P(B|A) & = \frac{P(A|B)P(B)}{P(A)}
+\end{align}
+Thus we see that we recovered Baye's rule by using the product rule and the symmetry of the joint probability distribution.
+
+Does these rules apply to multivariate distributions like $P(\mathbf{V}, \mathbf{H})$?
+If so it tells us that when sampling $\mathbf{V}$ using
+\begin{align}
+	P(\mathbf{V}|\mathbf{H}) &= \frac{P(\mathbf{H}|\mathbf{V})P(\mathbf{V})}{P(\mathbf{H})}
+\end{align}
+then, interpreted in terms of Bayes, $P(\mathbf{V})$ is our prior distribution which describes our belief that $\mathbf{V}$ represents the true population charcteristics, $P(\mathbf{H}|\mathbf{V})$ is our sampling model which describes our belief that $\mathbf{H}$ would be the outcome of our study of a population subset if we knew $\mathbf{V}$ to be true, and $P(\mathbf{V}|\mathbf{H})$ is our posterior distribution - our belief that $\mathbf{V}$ is the true value, having observed the data $\mathbf{H}$.
+
+Similarly, when we sample $\mathbf{H}$ from $P(\mathbf{H}|\mathbf{V})$ the same would apply to the formula
+\begin{align}
+	P(\mathbf{H}|\mathbf{V}) &= \frac{P(\mathbf{V}|\mathbf{H})P(\mathbf{H})}{P(\mathbf{V})}
+\end{align}
+
+
+
+ Using \cite{upennBayes} could be relevant in this section. Maybe a lot more is Stanford lecture notes on Generative Learning algorithms: \cite{genlearnStanford} (in your masters folder).
+
+ \section{Sampling}
+ As it is, our desired stationary distribution we wish to sample according to is $P(X, H)$. Our proposal distribution is $P(X|H)$.
+Comparing Metropolis Hastings (left) to our two-step Gibbs sampling (right) of the $x$ variable. Sampling of $h$ will be same just swithing the variables. First Metropolis definitions: \linebreak
+$P(X)$ is our desired stationary distribution from which we want to sample states. For us: $P(x, h)$. \linebreak
+$g(x'|x)$ is the proposal distribution. For us: $P(x|h)$ \linebreak
+$A(x'|x)$ is our acceptance distribution, which we get from $P(x'|x) = g(x'|x)A(x'|x)$.
+
+
+
+
+
+\section{Code flow/testing rbm HO}
+Components that need to work (testing aspects in square brackets):
+\begin{itemize}
+	\item Initializations
+	\begin{itemize}
+		\item Set parameters
+		\item Random setting of $\alpha_i$ and $\mathbf{X}$ [get to know cpp random generator system better. then check set ok. maybe implement unit test. seperate the operation into a function to make testing clearer? it can take seed/no seed as argument, and the test case can be with a seed?]
+	\end{itemize}
+	\item Minimization cycle
+	\begin{itemize}
+		\item Sampling loop
+		\begin{itemize}
+			\item Sample new $\mathbf{H}$
+			\item Sample new $\mathbf{X}$ [For this one and previous: get to know cpp random generator system better. then check set ok. maybe implement unit test. maybe seperate into functions, to make testing with specific parameter/seed etc easier. Check that calc of logisitc function and Gaussian mean works.]
+			\item If thermalized:
+			\begin{itemize}
+				\item Sample expectation values for the gradient. Means computing derivatives of $\ln{\Psi}$ wrt $\mathbf{X}$ and $\alpha_i$. [CHECK ALL ASPECTS OF FORMULAS WORK. Means moving into functions, to test simple cases.]
+			\end{itemize}
+			\item Compute expectation values and gradient [Small, but could be moved into a function that can be tested]
+			\item Update $\alpha_i$ according to minimization algorithm [HOW to test this??? but MUST be tested well. SGD, ASGD, the other one.. resource "Unit tests for stochastic optimization": \url{https://arxiv.org/pdf/1312.6055.pdf}]
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+
+
+\section{Look into}
+
+\begin{itemize}
+	\item \textbf{Issues with the current system.} 
+	\begin{itemize}
+		\item The square root problem
+		\begin{itemize}
+			\item Should have $\Psi = \sqrt{P(x)}$ (when $\Psi$ positive definite) but $\Psi= P(x)$ gave better result?
+			\item When testing I corrected the square root as well as fixing a sign issue in the boltzmann energy at once. Test fixing the sign seperately, to see if this at least improves.
+			\item What is the implication of deriving $\Psi$ from $P(X)$, but sampling from $P(X|H)$?
+			\begin{itemize}
+				\item Compare to standard Metropolis Hastings. (without Importance Sampling - only uses $\Psi$ in acceptance. With, maybe uses it in Proposal distribution also?)
+			\end{itemize}
+			\item The weird sum factor. Is this ok? Not 'just' exponentials, like the common trial wf in lecture notes etc?
+			\begin{itemize}
+				\item Check fex \url{https://arxiv.org/pdf/1506.03752.pdf} article which introduces similar term to Jastrow for bosons to account for mid range correlations
+			\end{itemize}
+			\item How to make the parameters complex like \cite{solveQMann} suggests, while keeping the probability real..?? And how to go from less information to more?
+			\item Looking in the article \cite{solveQMann} it seems inconsistent whether they are taking the square root or not? I have left to write out the derivation to see if I'm correct that they haven't taken the sqrt in the final expression.
+		\end{itemize}
+		\item Follow the derivation of the sampling method step by step, compare to traditional Gibbs and Metropolis Hastings. Some questions that have arisen from a brief look is
+		\begin{itemize}
+			\item Are they saying $P(h)=\sum_h P(\sigma , h) = 1$? Is this a property of the binary RBM..? (ICPT notes, equation 2.15).
+			\item In the Wiki Metropolis-Hastings article, they have the transition probability $P(x'|x)$, related to our desired stationary distributin $P(x)$ and the proposal distribution $g(x'|x)$. But in ICPT Notes, they refer to $T$ as the transition probability, but when writing out the expression for $A$, they have put $T$ in the place of $g$. Did they mix up the two?
+		\end{itemize}
+		\item Whitening. I don't think I need to do additional standardization of the data (the positions) since I'm sampling it from the assumed distribution. However, to do: Change the implementation so you can run for different values of $\sigma$ other than 1. With $\sigma=1$ the variance in what we sample $X$ from is far greater than the changes in $\mu$ offered by the rbm parameters (often at the order $10^{-2}$, so maybe overshadowing their effect?
+		\item Could do: check effect of having $x$ and $y$ as variables $\Psi$, not just $x^2$ and $y^2$ as in the normal trial wf. But as seen above there are many more differences at play here so could be hard to seperate out this effect.
+		\item Implement the TESTS as explained earlier in the document
+		\item Analytical case to benchmark simplest number of parameters? What to do, three unknowns, does not make sense to set number of hidden units to zero (especially not in the code, what to sample from then)
+	\end{itemize}
+	\item \textbf{Results to extract and document from the current program, the HO system.}	
+	\begin{itemize}
+		\item Document the effect of the number of hidden variables. \cite{solveQMann} says increasing it should "in principle" improve the results, but this seems uncertain. If it doesn't, it means we have one more parameter that needs to be 'found', which makes the method harder to use.
+		\item Document effect of different $\sigma$ values in the RBM.
+		\item Most obvious: document ability to reach analytical benchmarks. Include plots to show how the algorithm procedes (both the optimization and the sampling at the optimized rbm).
+		\begin{itemize}
+			\item possible to interpret what the hidden variables are modeling?
+		\end{itemize}
+		\item All the different options in minimizing.
+		\begin{itemize}
+			\item SGD - document effect of $\eta$
+			\item ASGD - document effect of 5 different parameters
+			\item Stochastic reconfiguration (Sorella - Weak binding be- tween two aromatic rings: Feeling the van der Waals at- traction by quantum Monte Carlo methods.)
+		\end{itemize}
+	\end{itemize}
+	\item \textbf{Changes in the RBM}
+	\begin{itemize}
+		\item Use symmetries exhibited by the Hamilitonian to reduce numbers of variational parameters, by formulating the RBM in symmetry conserving fashion? (\cite{solveQMann} did this with translational invariance)
+		\item Something to account for relative distance, if the results for this cannot be improved by elements mentioned earlier.
+		\begin{itemize}
+			\item Think more about this.
+			\item Test mean-covariance RBM which lets two visibles connect
+			\item Multiply with a Jastrow like you would in normal vmc? Does this even make sense..?
+		\end{itemize}
+
+		\item Rectified linear hidden units (make the hidden units also continuous)
+		\item Several RBM layers - Deep belief network
+	\end{itemize}
+	\item \textbf{Other systems}
+	\begin{itemize}
+		\item Hydrogen - vanlig å bruke Gaussisk basis
+		\item Boson system (see FYS4411, 2016, project 1)
+		\item Important: What should be the benchmarks here? Should I implement code for more common methods to use as benchmark?
+	\end{itemize}
+	\item \textbf{Other models}
+	\begin{itemize}
+		\item Autoencoder
+		\item CNN
+	\end{itemize}
+	\item \textbf{Writing}
+	\begin{itemize}
+		\item Formulate a table of contents/list of chapters. Fex:
+		\begin{itemize}
+			\item Introduction
+			\item Theory
+			\begin{itemize}
+				\item Quantum many body problem, modeled systems, vmc?
+				\item Machine learning - neural networks - RBM, sampling, learning/minimization
+			\end{itemize}
+				\item Results (alternatively, John Anders: Advanced theory, implementation, results). Display effects documented above. What's important to include here, for a good thesis?
+		\end{itemize}
+	\end{itemize}
+	\item \textbf{Goals for the code?}
+	\item \textbf{Other}
+	\begin{itemize}
+		\item What are the goals here. Dimension reduction, feature extraction. Detecting interesting patterns that may serve as an input on how to guess wave functions better (how to extract, and translate/use this information?). Use as a prestep in minimizing? Similar to what Alocais did, what was that? Or was this reference about me splitting my minimization into several steps/methods?
+	\end{itemize}
+\end{itemize}
+
+%\bibliographystyle{plain}
+\bibliography{sources}
+
+\end{document}
