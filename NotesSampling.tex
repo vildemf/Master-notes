@@ -1,0 +1,231 @@
+\documentclass[norsk,a4paper,11pt]{article}
+\usepackage[T1]{fontenc} %for å bruke æøå
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amsfonts, amssymb}
+\usepackage{graphicx} %for å inkludere grafikk
+\usepackage{verbatim} %for å inkludere filer med tegn LaTeX ikke liker
+\usepackage[font=scriptsize]{caption}
+\usepackage{subcaption}
+\usepackage[usenames, dvipsnames]{color}
+%\usepackage{hyperref}
+\usepackage{url}
+% By default the URLs are put in typewriter type in the body and the
+% bibliography of the document when using the \url command.  If you are
+% using many long URLs you may want to uncommennt the next line so they
+% are typeset a little smaller.
+% \renewcommand{\UrlFont}{\small\tt}
+\newcommand*\diff{\mathop{}\!\mathrm{d}}
+\def\mbf#1{\mathbf{#1}}
+\newcommand{\VV}{\mathbf{V}}
+\newcommand{\Vv}{\mathbf{v}}
+\newcommand{\VX}{\mathbf{X}}
+\newcommand{\Vx}{\mathbf{x}}
+\newcommand{\VH}{\mathbf{H}}
+\newcommand{\Vh}{\mathbf{h}}
+\newcommand{\VW}{\mathbf{W}}
+\newcommand{\Vwi}{\mathbf{w}_{i*}}
+\newcommand{\Vwj}{\mathbf{w}_{*j}}
+\newcommand{\Va}{\mathbf{a}}
+\newcommand{\Vb}{\mathbf{b}}
+
+\bibliographystyle{plain}
+
+
+\title{Notes to check sampling}
+\author{Vilde Flusgrud}
+
+\begin{document}
+\date{\today}
+\maketitle
+
+\section{Restricted Boltzmann Machine (RBM)}
+
+The joint probability distribution is defined as \cite{gausbinRBM}
+\begin{align}
+	F_{rbm}(\VX,\mathbf{H}) = \frac{1}{Z} e^{-\frac{1}{T_0}E(\VX,\mathbf{H})}
+\end{align}
+where
+\begin{align}
+	Z = \int \int \frac{1}{Z} e^{-\frac{1}{T_0}E(\Vx,\mathbf{h})} \diff \Vx \diff \mathbf{h}
+\end{align}
+
+It is common to ignore $T_0$ by setting it to one.
+
+\section{Gaussian-Binary RBM}
+Here we have \cite{gausbinRBM}
+
+\begin{align}
+	E(\VX, \mathbf{H}) = \sum_i^M \frac{(X_i - a_i)^2}{2\sigma_i^2} - \sum_j^N b_j H_j - \sum_{i,j}^{M,N} \frac{X_i w_{ij} H_j}{\sigma_i^2} 
+\end{align}
+
+If $\sigma_i = \sigma$ then
+
+\begin{align}
+	E(\mathbf{V}, \mathbf{H})= \frac{||\VX - \mathbf{a}||^2}{2\sigma^2} - \mathbf{b}^T \mathbf{H} - \frac{\VX^T \mathbf{W} \mathbf{H}}{\sigma^2}
+\end{align}
+
+OBS: in the eq above, check the factor two's in the denominator with $\sigma$.
+
+
+
+
+
+\section{The Wave Function}
+To find the marginal probability $F_{rbm}(X)$ we set:
+\begin{align}
+	F_{rbm}(\mathbf{X}) &= \sum_\mathbf{h} F_{rbm}(\mathbf{X}, \mathbf{h}) \\
+				&= \frac{1}{Z}\sum_\mathbf{h} e^{-E(\mathbf{X}, \mathbf{h})}
+\end{align}
+
+This is used to represent the wave function:
+
+\begin{align}
+\Psi (\mathbf{X}) &= F_{rbm}(\mathbf{X}) \\
+&= \frac{1}{Z}\sum_{\{h_j\}} e^{-E(\mathbf{X}, \mathbf{h})} \\
+&= \frac{1}{Z} \sum_{\{h_j\}} e^{-\sum_i^M \frac{(X_i - a_i)^2}{2\sigma^2} + \sum_j^N b_j h_j + \sum_{i,j}^{M,N} \frac{X_i w_{ij} h_j}{\sigma^2}} \\
+&= \frac{1}{Z} e^{-\sum_i^M \frac{(X_i - a_i)^2}{2\sigma^2}} \prod_j^N (1 + e^{b_j + \sum_i^M \frac{X_i w_{ij}}{\sigma^2}}) \\
+\end{align}
+
+
+\subsection{Alternative 1: $\psi = \sqrt{F_{rbm}}$}
+This is used by Carleo in his seminar lectures for simple systems where the ground state wave function is positive definite and Gibbs sampling is used rather than Metropolis. (Though by mistake he uses this only in the conditional probabilites used in the Gibbs sampling, while the wave function used in the local energy is still $\Psi (\mathbf{X}) = F_{rbm}(\mathbf{X})$ as in the previous section. He says however in his email that the idea was to do the below version.)
+\begin{align}
+	|\Psi (\mathbf{X})|^2 &= F_{rbm}(\mathbf{X}) \\
+	\Rightarrow \Psi (\mathbf{X}) &= \sqrt{F_{rbm}(\mathbf{X})} \\
+	&= \frac{1}{\sqrt{Z}}\sqrt{\sum_{\{h_j\}} e^{-E(\mathbf{X}, \mathbf{h})}} \\
+	&= \frac{1}{\sqrt{Z}} \sqrt{\sum_{\{h_j\}} e^{-\sum_i^M \frac{(X_i - a_i)^2}{2\sigma^2} + \sum_j^N b_j h_j + \sum_{i,j}^{M,N} \frac{X_i w_{ij} h_j}{\sigma^2}} }\\
+	&= \frac{1}{\sqrt{Z}} e^{-\sum_i^M \frac{(X_i - a_i)^2}{4\sigma^2}} \sqrt{\sum_{\{h_j\}} \prod_j^N e^{b_j h_j + \sum_i^M \frac{X_i w_{ij} h_j}{\sigma^2}}} \\
+	&= \frac{1}{\sqrt{Z}} e^{-\sum_i^M \frac{(X_i - a_i)^2}{4\sigma^2}} \sqrt{\prod_j^N \sum_{h_j}  e^{b_j h_j + \sum_i^M \frac{X_i w_{ij} h_j}{\sigma^2}}} \\
+	&= \frac{1}{\sqrt{Z}} e^{-\sum_i^M \frac{(X_i - a_i)^2}{4\sigma^2}} \prod_j^N \sqrt{e^0 + e^{b_j + \sum_i^M \frac{X_i w_{ij}}{\sigma^2}}} \\
+	&= \frac{1}{\sqrt{Z}} e^{-\sum_i^M \frac{(X_i - a_i)^2}{4\sigma^2}} \prod_j^N \sqrt{1 + e^{b_j + \sum_i^M \frac{X_i w_{ij}}{\sigma^2}}} \\
+\end{align}
+
+
+\subsection{Alternative 2: $h_j \in \{-1, 1\}$, not $\{0, 1\}$}
+Used when representing the spin lattice system (intuitive because the visible spin values in that case take the values $-1$ and $1$ as well):
+\begin{align}
+\Psi (\mathbf{X}) &= F_{rbm}(\mathbf{X}) \\
+&= \frac{1}{Z} \sum_{\{h_j\}} e^{-\sum_i^M \frac{(X_i - a_i)^2}{2\sigma^2} + \sum_j^N b_j h_j + \sum_{i,j}^{M,N} \frac{X_i w_{ij} h_j}{\sigma^2}} \\
+&= \frac{1}{Z} e^{-\sum_i^M \frac{(X_i - a_i)^2}{2\sigma^2}} \prod_j^N \sum_{h_j}  e^{b_j h_j + \sum_i^M \frac{X_i w_{ij} h_j}{\sigma^2}} \\
+&= \frac{1}{Z} e^{-\sum_i^M \frac{(X_i - a_i)^2}{2\sigma^2}} \prod_j^N ( e^{-b_j - \sum_i^M \frac{X_i w_{ij}}{\sigma^2}} + e^{b_j + \sum_i^M \frac{X_i w_{ij}}{\sigma^2}})  \\
+&= \frac{1}{Z} e^{-\sum_i^M \frac{(X_i - a_i)^2}{2\sigma^2}} \prod_j^N 2\cosh(b_j + \sum_i^M \frac{X_i w_{ij}}{\sigma^2})\\
+&= \frac{1}{Z} e^{-\sum_i^M \frac{(X_i - a_i)^2}{2\sigma^2}} \prod_j^N 2\cosh(b_j + \sum_i^M \frac{X_i w_{ij}}{\sigma^2}) \\
+\end{align}
+
+\subsection{Quantum Monte Carlo expressions}
+In order to optimize the RBM parameters $\mathbf{\alpha}$ ($\Va$, $\Vb$ and $\VW$) we apply quantum Monte Carlo methods. Using the variational principle we approximate the ground state wave function by minimizing the local energy $E_L$. Its gradient with respect to the RBM parameters is given by \cite{jorgenthesis}
+
+\begin{align}
+	G_i = \frac{\partial \langle E_L \rangle}{\partial \alpha_i}
+	= 2(\langle E_L \frac{1}{\Psi}\frac{\partial \Psi}{\partial \alpha_i} \rangle - \langle E_L \rangle \langle \frac{1}{\Psi}\frac{\partial \Psi}{\partial \alpha_i} \rangle )
+\end{align}
+where $\alpha_i = a_1,...,a_M,b_1,...,b_N,w_{11},...,w_{MN}$.
+
+The local energy is given by the expression 
+
+\begin{align}
+	E_L = \frac{1}{\Psi} \hat{\mathbf{H}} \Psi
+\end{align}
+
+Where $\hat{\mathbf{H}}$ is the Hamiltonian, which is dependent on the physical system under investigation. The expectation value of $E_L$ is obtained during sampling by
+\begin{align}
+	\langle E_L \rangle = \frac{1}{N}\sum_n^N (E_L)_n
+\end{align}
+where $N$ is the number of samples.
+
+We use that $\frac{1}{\Psi}\frac{\partial \Psi}{\partial \alpha_i} 
+	= \frac{\partial \ln{\Psi}}{\partial \alpha_i}$
+and find
+
+\begin{align}
+	\ln{\Psi({\mathbf{X}})} &= -\ln{Z} - \sum_m^M \frac{(X_m - a_m)^2}{2\sigma^2}
+	+ \sum_n^N \ln({1 + e^{b_n + \sum_i^M \frac{X_i w_{in}}{\sigma^2}})}
+\end{align}
+
+Giving
+
+\begin{align}
+	\frac{\partial }{\partial a_m} \ln\Psi
+	&= 	\frac{1}{\sigma^2} (X_m - a_m) \\
+	\frac{\partial }{\partial b_n} \ln\Psi
+	&=
+	\frac{1}{e^{-b_n-\frac{1}{\sigma^2}\sum_i^M X_i w_{in}} + 1} \\
+	\frac{\partial }{\partial w_{mn}} \ln\Psi
+	&= \frac{X_m}{\sigma^2(e^{-b_n-\frac{1}{\sigma^2}\sum_i^M X_i w_{in}} + 1)}
+\end{align}
+
+\section{The system and the Hamiltonian}
+\subsection{The Harmonic Oscillator}
+The Hamiltonian for the Harmonic Oscillator system is \cite{lectures2015}
+\begin{align}
+	\hat{\mathbf{H}} = \sum_p^P (-\frac{1}{2}\nabla_p^2 + \frac{1}{2}\omega^2 r_p^2 ) + \sum_{p<q} \frac{1}{r_{pq}}
+\end{align}
+
+where the first summation term represents the standard harmonic oscillator part and the latter the repulsive interaction between two electrons. Natural units ($\hbar=c=e=m_e=1$) are used, and $P$ is the number of particles.
+
+Thus we get ($D$ being the number of dimensions)
+\begin{align}
+	E &= \frac{1}{\Psi} \mathbf{H} \Psi \\
+	&= \frac{1}{\Psi} (\sum_p^P (-\frac{1}{2}\nabla_p^2 + \frac{1}{2}\omega^2 r_p^2 ) + \sum_{p<q} \frac{1}{r_{pq}}) \Psi \\
+	&= -\frac{1}{2}\frac{1}{\Psi} \sum_p^P \nabla_p^2 \Psi 
+	+ \frac{1}{2}\omega^2 \sum_p^P  r_p^2  + \sum_{p<q} \frac{1}{r_{pq}} \\
+	&= -\frac{1}{2}\frac{1}{\Psi} \sum_p^P \sum_d^D \frac{\partial^2 \Psi}{\partial x_{pd}^2} + \frac{1}{2}\omega^2 \sum_p^P  r_p^2  + \sum_{p<q} \frac{1}{r_{pq}} \\
+	&= \frac{1}{2} \sum_p^P \sum_d^D (-(\frac{\partial}{\partial x_{pd}} \ln\Psi)^2 -\frac{\partial^2}{\partial x_{pd}^2} \ln\Psi + \omega^2 x_{pd}^2)  + \sum_{p<q} \frac{1}{r_{pq}} \\
+\end{align}
+
+Now if each visible node in the Boltzmann machine represents one coordinate of one particle, this can be written as
+
+\begin{align}
+	E &=
+	\frac{1}{2} \sum_m^M (-(\frac{\partial}{\partial v_m} \ln\Psi)^2 -\frac{\partial^2}{\partial v_m^2} \ln\Psi + \omega^2 v_m^2)  + \sum_{p<q} \frac{1}{r_{pq}}
+\end{align}
+
+Where we have that
+\begin{align}
+	\frac{\partial}{\partial x_m} \ln\Psi
+	&= - \frac{1}{\sigma^2}(x_m - a_m) + \frac{1}{\sigma^2} \sum_n^N \frac{w_{mn}}{e^{-b_n - \frac{1}{\sigma^2}\sum_i^M x_i w_{in}} + 1} \\
+	\frac{\partial^2}{\partial x_m^2} \ln\Psi
+	&= - \frac{1}{\sigma^2} + \frac{1}{\sigma^4}\sum_n^N \omega_{mn}^2 \frac{e^{b_n + \frac{1}{\sigma^2}\sum_i^M x_i w_{in}}}{(e^{b_n + \frac{1}{\sigma^2}\sum_i^M x_i w_{in}} + 1)^2}
+\end{align}
+
+We now have all the expressions neeeded to calculate the gradient of the local energy with respect to the RBM parameters $\frac{\partial \langle E_L \rangle}{\partial \alpha_i}$.
+
+\section{Sampling}
+The goal is to sample positions $\Vx$ according to the probability density given by our current approximation of $|\Psi(\Vx)|^2$. 
+
+\subsection{Gibbs sampling}
+It was suggested by Carleo that this method should mainly used for simple systems where the wave function is positive definite.
+In this method we sample from the joint probability of $\Vx$ and $\Vh$, in the form of a two step sampling process. The samples $\Vx$ by themselves then model the probability density $|\Psi(\Vx)|^2$ as we wish.
+The updated samples are generated according to the conditional probabilities $P(X_i|\Vh)$ and $P(H_j|\Vx)$ respectively and accepted with the probability of $1$. 
+
+\subsubsection{Conditionals when using $\Psi(x) = \sqrt{F_{rbm}}$}
+When the wave function is represented by $\Psi = \sqrt{F_{rbm}}$ as Carleo suggested for a simple system, the condition probabilities are
+
+\begin{align}
+	P(X_i|\mathbf{h}) &= \mathcal{N}(X_i; a_i+\mathbf{w}_{i*} \mathbf{h}, \sigma^2) \\
+	P(\mathbf{X}|\mathbf{h}) &= \prod_i^M \mathcal{N}(X_i; a_i+\mathbf{w}_{i*} \mathbf{h}, \sigma^2) \\
+	&= \mathcal{N} (\mathbf{X}; \mathbf{a}+\mathbf{W}\mathbf{h},\sigma^2)
+\end{align}
+
+\begin{align}
+	P(H_j|\mathbf{x}) &= \frac{e^{(b_j+\frac{\mathbf{x}^T\mathbf{w}_{*j}}{\sigma^2})H_j}}{\sum_{h_j}e^{(b_j+\frac{\mathbf{x}^T\mathbf{w}_{*j}}{\sigma^2})h_j}} \\
+	&= \frac{e^{(b_j+\frac{\mathbf{v}^T\mathbf{w}_{*j}}{\sigma^2})H_j}}{1+e^{b_j+\frac{\mathbf{x}^T\mathbf{w}_{*j}}{\sigma^2}}} \\
+	P(\mathbf{H}|\mathbf{x}) &= \prod_j^N \frac{e^{(b_j+\frac{\mathbf{x}^T\mathbf{w}_{*j}}{\sigma^2})H_j}}{1+e^{b_j+\frac{\mathbf{x}^T\mathbf{w}_{*j}}{\sigma^2}}} \\
+\end{align}
+Meaning
+\begin{align}
+	P(H_j=1|\mathbf{x}) &= \frac{e^{b_j+\frac{\mathbf{x}^T\mathbf{w}_{*j}}{\sigma^2}}}{1+e^{b_j+\frac{\mathbf{x}^T\mathbf{w}_{*j}}{\sigma^2}}} \\
+	&= \frac{1}{1+e^{-b_j-\frac{\mathbf{x}^T\mathbf{w}_{*j}}{\sigma^2}}} \\
+	P(H_j=0|\mathbf{x}) &= \frac{1}{1+e^{b_j+\frac{\mathbf{x}^T\mathbf{w}_{*j}}{\sigma^2}}} 
+\end{align}
+
+\subsection{Metropolis-Hastings sampling}
+In the brute force version of this, we move each position $x_i$ with a step size determined by a unifrom distribution. The change in the system is then accpeted with an acceptance probability
+\begin{align}
+	A (\Vx \rightarrow \Vx') = \text{min}(1, |\frac{\Psi(\Vx')}{\Psi(\Vx)}|^2)
+\end{align}
+
+%\bibliographystyle{plain}
+\bibliography{sources}
+
+\end{document}

@@ -128,7 +128,7 @@ Then
 
 Remember that if two random events $A$ and $B$ are independent, their joint probability equals the product of their probabilitites: $P(A, B) = P(A)P(B)$. Since the $X_i$ are independent variables in the restricted Boltzmann machine, it makes sense that we see the following form above: $P(\VX | \Vh) = \prod_i P(X_i | \Vh) $. (correct?)
 
-We now want to rewrite the exponent to get the expression for $P(P(X_i | \Vh))$ into the form of a Gaussian distribution, which generally has the form
+We now want to rewrite the exponent to get the expression for $P(X_i | \Vh)$ into the form of a Gaussian distribution, which generally has the form
 \begin{align}
 	f(x|\mu, \sigma^2) = \frac{1}{\sqrt{2\pi \sigma^2}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}
 \end{align}
@@ -153,11 +153,26 @@ Inserting this back in, we find
 
 \subsubsection{Derive $P(\VH | \Vx)$}
 
+\begin{align}
+	P(\VH | \Vx) &= \frac{P(\Vx, \VH)}{\sum_\Vh P(\Vx, \Vh)} \\
+	&= \frac{e^{-\frac{|\VX - \Va|^2}{\sigma^2} } \prod_j e^{(2b_j + 2\frac{\Vx^T \Vwj}{\sigma^2})H_j} }{\sum_\Vh e^{-\frac{|\VX - \Va|^2}{\sigma^2}} \prod_j e^{(2b_j + 2\frac{\Vx^T \Vwj}{\sigma^2}) h_j} } \\
+	&= \prod_j \frac{e^{2(b_j + \frac{\Vx^T \Vwj}{\sigma^2})H_j} }{\sum_{h_j} e^{2(b_j + \frac{\Vx^T \Vwj}{\sigma^2})h_j} } \\
+	&= \prod_j \frac{e^{2(b_j + \frac{\Vx^T \Vwj}{\sigma^2})H_j} }{1 + e^{2(b_j + \frac{\Vx^T \Vwj}{\sigma^2})} } \\
+	\text{and} \quad P(H_j | \Vx) &= \frac{e^{2(b_j + \frac{\Vx^T \Vwj}{\sigma^2})H_j} }{1 + e^{2(b_j + \frac{\Vx^T \Vwj}{\sigma^2})} } \\
+\end{align}
+
+From this we see that the probability for $H_j=1$ and $H_j=0$ respectively is
+\begin{align}
+	P(H_j=1 | \Vx) &= \frac{1}{1 + e^{-2(b_j + \frac{\Vx^T \Vwj}{\sigma^2})} } \\
+	P(H_j=0 | \Vx) &= \frac{1}{1 + e^{2(b_j + \frac{\Vx^T \Vwj}{\sigma^2})} }
+\end{align}
+
+
 
 \section{Quantum Mechanics (How to go from RBM to $\Psi$)}
-Find the marginal probability $P(X)$:
+Find the marginal probability amplitude $F_{rbm}(X)$:
 \begin{align}
-	P(\mathbf{X}) &= \sum_\mathbf{h} P(\mathbf{X}, \mathbf{h}) \\
+	F_{rbm}(\mathbf{X}) &= \sum_\mathbf{h} F_{rbm}(\mathbf{X}, \mathbf{h}) \\
 				&= \frac{1}{Z}\sum_\mathbf{h} e^{-E(\mathbf{X}, \mathbf{h})}
 \end{align}
 Now, in this case where for the ground state the wave function is positive definite, we set
@@ -302,7 +317,7 @@ Where we have that
 \color{Black}
 \begin{align}
 	\frac{\partial}{\partial x_m} \ln\Psi
-	&= - \frac{1}{\sigma^2}(x_m - a_m) - \sum_n^N \frac{1}{e^{-b_n - \frac{1}{\sigma^2}\sum_i^M x_i w_{in}} + 1} \\
+	&= - \frac{1}{\sigma^2}(x_m - a_m) + \frac{1}{\sigma^2} \sum_n^N \frac{w_{mn}}{e^{-b_n - \frac{1}{\sigma^2}\sum_i^M x_i w_{in}} + 1} \\
 	\frac{\partial^2}{\partial x_m^2} \ln\Psi
 	&= - \frac{1}{\sigma^2} + \frac{1}{\sigma^4}\sum_n^N \omega_{mn}^2 \frac{e^{b_n + \frac{1}{\sigma^2}\sum_i^M x_i w_{in}}}{(e^{b_n + \frac{1}{\sigma^2}\sum_i^M x_i w_{in}} + 1)^2}
 \end{align}

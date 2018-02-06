@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.9.5)  30 JAN 2018 14:19
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.9.5)  6 FEB 2018 11:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**chapRBM.tex
-(./chapRBM.tex
+**NotesSampling.tex
+(./NotesSampling.tex
 LaTeX2e <2016/03/31>
 Babel <3.9r> and hyphenation patterns for 83 language(s) loaded.
 (/usr/local/texlive/2016/texmf-dist/tex/latex/base/article.cls
@@ -490,8 +490,8 @@ Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 LaTeX Warning: Unused global option(s):
     [norsk].
 
-(./chapRBM.aux)
-\openout1 = `chapRBM.aux'.
+(./NotesSampling.aux)
+\openout1 = `NotesSampling.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 37.
 LaTeX Font Info:    ... okay on input line 37.
@@ -579,171 +579,47 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 39.
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
-{/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 93--96
-\T1/cmr/m/n/10.95 Some ob-ser-va-tions ($\OML/cmm/m/it/10.95 v$ \T1/cmr/m/n/10.
-95 be-ing co-or-di-nate of a par-ti-cle):
- []
-
-[2]
-Overfull \hbox (11.91566pt too wide) in paragraph at lines 111--112
-\T1/cmr/m/n/10.95 cord-ing to quan-tum me-chan-ics given $\OML/cmm/m/it/10.95  
-\OT1/cmr/m/n/10.95 (\OT1/cmr/bx/n/10.95 X\OT1/cmr/m/n/10.95 )$\T1/cmr/m/n/10.95
- . We have $\OML/cmm/m/it/10.95 P\OT1/cmr/m/n/10.95 (\OT1/cmr/bx/n/10.95 X\OML/
-cmm/m/it/10.95 ; \OT1/cmr/bx/n/10.95 H\OT1/cmr/m/n/10.95 ) = \OMS/cmsy/m/n/10.9
-5 j\OML/cmm/m/it/10.95 F[]\OT1/cmr/m/n/10.95 (\OT1/cmr/bx/n/10.95 X\OML/cmm/m/i
-t/10.95 ; \OT1/cmr/bx/n/10.95 H\OT1/cmr/m/n/10.95 )\OMS/cmsy/m/n/10.95 j[]$\T1/
-cmr/m/n/10.95 .
- []
-
-[3]
-Overfull \hbox (21.70456pt too wide) in paragraph at lines 129--130
-\T1/cmr/m/n/10.95 joint prob-a-bil-ity equals the prod-uct of their prob-a-bil-
-i-tites: $\OML/cmm/m/it/10.95 P\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 A; B\OT1
-/cmr/m/n/10.95 ) = \OML/cmm/m/it/10.95 P\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95
- A\OT1/cmr/m/n/10.95 )\OML/cmm/m/it/10.95 P\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10
-.95 B\OT1/cmr/m/n/10.95 )$\T1/cmr/m/n/10.95 .
- []
-
-[4] [5] [6] [7] [8] [9] [10] [11]
-Underfull \hbox (badness 10000) in paragraph at lines 383--393
-[]\T1/cmr/m/n/10.95 Bayesian learn-ing - some def-i-ni-tions [[]]:
- []
-
-
-Underfull \hbox (badness 2173) in paragraph at lines 383--393
-\T1/cmr/m/n/10.95 tics of a pop-u-la-tion from a sub-set ofmem-bers of that pop
--u-la-tion.
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 383--393
-\T1/cmr/m/n/10.95 tion.
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 383--393
-\T1/cmr/m/n/10.95 will re-sult.
- []
-
-
-Underfull \hbox (badness 1590) in paragraph at lines 383--393
-\OT1/cmr/m/n/10.95 ^^B$ \T1/cmr/m/n/10.95 = The pa-ram-e-ter space = the set of
- pos-si-ble pa-ram-e-ter val-ues
- []
-
-
-Underfull \hbox (badness 7273) in paragraph at lines 383--393
-\T1/cmr/m/n/10.95 our be-lief that $\OML/cmm/m/it/10.95 ^^R$ \T1/cmr/m/n/10.95 
-rep-re-sents the true pop-u-la-tion char-ac-ter-is-tics.
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 383--393
-
- []
-
-[12]
-Underfull \hbox (badness 10000) in paragraph at lines 427--432
-\T1/cmr/m/n/10.95 tions:
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 427--432
-\T1/cmr/m/n/10.95 states. For us: $\OML/cmm/m/it/10.95 P\OT1/cmr/m/n/10.95 (\OM
-L/cmm/m/it/10.95 x; h\OT1/cmr/m/n/10.95 )$\T1/cmr/m/n/10.95 .
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 427--432
-\OML/cmm/m/it/10.95 g\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x[]\OMS/cmsy/m/n/1
-0.95 j\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 )$ \T1/cmr/m/n/10.95 is the pro-p
-osal dis-tri-bu-tion. For us: $\OML/cmm/m/it/10.95 P\OT1/cmr/m/n/10.95 (\OML/cm
-m/m/it/10.95 x\OMS/cmsy/m/n/10.95 j\OML/cmm/m/it/10.95 h\OT1/cmr/m/n/10.95 )$
- []
-
-
-Overfull \hbox (27.501pt too wide) in paragraph at lines 427--432
-\OML/cmm/m/it/10.95 A\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x[]\OMS/cmsy/m/n/1
-0.95 j\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 )$ \T1/cmr/m/n/10.95 is our ac-ce
-p-tance dis-tri-bu-tion, which we get from $\OML/cmm/m/it/10.95 P\OT1/cmr/m/n/1
-0.95 (\OML/cmm/m/it/10.95 x[]\OMS/cmsy/m/n/10.95 j\OML/cmm/m/it/10.95 x\OT1/cmr
-/m/n/10.95 ) = \OML/cmm/m/it/10.95 g\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x[]
-\OMS/cmsy/m/n/10.95 j\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 )\OML/cmm/m/it/10.
-95 A\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x[]\OMS/cmsy/m/n/10.95 j\OML/cmm/m/
-it/10.95 x\OT1/cmr/m/n/10.95 )$\T1/cmr/m/n/10.95 . 
- []
-
-[13]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 440.
-
- (/usr/local/texlive/2016/texmf-dist/tex/latex/base/omscmr.fd
-File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 440.
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 456.
-
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/base/t1cmtt.fd
-File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-) [14]
-
-LaTeX Warning: Citation `solveQMann' on page 15 undefined on input line 479.
-
-
-LaTeX Warning: Citation `solveQMann' on page 15 undefined on input line 480.
-
-[15]
-
-LaTeX Warning: Citation `solveQMann' on page 16 undefined on input line 494.
-
-
-LaTeX Warning: Citation `solveQMann' on page 16 undefined on input line 509.
-
-[16] (./chapRBM.bbl [17]) [18] (./chapRBM.aux)
-
-LaTeX Warning: There were undefined references.
-
- ) 
+{/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
+ [4] [5]
+[6] (./NotesSampling.bbl) [7] (./NotesSampling.aux) ) 
 Here is how much of TeX's memory you used:
- 4442 strings out of 493014
- 62689 string characters out of 6133352
- 136170 words of memory out of 5000000
- 7896 multiletter control sequences out of 15000+600000
- 22529 words of font info for 67 fonts, out of 8000000 for 9000
+ 4385 strings out of 493014
+ 61534 string characters out of 6133352
+ 133172 words of memory out of 5000000
+ 7847 multiletter control sequences out of 15000+600000
+ 18691 words of font info for 52 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 38i,11n,38p,854b,399s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}
-</usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><
-/usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx6.pfb></u
-sr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr
-/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/
-local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></u
-sr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
-r/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr
-/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/l
-ocal/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/loc
-al/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local
-/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/t
-exlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texl
-ive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive
-/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/
-2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/20
-16/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2016
-/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/
-2016/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb></usr/local/texlive/20
-16/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texlive/2016
-/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/texlive/2016/t
-exmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/texlive/2016/tex
-mf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2016/texmf
--dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/local/texlive/2016/texmf-d
-ist/fonts/type1/public/cm-super/sfti1095.pfb></usr/local/texlive/2016/texmf-dis
-t/fonts/type1/public/cm-super/sftt1095.pfb>
-Output written on chapRBM.pdf (18 pages, 376049 bytes).
+ 38i,11n,38p,511b,201s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2016/t
+exmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/local/texlive/2016/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2016/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmbx6.pfb></usr/local/texlive/2016/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/local/texlive/2016/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2016/texmf-dis
+t/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></usr/local/texlive/2016/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2016/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2016/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2016/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2016/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2016/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2016/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2016/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/publ
+ic/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/
+public/cm-super/sfbx1095.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/pu
+blic/cm-super/sfbx1200.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/publ
+ic/cm-super/sfbx1440.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public
+/cm-super/sfrm1095.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/c
+m-super/sfrm1200.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-
+super/sfrm1728.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-su
+per/sfti1095.pfb>
+Output written on NotesSampling.pdf (7 pages, 290016 bytes).
 PDF statistics:
- 164 PDF objects out of 1000 (max. 8388607)
- 117 compressed objects within 2 object streams
+ 125 PDF objects out of 1000 (max. 8388607)
+ 91 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
