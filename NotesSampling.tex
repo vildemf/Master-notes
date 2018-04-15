@@ -87,7 +87,7 @@ This is used to represent the wave function:
 \end{align}
 
 
-\subsection{Alternative 1: $\psi = \sqrt{F_{rbm}}$}
+\subsection{Alternative 1: $\Psi = \sqrt{F_{rbm}}$}
 This is used by Carleo in his seminar lectures for simple systems where the ground state wave function is positive definite and Gibbs sampling is used rather than Metropolis. (Though by mistake he uses this only in the conditional probabilites used in the Gibbs sampling, while the wave function used in the local energy is still $\Psi (\mathbf{X}) = F_{rbm}(\mathbf{X})$ as in the previous section. He says however in his email that the idea was to do the below version.)
 \begin{align}
 	|\Psi (\mathbf{X})|^2 &= F_{rbm}(\mathbf{X}) \\
@@ -154,6 +154,25 @@ Giving
 	&= \frac{X_m}{\sigma^2(e^{-b_n-\frac{1}{\sigma^2}\sum_i^M X_i w_{in}} + 1)}
 \end{align}
 
+\subsection{If $\Psi = \sqrt{F_{rbm}}$}
+
+\begin{align}
+	\ln{\Psi({\mathbf{X}})} &= -\frac{1}{2}\ln{Z} - \sum_m^M \frac{(X_m - a_m)^2}{4\sigma^2}
+	+ \frac{1}{2}\sum_n^N \ln({1 + e^{b_n + \sum_i^M \frac{X_i w_{in}}{\sigma^2}})}
+\end{align}
+
+Giving
+
+\begin{align}
+	\frac{\partial }{\partial a_m} \ln\Psi
+	&= 	\frac{1}{2\sigma^2} (X_m - a_m) \\
+	\frac{\partial }{\partial b_n} \ln\Psi
+	&=
+	\frac{1}{2(e^{-b_n-\frac{1}{\sigma^2}\sum_i^M X_i w_{in}} + 1)} \\
+	\frac{\partial }{\partial w_{mn}} \ln\Psi
+	&= \frac{X_m}{2\sigma^2(e^{-b_n-\frac{1}{\sigma^2}\sum_i^M X_i w_{in}} + 1)}
+\end{align}
+
 \section{The system and the Hamiltonian}
 \subsection{The Harmonic Oscillator}
 The Hamiltonian for the Harmonic Oscillator system is \cite{lectures2015}
@@ -165,7 +184,7 @@ where the first summation term represents the standard harmonic oscillator part 
 
 Thus we get ($D$ being the number of dimensions)
 \begin{align}
-	E &= \frac{1}{\Psi} \mathbf{H} \Psi \\
+	E_L &= \frac{1}{\Psi} \mathbf{H} \Psi \\
 	&= \frac{1}{\Psi} (\sum_p^P (-\frac{1}{2}\nabla_p^2 + \frac{1}{2}\omega^2 r_p^2 ) + \sum_{p<q} \frac{1}{r_{pq}}) \Psi \\
 	&= -\frac{1}{2}\frac{1}{\Psi} \sum_p^P \nabla_p^2 \Psi 
 	+ \frac{1}{2}\omega^2 \sum_p^P  r_p^2  + \sum_{p<q} \frac{1}{r_{pq}} \\
@@ -176,7 +195,7 @@ Thus we get ($D$ being the number of dimensions)
 Now if each visible node in the Boltzmann machine represents one coordinate of one particle, this can be written as
 
 \begin{align}
-	E &=
+	E_L &=
 	\frac{1}{2} \sum_m^M (-(\frac{\partial}{\partial v_m} \ln\Psi)^2 -\frac{\partial^2}{\partial v_m^2} \ln\Psi + \omega^2 v_m^2)  + \sum_{p<q} \frac{1}{r_{pq}}
 \end{align}
 
@@ -188,7 +207,18 @@ Where we have that
 	&= - \frac{1}{\sigma^2} + \frac{1}{\sigma^4}\sum_n^N \omega_{mn}^2 \frac{e^{b_n + \frac{1}{\sigma^2}\sum_i^M x_i w_{in}}}{(e^{b_n + \frac{1}{\sigma^2}\sum_i^M x_i w_{in}} + 1)^2}
 \end{align}
 
-We now have all the expressions neeeded to calculate the gradient of the local energy with respect to the RBM parameters $\frac{\partial \langle E_L \rangle}{\partial \alpha_i}$.
+We now have all the expressions neeeded to calculate the gradient of the expected local energy with respect to the RBM parameters $\frac{\partial \langle E_L \rangle}{\partial \alpha_i}$.
+
+\subsection{If $\Psi = \sqrt{F_{rbm}}$}
+\begin{align}
+	\frac{\partial}{\partial x_m} \ln\Psi
+	&= - \frac{1}{2\sigma^2}(x_m - a_m) + \frac{1}{2\sigma^2} \sum_n^N
+ 	\frac{w_{mn}}{e^{-b_n-\frac{1}{\sigma^2}\sum_i^M x_i w_{in}} + 1}
+	\\
+	\frac{\partial^2}{\partial x_m^2} \ln\Psi
+	&= - \frac{1}{2\sigma^2} + \frac{1}{2\sigma^4}\sum_n^N \omega_{mn}^2 \frac{e^{b_n + \frac{1}{\sigma^2}\sum_i^M x_i w_{in}}}{(e^{b_n + \frac{1}{\sigma^2}\sum_i^M x_i w_{in}} + 1)^2}
+\end{align}
+
 
 \section{Sampling}
 The goal is to sample positions $\Vx$ according to the probability density given by our current approximation of $|\Psi(\Vx)|^2$. 

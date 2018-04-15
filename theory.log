@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.9.5)  6 FEB 2018 13:47
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.9.5)  15 APR 2018 18:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**NotesSampling.tex
-(./NotesSampling.tex
+**theory.tex
+(./theory.tex
 LaTeX2e <2016/03/31>
 Babel <3.9r> and hyphenation patterns for 83 language(s) loaded.
 (/usr/local/texlive/2016/texmf-dist/tex/latex/base/article.cls
@@ -471,6 +471,21 @@ Package: subcaption 2016/02/20 v1.1-142 Sub-captions (AR)
 \c@subfigure=\count101
 \c@subtable=\count102
 )
+(/usr/local/texlive/2016/texmf-dist/tex/latex/mdwtools/mdwlist.sty
+Package: mdwlist 1996/05/02 1.1 Various list-related things
+)
+(/usr/local/texlive/2016/texmf-dist/tex/latex/tools/bm.sty
+Package: bm 2016/02/27 v1.2a Bold Symbol Support (DPC/FMi)
+\symboldoperators=\mathgroup6
+\symboldletters=\mathgroup7
+\symboldsymbols=\mathgroup8
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 142.
+LaTeX Info: Redefining \bm on input line 208.
+)
+(/usr/local/texlive/2016/texmf-dist/tex/latex/tools/enumerate.sty
+Package: enumerate 2015/07/23 v3.00 enumerate extensions (DPC)
+\@enLab=\toks24
+)
 (/usr/local/texlive/2016/texmf-dist/tex/latex/graphics/color.sty
 Package: color 2016/05/09 v1.1c Standard LaTeX Color (DPC)
 
@@ -490,21 +505,21 @@ Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 LaTeX Warning: Unused global option(s):
     [norsk].
 
-(./NotesSampling.aux)
-\openout1 = `NotesSampling.aux'.
+(./theory.aux)
+\openout1 = `theory.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
 
 (/usr/local/texlive/2016/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -513,12 +528,12 @@ LaTeX Font Info:    ... okay on input line 37.
 \scratchbox=\box28
 \nofMPsegments=\count104
 \nofMParguments=\count105
-\everyMPshowfont=\toks24
+\everyMPshowfont=\toks25
 \MPscratchCnt=\count106
 \MPscratchDim=\dimen122
 \MPnumerator=\count107
 \makeMPintoPDFobject=\count108
-\everyMPtoPDFconversion=\toks25
+\everyMPtoPDFconversion=\toks26
 ) (/usr/local/texlive/2016/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2016/05/10 v0.21 Utility functions of pdfTeX for LuaTeX (HO
 )
@@ -568,58 +583,256 @@ e
 ))
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Try loading font information for U+msa on input line 39.
+LaTeX Font Info:    Try loading font information for U+msa on input line 42.
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 39.
+LaTeX Font Info:    Try loading font information for U+msb on input line 42.
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [1
+)
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 46.
 
-{/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
- [4] [5]
-[6] [7] (./NotesSampling.bbl) [8] (./NotesSampling.aux) ) 
+(/usr/local/texlive/2016/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 46.
+ [1
+
+{/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+Overfull \hbox (1.18474pt too wide) in paragraph at lines 69--70
+\T1/cmr/m/n/10.95 Data gen-er-ated by draw-ing sam-ples from the equa-tion $\OM
+L/cmm/m/it/10.95 y[] \OT1/cmr/m/n/10.95 = \OML/cmm/m/it/10.95 f\OT1/cmr/m/n/10.
+95 (\OML/cmm/m/it/10.95 x[]\OT1/cmr/m/n/10.95 ) +
+ []
+
+[2] [3] [4] [5] [6] [7] [8] [9] [10]
+Overfull \hbox (16.4001pt too wide) in paragraph at lines 269--271
+[]\T1/cmr/m/it/10.95 Gradients are com-pu-ta-tion-ally ex-pen-sive to cal-cu-la
+te for large datasets
+ []
+
+[11]
+Overfull \hbox (13.77434pt too wide) in paragraph at lines 307--309
+[]\T1/cmr/m/n/10.95 Adding mo-men-tum: SGD al-most al-ways used with a "mo-men-
+tum"/inertia
+ []
+
+[12] [13] [14] [15] [16] [17]
+Overfull \hbox (3.7862pt too wide) in paragraph at lines 458--459
+\T1/cmr/m/n/10.95 The like-li-hood func = com-mon fea-ture in both clas-si-cal 
+statis-tics and Bayesian
+ []
+
+[18]
+Overfull \hbox (9.1743pt too wide) in paragraph at lines 482--483
+[]$[] \OT1/cmr/m/n/10.95 = \OML/cmm/m/it/10.95 argmax[]p\OT1/cmr/m/n/10.95 (\OT
+1/cmr/bx/n/10.95 w\OMS/cmsy/m/n/10.95 j\OT1/cmr/bx/n/10.95 X\OT1/cmr/m/n/10.95 
+)$ \T1/cmr/m/n/10.95 = the pos-te-rior mode = the maximum-a-posteriori
+ []
+
+[19] [20] [21] [22] [23] [24] [25] [26] [27]
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <6> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 741.
+
+Overfull \hbox (6.74803pt too wide) in paragraph at lines 747--748
+\T1/cmr/m/n/10.95 tion of prior dis-tri-bu-tion at the pos-te-rior level. Fex: 
+for a Gaus-sion(Geometric)
+ []
+
+[28] [29]
+Overfull \hbox (22.63844pt too wide) in paragraph at lines 778--780
+\T1/cmr/m/n/10.95 Have so far fo-cused on con-tin-u-ous out-put. Now: clas-si-f
+i-ca-tion: out-comes=discrete
+ []
+
+[30] [31] [32] [33]
+Overfull \hbox (11.28317pt too wide) in paragraph at lines 894--895
+[]\T1/cmr/m/n/10.95 Near $\OML/cmm/m/it/10.95 T[]$ \T1/cmr/m/n/10.95 the fer-ro
+-mag-netic cor-re-la-tion length di-verges, lead-ing to, amongst
+ []
+
+[34] [35]
+Overfull \hbox (0.83012pt too wide) in paragraph at lines 923--924
+\T1/cmr/m/n/10.95 out-put "prob-a-bil-ity of this be-ing a true sig-nal event",
+ y-axis=frequency.
+ []
+
+[36] [37] [38] [39]
+Overfull \hbox (5.98761pt too wide) in paragraph at lines 1011--1012
+[]\T1/cmr/m/n/10.95 The cor-re-spond-ing $[]\OT1/cmr/m/n/10.95 (\OML/cmm/b/it/1
+0.95 x\OT1/cmr/m/n/10.95 )$ \T1/cmr/m/n/10.95 will dif-fer from each other due 
+to stochas-
+ []
+
+[40] [41] [42] [43] [44] [45]
+Overfull \hbox (17.93808pt too wide) in paragraph at lines 1154--1156
+[]\T1/cmr/m/n/10.95 Then re-peat the same pro-ce-dure to get in to-tal $\OML/cm
+m/m/it/10.95 B$ \T1/cmr/m/n/10.95 such sets: $\OMS/cmsy/m/n/10.95 D[]\OML/cmm/m
+/it/10.95 ; :::; \OMS/cmsy/m/n/10.95 D[]$\T1/cmr/m/n/10.95 . 
+ []
+
+[46] [47] [48] [49] [50] [51]
+Overfull \hbox (21.10265pt too wide) in paragraph at lines 1313--1313
+[]\T1/cmr/bx/n/12 Application to the Ising model and Su-per-sym-me-try Datasets
+ 
+ []
+
+
+Overfull \hbox (4.88092pt too wide) in paragraph at lines 1318--1319
+[]\T1/cmr/m/n/10.95 Classifying Monte-Carlo sim-u-la-tions of col-li-sion event
+s in the SUSY
+ []
+
+[52] [53] [54]
+Overfull \hbox (1.85013pt too wide) in paragraph at lines 1345--1346
+\T1/cmr/m/n/10.95 com-monly ac-cepted heuris-tics turn out not to be as pow-er-
+ful as thought,
+ []
+
+
+Overfull \hbox (1.54582pt too wide) in paragraph at lines 1358--1359
+[]\T1/cmr/m/n/10.95 Recently, DNNs have been used to im-prove the ef-fi-ciency 
+of Monte-
+ []
+
+
+Overfull \hbox (11.02734pt too wide) in paragraph at lines 1359--1360
+[]\T1/cmr/m/n/10.95 Deep learn-ing has found in-ter-est-ing ap-pli-ca-tions in 
+quan-tum physics. 
+ []
+
+
+Overfull \hbox (5.00578pt too wide) in paragraph at lines 1370--1371
+[]\T1/cmr/m/n/10.95 Recognition of state and charge con-fig-u-ra-tions and auto
+-tuning
+ []
+
+[55] [56] [57] [58] [59]
+Overfull \hbox (2.9502pt too wide) in paragraph at lines 1446--1447
+[]\T1/cmr/m/n/10.95 Given a data point $\OT1/cmr/m/n/10.95 (\OML/cmm/b/it/10.95
+ x[]\OML/cmm/m/it/10.95 ; y[]\OT1/cmr/m/n/10.95 )$\T1/cmr/m/n/10.95 , the neu-r
+al net makes a prediction$[]\OT1/cmr/m/n/10.95 (\OML/cmm/b/it/10.95 w\OT1/cmr/m
+/n/10.95 )$\T1/cmr/m/n/10.95 ,
+ []
+
+[60]
+Overfull \hbox (49.90425pt too wide) in paragraph at lines 1495--1496
+\T1/cmr/m/n/10.95 in-te-gers (Keras pro-vides func-tion for do-ing this, "keras
+.utils.to_categorical") 
+ []
+
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 1499
+.
+(/usr/local/texlive/2016/texmf-dist/tex/latex/base/t1cmtt.fd
+File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+) [61]
+Overfull \hbox (10.11249pt too wide) in paragraph at lines 1505--1506
+[]\T1/cmr/m/n/10.95 Next, choose loss func to use for train-ing. Chooses \T1/cm
+tt/m/n/10.95 categorical_entropy
+ []
+
+
+Overfull \hbox (8.3499pt too wide) in paragraph at lines 1509--1510
+[]\T1/cmr/m/n/10.95 Training the DNN: a one-liner us-ing the \T1/cmtt/m/n/10.95
+ fit() \T1/cmr/m/n/10.95 method of the \T1/cmtt/m/n/10.95 Sequential
+ []
+
+[62] [63] [64]
+Overfull \hbox (3.81488pt too wide) in paragraph at lines 1595--1596
+[]\T1/cmr/m/n/10.95 DNNs, like all su-per-vised learn-ing al-gos, must nav-i-ga
+te the bias-variance
+ []
+
+[65]
+Overfull \hbox (32.63861pt too wide) in paragraph at lines 1600--1600
+[]\T1/cmr/bx/n/10.95 Implicit reg-u-lar-iza-tion us-ing SGD: ini-tial-iza-tion,
+ hyper-parameter
+ []
+
+[66] [67] [68] [69] [70] [71] [72] [73] [74] [75]
+Overfull \hbox (17.93811pt too wide) in paragraph at lines 1811--1811
+[]\T1/cmr/bx/n/12 Organizing deep learn-ing work-flows us-ing the bias-variance
+
+ []
+
+[76] [77]
+Overfull \hbox (2.87415pt too wide) in paragraph at lines 1849--1850
+\T1/cmr/m/n/10.95 mod-els, en-sem-ble meth-ods inc ran-dom forests or gradient-
+boosted trees)
+ []
+
+[78] [79] [80] [81]
+Overfull \hbox (6.51128pt too wide) in paragraph at lines 1913--1914
+[]\T1/cmr/m/n/10.95 Consider data dis-tributed uni-formely at ran-dom in a $\OM
+L/cmm/m/it/10.95 D$\T1/cmr/m/n/10.95 -dimensional
+ []
+
+[82] [83] [84]
+Overfull \hbox (15.17413pt too wide) in paragraph at lines 1994--1994
+[]\T1/cmr/bx/n/14.4 Variational meth-ods and mean-field the-ory (MFT) 
+ []
+
+
+Overfull \hbox (6.54643pt too wide) in paragraph at lines 2001--2001
+[]\T1/cmr/bx/n/14.4 Energy based mod-els: Max-im-ium En-tropy (Max-
+ []
+
+[85]
+Overfull \vbox (207.92928pt too high) has occurred while \output is active []
+
+
+[86] (./theory.aux) ) 
 Here is how much of TeX's memory you used:
- 4385 strings out of 493014
- 61534 string characters out of 6133352
- 134172 words of memory out of 5000000
- 7847 multiletter control sequences out of 15000+600000
- 18691 words of font info for 52 fonts, out of 8000000 for 9000
+ 4572 strings out of 493014
+ 64282 string characters out of 6133352
+ 134374 words of memory out of 5000000
+ 8006 multiletter control sequences out of 15000+600000
+ 26044 words of font info for 71 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 38i,11n,38p,511b,201s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/20
-16/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/local/texlive/2016
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2016/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmbx6.pfb></usr/local/texlive/2016/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/local/texlive/2016/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2016/texmf
--dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></usr/local/texlive/2016/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2016/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2016/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2016/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2016/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2016/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2016/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2016/texmf-dist/font
-s/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2016/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2016/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2016/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/
-public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2016/texmf-dist/fonts/ty
-pe1/public/cm-super/sfbx1095.pfb></usr/local/texlive/2016/texmf-dist/fonts/type
-1/public/cm-super/sfbx1200.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/
-public/cm-super/sfbx1440.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/pu
-blic/cm-super/sfrm1095.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/publ
-ic/cm-super/sfrm1200.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public
-/cm-super/sfrm1728.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/c
-m-super/sfti1095.pfb>
-Output written on NotesSampling.pdf (8 pages, 292021 bytes).
+ 38i,12n,38p,1817b,424s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/cm-sup
+er/cm-super-t1.enc}</usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmbsy10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmbx10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmbx6.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmbx8.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmex10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm
+extra/cmex7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmmi10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmmi5.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmmi6.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mmi8.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmm
+ib10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cmextr
+a/cmmib6.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm
+extra/cmmib8.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmr10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmr5.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmr6.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
+8.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10
+.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.p
+fb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb
+></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><
+/usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.p
+fb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbi1095.pfb
+></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx0600.pfb><
+/usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx0800.pfb></u
+sr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb></usr
+/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/l
+ocal/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/loc
+al/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm0600.pfb></usr/local
+/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/t
+exlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/tex
+live/2016/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/local/texli
+ve/2016/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb></usr/local/texlive
+/2016/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb>
+Output written on theory.pdf (86 pages, 709453 bytes).
 PDF statistics:
- 128 PDF objects out of 1000 (max. 8388607)
- 93 compressed objects within 1 object stream
+ 420 PDF objects out of 1000 (max. 8388607)
+ 295 compressed objects within 3 object streams
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

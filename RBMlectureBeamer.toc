@@ -1,0 +1,19 @@
+\beamer@endinputifotherversion {3.36pt}
+\beamer@sectionintoc {1}{Introduction}{3}{0}{1}
+\beamer@sectionintoc {2}{The Restricted Boltzmann machine}{6}{0}{2}
+\beamer@subsectionintoc {2}{1}{Structure}{7}{0}{2}
+\beamer@subsectionintoc {2}{2}{Joint distribution and the Energy function}{10}{0}{2}
+\beamer@subsectionintoc {2}{3}{Defining different types of RBMs}{12}{0}{2}
+\beamer@subsubsectionintoc {2}{3}{1}{Binary-Binary RBM}{13}{0}{2}
+\beamer@subsubsectionintoc {2}{3}{2}{Gaussian-Binary RBM}{14}{0}{2}
+\beamer@subsubsectionintoc {2}{3}{3}{Other RBMs}{15}{0}{2}
+\beamer@subsectionintoc {2}{4}{Sampling}{16}{0}{2}
+\beamer@subsubsectionintoc {2}{4}{1}{Metropolis sampling}{17}{0}{2}
+\beamer@subsubsectionintoc {2}{4}{2}{Gibbs sampling}{18}{0}{2}
+\beamer@subsectionintoc {2}{5}{Cost function}{20}{0}{2}
+\beamer@subsectionintoc {2}{6}{Optimization / Training}{22}{0}{2}
+\beamer@sectionintoc {3}{RBMs for the quantum many body problem}{28}{0}{3}
+\beamer@subsectionintoc {3}{1}{Choose the right RBM}{31}{0}{3}
+\beamer@subsectionintoc {3}{2}{Representing the wave function}{32}{0}{3}
+\beamer@subsectionintoc {3}{3}{Choose the cost function}{34}{0}{3}
+\beamer@subsectionintoc {3}{4}{The physical system}{36}{0}{3}
