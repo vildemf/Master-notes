@@ -1,0 +1,863 @@
+\documentclass[twoside,english]{uiofysmaster}
+\usepackage[T1]{fontenc} %for å bruke æøå
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amsfonts, amssymb}
+\usepackage{graphicx} %for å inkludere grafikk
+\usepackage{verbatim} %for å inkludere filer med tegn LaTeX ikke liker
+\usepackage[font=scriptsize]{caption}
+\usepackage{subcaption}
+\usepackage{mdwlist}
+\usepackage[toc,page]{appendix}
+\usepackage{bm}
+\usepackage{enumerate}
+\usepackage{mathtools}
+
+\newcommand*\dif{\mathop{}\!\mathrm{d}}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+
+\bibliographystyle{ieeetr}
+%\bibliography{references}
+
+\author{Vilde Moe Flugsrud}
+\title{The history of master thesises and other random gibberish}
+\date{June 2018}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is an abstract text.
+\end{abstract}
+
+\begin{acknowledgements}
+  I acknowledge my acknowledgements.
+\end{acknowledgements}
+
+\tableofcontents
+
+\chapter{Introduction}
+
+Start your chapter by writing something smart. Then go get coffee.
+
+\part{Theory}
+\chapter{The established approaches}
+\section{Approximating the wave function}
+
+\section{Methods}
+\begin{itemize}
+	\item Summary from
+	\begin{itemize}
+			\item Ledum master \cite{Ledum2017}
+	\end{itemize}
+	\item The advent of computer simulations during the last several decades have in par- ticular made it possible to study moderately sized quantum mechanical systems from  rst principles. Our ability to solve—in closed form—the governing equations of quantum mechanics (QM) vanishes extremely quickly as the number of constituent particles exceed just a few.
+	\item Any approximative scheme which aims to solve the many-body schrodinger equa- tion from scratch subject to some (more or less) well-de ned simpli cations is called an ab initio method. Working from  rst principles the aim of such algorithms is to extract information from a theoretical QM system in a reasonable amount of time. In order to accomplish this, a number of complicating intricacies need to be disre- garded. The magnitude of the simpli cations—essentially the number and impor- tance of complicating factors dropped—determine both the e cacy and the e ciency of the method: More simpli cations made allow solutions to be found for larger sys- tems (albeit less precise solutions), whereas extremely precise solutions can be found for small systems if very few simpli cations are employed.
+	\item Despite tremendous increases in available numerical computational power in the latter half of the previous-, and the early parts of the current century, any such approximate scheme used is still heavily limited w.r.t. the system size. In practice, most methods are limited to systems of containing on the order of between $10^2$ (for high- precision methods such as con guration interaction, coupled cluster, di usion Monte Carlo, etc.) and $10^5$ electrons (for faster Hartree-Fock and density functional methods).
+	\cite{Hu2015} \cite{VandeVondele2012} \cite{Bowler2010}
+	\item As previously noted, solving the Schrodinger equation (SE) exactly by hand is impos- sible in the overwhelming majority of interesting cases. However, methods which can get close to the exact solution exists. Full Con guration Interaction (FCI) or direct di- agonalization of the Hamiltonian is exact in the limit of an in nite orbital basis set but su ers from an exponential complexity scaling (in system and basis size). 
+	\begin{itemize}
+		\item Molecular Electronic-Structure Theory - Helgaker. 2000 isbn: 0-471-96755-6.
+	\end{itemize}
+	\item The related Confguration Interaction (CI) and Coupled Cluster (CC) approaches both truncate the FCI expansion of Slater determinants, thus gaining speed but loosing some accuracy.
+	\begin{itemize}
+		\item S. Kvaal. Lecture notes for FYS-KJM4480. Lecture notes. Sept. 2017
+		\item I. Shavitt and R.J. Bartlett. Many-Body Methods in Chemistry and Physics. MBPT and Coupled-Cluster Theory. Cambridge University Press, 2009. isbn: 0-521- 81832-X
+	\end{itemize}
+	\item Diffusion Monte Carlo (DMC) techniques can in principle provide the exact solution to the SE by imaginary-time evolution of an initial wave function guess
+	\begin{itemize}
+		\item M. Hjorth-Jensen. Computational Physics. Lecture notes. Aug. 2015. url: https: //github.com/CompPhysics/ComputationalPhysics/blob/master/doc/Lectures/ lectures2015.pdf .
+		\item B.L. Hammond, W.A. Lester Jr., and P.J. Reynolds. Monte Carlo Methods in Ab Initio Quantum Chemistry. Wspc, 1994. isbn: 981-02-0322-5.
+	\end{itemize}
+	\item In practice, DMC methods are highly dependent on this ansatz and thus require as input the results of less accurate method but faster methods. One example may be the Variational Monte Carlo (VMC) method: conceptually simpler and faster than DMC, but not as accurate
+	\begin{itemize}
+		\item B.L. Hammond, W.A. Lester Jr., and P.J. Reynolds. Monte Carlo Methods in Ab Initio Quantum Chemistry. Wspc, 1994. isbn: 981-02-0322-5.
+		\item Harold Conroy. “Molecular Schrodinger Equation. II. Monte Carlo Evaluation of Integrals”. In: The Journal of Chemical Physics 41.5 (1964), pp. 1331–1335. doi: 10.1063/1.1726069. eprint: https://doi.org/10.1063/1.1726069. url: https://doi.org/10.1063/1.1726069.
+		\item J.B. Anderson. Quantum Monte Carlo. Origins, Development, Applications. Ox- ford University Press, 2007. isbn: 0-19-531010-1.
+	\end{itemize}
+	\item The Hartree-Fock (HF) framework—which provides an e cient but not enormously accurate result—has seen extensive use since its inception in 1930
+	\begin{itemize}
+		\item D. R. Hartree. “The Wave Mechanics of an Atom with a Non-Coulomb Central Field. Part I. Theory and Methods”. In: Mathematical Proceedings of the Cam- bridge Philosophical Society 24.1 (1928), pp. 89–110. doi: 10.1017/S0305004100011919.
+		\item V. Fock. %“Näherungsmethode zur Lösung des quantenmechanischen Mehrkör- perproblems”. In: Zeitschrift für Physik 61.1 (Jan. 1930), pp. 126–148. issn: 0044-3328. doi: 10.1007/BF01340294. url: https://doi.org/10.1007/BF01340294.
+		\item A. Szabo and N.S. Ostlund. Modern Quantum Chemistry. Dover Publications, 1996. isbn: 0-486-69186-1.
+	\end{itemize}
+	\item However, by far the most popular approximation is Density Functional Theory (DFT), devel- oped by W. Kohn and L. J. Sham in 1965
+	\begin{itemize}
+		\item W. Kohn and L. J. Sham. “Self-Consistent Equations Including Exchange and Correlation E ects”. In: Phys. Rev. 140 (4A Nov. 1965), A1133–A1138. doi: 10. 1103/PhysRev.140.A1133. url: https://link.aps.org/doi/10.1103/PhysRev.140. A1133.
+		\item R.M. Martin. Electronic Structure. Cambridge University Press, 2004. isbn: 0- 521-53440-2.
+	\end{itemize}
+	Between 1980 and 2010, DFT was the most active  eld in physics with eight out of the top ten most cited papers being on the subject 
+	\begin{itemize}
+		\item Axel D. Becke. “Perspective: Fifty years of density-functional theory in chem- ical physics”. In: The Journal of Chemical Physics 140.18 (2014), 18A301. doi: 10.1063/1.4869598. eprint: https://doi.org/10.1063/1.4869598. url: https: //doi.org/10.1063/1.4869598.
+	\end{itemize}
+	\item Computational scaling of \textit{ab initio} QM models range from $\mathcal{O}(N!)$ in the extreme (FCI) via $\mathcal{O}(N^6)$ (CC with singles, doubles, and estimated connected triples) and $\mathcal{O}(N^4)$ (formal HF), to $\mathcal{O}(N^3)$ for Hatree-Fock with integral pre-screening and density fitting.
+	\begin{itemize}
+		\item Laura E. Ratcli  et al. “Challenges in large scale quantum mechanical calcu- lations”. In: Wiley Interdisciplinary Reviews: Computational Molecular Science 7.1 (2017). e1290, e1290–n/a. issn: 1759-0884. doi: 10.1002/wcms.1290. url: http://dx.doi.org/10.1002/wcms.1290.
+	\end{itemize}
+\end{itemize}
+
+\section{VMC}
+\subsection{Application of the variational principle}
+Molecular Electronic-Structure Theory - Helgaker. 2000 isbn: 0-471-96755-6.
+
+\section{All the other ones..}
+
+\section{Quantum Dot}
+
+\chapter{Statistical toolbox - inc methods shared by traditional and ML}
+\section{Building blocks}
+-the i.i.d. assumption, central limit theorem, how did this enter Mortens regression lectures, the thing i was wondering about
+-variance
+-covariance
+-correlation
+-autocorrelation - a type of cross-correlation
+-autocorrelation time, effective number of measurements (mortens vmc pdf)
+-time-displacement autocorrelation
+
+-Bayesian inference
+-Maximum Likelihood Estimation
+-Its relation to regression and least squares
+-Regression as the simplest form of supervised learning - laying the ground for DNNs in the ML chapter
+
+there is a Bayesian formulation of linear regression, the method is called MLE, and from it can be derived the least squares method (does this mean MLE more general than LS? or are they equal?)
+So the LS/regression cost function = the negative of the Bayesian log likelihood func
+
+\section{Sampling}
+\subsection{Markov Chain Monte Carlo}
+\subsection{Metropolis}
+ergodicity/detailed balance
+with and without "hastings"
+\subsubsection{Brute Force}
+\subsubsection{Importance Sampling}
+
+\subsection{Gibbs Sampling}
+\subsection{Blocking}
+
+\section{Optimization}
+\subsection{Gradient Descent}
+\subsubsection{Variations}
+\subsection{Second order}
+
+
+
+\chapter{Machine learning}
+\section{Overview}
+\section{Regression etc etc}
+\section{DNNs - getting to neural networks}
+This function can be represented in the form of a network diagram as shown in Figure 5.1. The process of evaluating (5.7) can then be interpreted as a forward propagation of information through the network. It should be emphasized that these diagrams do not represent probabilistic graphical models of the kind to be consid- ered in Chapter 8 because the internal nodes represent deterministic variables rather than stochastic ones. For this reason, we have adopted a slightly different graphical notation for the two kinds of model. We shall see later how to give a probabilistic interpretation to a neural network.
+http://users.isr.ist.utl.pt/~wurmd/Livros/school/Bishop%20-%20Pattern%20Recognition%20And%20Machine%20Learning%20-%20Springer%20%202006.pdf
+\cite{Bishop2006} (used in the german master's thesis)
+
+
+\section{Discriminative vs Generative}
+Basically: want generative because we want to be able to sample.
+
+Generative or Discriminative? Getting the Best of Both Worlds. Bruk denne !!!
+%https://pdfs.semanticscholar.org/fcd8/9e702a15b67abbec1b4d81584d812f79dfda.pdf?_ga=2.136588272.1961892878.1525605616-1442489588.1525605616
+
+DEEP DISCRIMINATIVE AND GENERATIVE MODELS FOR PATTERN RECOGNITION
+https://pdfs.semanticscholar.org/cea9/c5f7117b3db7e62f35b4d290cfb84ddd7ba3.pdf
+
+Generative classifiers learn a model of the joint prob, $p(x,y)$, of the inputs $x$ and the label $y$, and make their predictions by using Bayes rules to calc $p(y|x)$, and then picking the most likely label $y$. Discriminative classifiers model the posterior $p(y|x)$ directly, or learn a direct map from inputs $x$ to the class labels. 
+https://ai.stanford.edu/~ang/papers/nips01-discriminativegenerative.pdf
+
+
+
+\section{Graphical models - undirected=Bayesian networks(=belief networks, causal networks), directed=Markov networks (=Markov random fields)}
+Literature:
+Murphy and
+http://users.isr.ist.utl.pt/~wurmd/Livros/school/Bishop%20-%20Pattern%20Recognition%20And%20Machine%20Learning%20-%20Springer%20%202006.pdf
+\cite{Bishop2006} (used in the german master's thesis)
+
+and this article
+
+Exponential Family Harmoniums
+with an Application to Information Retrieval
+https://www.ics.uci.edu/~welling/publications/papers/GenHarm3.pdf
+
+\subsection{Energy based (=a type of MRF?)}
+
+http://yann.lecun.com/exdb/publis/pdf/lecun-06.pdf
+
+\subsection{Random Markov Fields}
+\begin{itemize}
+	\item Connection to \textbf{hopfield networks} (introduced around 80ies, binary nodes) (a type of MRF). Unlike BM, units not stochastic.
+	\item In probability theory and related fields, a \textbf{stochastic or random process} is a mathematical object usually defined as a collection of random variables. Historically, the random variables were associated with or indexed by a set of numbers, usually viewed as points in time, giving the interpretation of a stochastic process representing numerical values of some system randomly changing over time
+	\item A \textbf{random field} is a generalization of a stochastic process such that the underlying parameter need no longer be a simple real or integer valued "time", but can instead take values that are multidimensional vectors, or points on some manifold.
+	At its most basic, discrete case, a random field is a list of random numbers whose indices are identified with a discrete set of points in a space (for example, n-dimensional Euclidean space). When used in the natural sciences, values in a random field are often spatially correlated in one way or another. In its most basic form this might mean that adjacent values (i.e. values with adjacent indices) do not differ as much as values that are further apart. This is an example of a covariance structure, many different types of which may be modeled in a random field. More generally, the values might be defined over a continuous domain, and the random field might be thought of as a "function valued" random variable.
+	\item \textbf{Markov random fields} 
+	In the domain of physics and probability, a Markov random field (often abbreviated as MRF), Markov network or undirected graphical model is a set of random variables having a Markov property described by an undirected graph. In other words, a random field is said to be a Markov random field if it satisfies Markov properties.
+
+	A Markov network or MRF is similar to a Bayesian network in its representation of dependencies; the differences being that Bayesian networks are directed and acyclic, whereas Markov networks are undirected and may be cyclic. Thus, a Markov network can represent certain dependencies that a Bayesian network cannot (such as cyclic dependencies); on the other hand, it can't represent certain dependencies that a Bayesian network can (such as induced dependencies). The underlying graph of a Markov random field may be finite or infinite.
+
+	When the joint probability density of the random variables is strictly positive, it is also referred to as a Gibbs random field, because, according to the Hammersley–Clifford theorem, it can then be represented by a Gibbs measure for an appropriate (locally defined) energy function. The prototypical Markov random field is the Ising model; indeed, the Markov random field was introduced as the general setting for the Ising model.
+
+	The foundations of the theory of Markov random fields may be dound in Preston (1974) and Spitzer (1971). The concept of an MRF came from attempts to put into a general probabilistic setting a very specified model named after the German phycisist Ernst Ising, a student of Lenz. Ising published his results in 1925 while a paper by Lenz in 1920 gave a sketchy idea of the model.
+	\item An RMF is a type of Product of Experts
+	\item A BM is a type of RMF
+\end{itemize}
+
+Boltzmann Machines are networks just like neural nets and have units that are very similar to Perceptrons, but instead of computing an output based on inputs and weights, each unit in the network can compute a probability of it having a value of 1 or 0 given the values of connected units and weights. The units are therefore stochastic - they behave according to a probability distribution, rather than in a known deterministic way. 
+
+
+In order to establish the framework in which to introduce the Boltzmann Machine in the next section, we need to leave this one off with having introduced the general form of a Random Markov Field. In order to then show the BM in next chapter on this form.
+
+Long section from http://users.isr.ist.utl.pt/~wurmd/Livros/school/Bishop%20-%20Pattern%20Recognition%20And%20Machine%20Learning%20-%20Springer%20%202006.pdf
+\cite{Bishop2006} follows below.
+
+We turn now to the second ma- jor class of graphical models that are described by undirected graphs and that again specify both a factorization and a set of conditional independence relations.
+A Markov random field, also known as a Markov network or an undirected graphical model (Kindermann and Snell, 1980), has a set of nodes each of which corresponds to a variable or group of variables, as well as a set of links each of which connects a pair of nodes. The links are undirected, that is they do not carry arrows. In the case of undirected graphs, it is convenient to begin with a discussion of conditional independence properties.
+
+Let us denote a clique by $C$ and the set of variables in that clique by $\bm{x}_C$. Then the joint distribution is written as a product of \textit{potential functions} $\phi$ over the maximal cliques of the graph
+\begin{align}
+	p(\bm{x}) = \frac{1}{Z} \prod_C \phi_C (\bm{x}_C)
+\end{align} 
+where $Z$, sometimes called the \textit{partition function}, is a normalization constant given by
+\begin{align}
+	Z = \sum_{\bm{x}} \prod_C \phi_C (\bm{x}_C)
+\end{align}
+By considering only potential functions which satisfy $\phi_C (\bm{x}_C) \geq 0$ we ensure that $p(\bm{x}) \geq 0$. Here $\bm{x}$ assumed to comprise discrete variables, but it can also be continuous or a combination of the two, given that the summation in $Z$ is replaced by the appropriate combination of summation and integration.
+
+The presence of this normalization constant is one of the major limitations of undirected graphs. If we have a model with $M$ discrete nodes each having $K$ states, then the evaluation of the normalization term involves summing over $K^M$ states and so (in the worst case) is exponential in the size of the model. 
+
+Have so far
+\begin{enumerate}
+	\item Discussed the notion of conditional independence based on simple graph separation
+	\item Proposed a factorization of the joint distribution that is intended to correspond to this conditional independence structure
+\end{enumerate}
+In order to make a formal connection/ precise relationship between factorization for undirected graphs and conditional independence we need to restrict attention to potential functions $\phi_C (\bm{x}_C)$ that are \textit{strictly} positive.
+
+Define
+\begin{itemize}
+	\item $\mathcal{U I}$ = the set of \textit{all possible distributions defined over a fixed set of variables corresponding to the nodes of a particular undirected graph} that are consistent with the set of conditional independence statements that can be read from the graph using graph separation.
+	\item $\mathcal{U F}$ = the set of \textit{all possible distributions defined over a fixed set of variables corresponding to the nodes of a particular undirected graph} that can be expressed as a factorization of the form presented above with respect to the maximal cliques of the graph. 
+\end{itemize}
+The Hammersley-Clifford theorem (Clifford, 1990) states that the sets $\mathcal{U I}$ and $\mathcal{U F}$ are identical.
+
+Because we are restricted to potential functions which are strictly positive it is convenient to express them as exponentials, so that
+\begin{align}
+	\phi_C (\bm{x}_C) = e^{-E_C(\bm{x}_C)}
+\end{align}
+
+where $E(\bm{x}_C)$ is called an \textit{energy function}, and the exponential representation is called the \textit{Boltzmann distribution}. The joint distribution is defined as the product of potentials, and so the total energy is obtained by adding the energies of each of the maximal cliques.
+
+The joint distribution is then
+\begin{align}
+	p(\bm{x}) =& \frac{1}{Z} \prod_C \phi_C (\bm{x}_C) \nonumber \\
+	=& \frac{1}{Z} \prod_C e^{-E_C(\bm{x}_C)} \nonumber \\
+	=& \frac{1}{Z} e^{-\sum_C E_C(\bm{x}_C)} \nonumber \\
+	=& \frac{1}{Z} e^{-E(\bm{x})}
+\end{align} 
+
+The set of random variables $\bm{x}$ then forms a Markov random field with respect to $G$ (the undirected graph to which the set of cliques $C$ belong). 
+
+
+
+
+
+
+\chapter{The Restricted Boltzmann Machine}
+
+\section{The Boltzmann Machine}
+
+Necessity of hidden units, free energy, relation to logistic regression. \cite{Osogami2017}
+
+A general energy expression
+\begin{align}
+	E_{BM}(\bm{x}, \bm{h}) =& - \sum_{i, k}^{M, K} a_i^k \alpha_i^k (x_i)
+	- \sum_{j, l}^{N, L} b_j^l \beta_j^l (h_j) 
+	- \sum_{i,j,k,l}^{M,N,K,L} \alpha_i^k (x_i) w_{ij}^{kl} \beta_j^l (h_j) \nonumber \\
+	&- \sum_{i, m=i+1, k}^{M, M, K} \alpha_i^k (x_i) v_{im}^k \alpha_m^k (x_m)
+	- \sum_{j,n=j+1,l}^{N,N,L} \beta_j^l (h_j) u_{jn}^l \beta_n^l (h_n)
+\end{align}
+with
+\begin{itemize}
+	\item $\alpha_i^k (x_i), \beta_j^l (h_j) $= One dimensional transfer functions, mapping a given input value to a desired feature value. They are sufficient statistics of the model and can be arbitrary non-parametrized functions of the input variable $x_i$ or $h_j$ respectively, but they need to be independent of the parametrization.
+	\item $k, l $= These indices denote there can be multiple transfer funcs pr variable.
+	\item $a_i^k,  b_j^l$= appear in the first and second term which only depends ont he visible and hidden units respectively. Thus they could be interpreted as the corresponding visible and hidden bias respectively.
+	\item $w_{ij}^{kl}$ = inter layer connection term, connects the visible and hidden bias, respectively.
+	\item $ v_{im}^k, u_{jn}^l$ = intra layer connection terms, connecting the visible units to each other, and the hidden units to each other, respectively.
+\end{itemize}
+
+\subsection{Restricted Boltzmann Machines}
+\subsubsection{Energy Function}
+OBS: from the high bias - low variance review: the free-energy of the marginalized probability shows the modeling of higher order interactions.
+
+The Boltzmann machine is restricted by removing intra layer connections, meaning nodes within the same layer are conditionally independent. This is done setting $v_{im}$ and $u_{jn}$ to zero. The structure is then a bipartite graph. The expression for the energy of the RBM is then
+\begin{align}
+	E_{RBM}(\bm{x}, \bm{h}) = - \sum_{i, k}^{M, K} a_i^k \alpha_i^k (x_i)
+	- \sum_{j, l}^{N, L} b_j^l \beta_j^l (h_j) 
+	- \sum_{i,j,k,l}^{M,N,K,L} \alpha_i^k (x_i) w_{ij}^{kl} \beta_j^l (h_j)
+\end{align}
+
+%\subsubsection{Joint Probability Density Function}
+
+\subsubsection{Marginal Probability Density Functions}
+\begin{align}
+	P_{RBM} =& \int P_{RBM} (\bm{x}, \tilde{\bm{h}}) \dif \tilde{\bm{h}} \nonumber \\
+	=& \frac{1}{Z_{RBM}} \int e^{-E_{RBM} (\bm{x}, \tilde{\bm{h}}) } \dif \tilde{\bm{h}} \nonumber \\
+	=& \frac{1}{Z_{RBM}} \int e^{\sum_{i, k} a_i^k \alpha_i^k (x_i)
+	+ \sum_{j, l} b_j^l \beta_j^l (\tilde{h}_j) 
+	+ \sum_{i,j,k,l} \alpha_i^k (x_i) w_{ij}^{kl} \beta_j^l (\tilde{h}_j)} 
+	\dif \tilde{\bm{h}} \nonumber \\
+	=& \frac{1}{Z_{RBM}} e^{\sum_{i, k} a_i^k \alpha_i^k (x_i)}
+	\int \prod_j^N e^{\sum_l b_j^l \beta_j^l (\tilde{h}_j) 
+	+ \sum_{i,k,l} \alpha_i^k (x_i) w_{ij}^{kl} \beta_j^l (\tilde{h}_j)} \dif \tilde{\bm{h}} \nonumber \\
+	=& \frac{1}{Z_{RBM}} e^{\sum_{i, k} a_i^k \alpha_i^k (x_i)}
+	\biggl( \int e^{\sum_l b_1^l \beta_1^l (\tilde{h}_1) + \sum_{i,k,l} \alpha_i^k (x_i) w_{i1}^{kl} \beta_1^l (\tilde{h}_1)} \dif  \tilde{h}_1 \nonumber \\
+	& \times \int e^{\sum_l b_2^l \beta_2^l (\tilde{h}_2) + \sum_{i,k,l} \alpha_i^k (x_i) w_{i2}^{kl} \beta_2^l (\tilde{h}_2)} \dif  \tilde{h}_2 \nonumber \\
+	& \times ... \nonumber \\
+	& \times \int e^{\sum_l b_N^l \beta_N^l (\tilde{h}_N) + \sum_{i,k,l} \alpha_i^k (x_i) w_{iN}^{kl} \beta_N^l (\tilde{h}_N)} \dif  \tilde{h}_N \biggr) \nonumber \\
+	=& \frac{1}{Z_{RBM}} e^{\sum_{i, k} a_i^k \alpha_i^k (x_i)}
+	\prod_j^N \int e^{\sum_l b_j^l \beta_j^l (\tilde{h}_j) + \sum_{i,k,l} \alpha_i^k (x_i) w_{ij}^{kl} \beta_j^l (\tilde{h}_j)}  \dif \tilde{h}_j
+\end{align}
+
+Similarly
+\begin{align}
+	P_{RBM} (\bm{h}) =& \frac{1}{Z_{RBM}} \int e^{-E_{RBM} (\tilde{\bm{x}}, \bm{h})} \dif \tilde{\bm{x}} \nonumber \\
+	=& \frac{1}{Z_{RBM}} e^{\sum_{j, l} b_j^l \beta_j^l (h_j)}
+	\prod_i^M \int e^{\sum_k a_i^k \alpha_i^k (\tilde{x}_i)
+	+ \sum_{j,k,l} \alpha_i^k (\tilde{x}_i) w_{ij}^{kl} \beta_j^l (h_j)} \dif \tilde{x}_i
+\end{align}
+
+\subsubsection{Conditional Probability Density Functions}
+Using Bayes theorem:
+\begin{align}
+	P_{RBM} (\bm{h}|\bm{x}) =& \frac{P_{RBM} (\bm{x}, \bm{h})}{P_{RBM} (\bm{x})} \nonumber \\
+	=& \frac{\frac{1}{Z_{RBM}} e^{\sum_{i, k} a_i^k \alpha_i^k (x_i)
+	+ \sum_{j, l} b_j^l \beta_j^l (h_j) 
+	+ \sum_{i,j,k,l} \alpha_i^k (x_i) w_{ij}^{kl} \beta_j^l (h_j)}}
+	{\frac{1}{Z_{RBM}} e^{\sum_{i, k} a_i^k \alpha_i^k (x_i)}
+	\prod_j^N \int e^{\sum_l b_j^l \beta_j^l (\tilde{h}_j) + \sum_{i,k,l} \alpha_i^k (x_i) w_{ij}^{kl} \beta_j^l (\tilde{h}_j)}  \dif \tilde{h}_j} \nonumber \\
+	=& \prod_j^N \frac{e^{\sum_l b_j^l \beta_j^l (h_j) + \sum_{i,k,l} \alpha_i^k (x_i) w_{ij}^{kl} \beta_j^l (h_j)} }
+	{\int e^{\sum_l b_j^l \beta_j^l (\tilde{h}_j) + \sum_{i,k,l} \alpha_i^k (x_i) w_{ij}^{kl} \beta_j^l (\tilde{h}_j)}  \dif \tilde{h}_j}
+\end{align}
+Similarly
+\begin{align}
+	P_{RBM} (\bm{x}|\bm{h}) =&  \frac{P_{RBM} (\bm{x}, \bm{h})}{P_{RBM} (\bm{h})} \nonumber \\
+	=& \prod_i^M \frac{e^{\sum_k a_i^k \alpha_i^k (x_i)
+	+ \sum_{j,k,l} \alpha_i^k (x_i) w_{ij}^{kl} \beta_j^l (h_j)}}
+	{\int e^{\sum_k a_i^k \alpha_i^k (\tilde{x}_i)
+	+ \sum_{j,k,l} \alpha_i^k (\tilde{x}_i) w_{ij}^{kl} \beta_j^l (h_j)} \dif \tilde{x}_i}
+\end{align}
+
+
+\subsection{Binary-Binary Restricted Boltzmann Machines}
+\subsubsection{Energy Function}
+\subsubsection{Joint Probability Density Function}
+\subsubsection{Marginal Probability Density Functions}
+\subsubsection{Conditional Probability Density Functions}
+
+\subsection{Gaussian-Binary Restricted Boltzmann Machines}
+\subsubsection{Energy Function}
+We derive this from the general RBM by using $K=3$ and $L=1$ and setting the transfer functions 
+\begin{align}
+	\alpha_i^1 (x_i) &= -x_i^2 , \\
+	\alpha_i^2 (x_i) &= x_i , \\
+	\alpha_i^3 (x_i) &= 1 , \\
+	\beta_j^1 (h_j) &= h_j , \\
+\end{align}
+and the parameters to
+\begin{align}
+	a_i^1 &= \frac{1}{2\sigma_i^2} , \\
+	a_i^2 &= \frac{a_i}{\sigma_i^2} , \\ 
+	a_i^3 &= -\frac{a_i^2}{2\sigma_i^2} , \\
+	b_j^1 &= b_j , \\
+	w_{ij}^{11} &= 0 , \\
+	w_{ij}^{21} &= \frac{w_{ij}}{\sigma_i^2} , \\
+	w_{ij}^{31} &= 0
+\end{align}
+
+
+Inserting this into $E_{RBM}(\bm{x},\bm{h})$ results in the energy
+\begin{align}
+	E_{GB}(\bm{x}, \bm{h}) =& \sum_i^M \frac{(x_i - a_i)^2}{2\sigma_i^2}
+	- \sum_j^N b_j h_j 
+	-\sum_{ij}^{M,N} \frac{x_i w_{ij} h_j}{\sigma_i^2} \nonumber \\
+	=& \norm*{\frac{\bm{x} -\bm{a}}{2\bm{\sigma}}}^2 - \bm{b}^T \bm{h} 
+	- (\frac{\bm{x}}{\bm{\sigma}^2})^T \bm{W}\bm{h}
+\end{align}
+
+\subsubsection{Joint Probability Density Function}
+The energy results in the joint probability
+\begin{align}
+	P_{GB} (\bm{x}, \bm{h}) =& \frac{1}{Z_{GB}} e^{-\norm*{\frac{\bm{x} -\bm{a}}{2\bm{\sigma}}}^2 + \bm{b}^T \bm{h} 
+	+ (\frac{\bm{x}}{\bm{\sigma}^2})^T \bm{W}\bm{h}} \nonumber \\
+	=& \frac{1}{Z_{GB}} e^{- \sum_i^M \frac{(x_i - a_i)^2}{2\sigma_i^2}
+	+ \sum_j^N b_j h_j 
+	+\sum_{ij}^{M,N} \frac{x_i w_{ij} h_j}{\sigma_i^2}} \nonumber \\
+	=& \frac{1}{Z_{GB}} \prod_{ij}^{M,N} e^{\frac{(x_i - a_i)^2}{2\sigma_i^2}
+	- b_j h_j 
+	-\frac{x_i w_{ij} h_j}{\sigma_i^2}} \nonumber \\
+	=& \frac{1}{Z_{GB}} \prod_{ij}^{M,N} \phi_{GB_{ij}} (x_i, h_j)
+\end{align}
+with the partition function
+\begin{align}
+	Z_{GB} =& \int \sum_{\tilde{\bm{h}}}^{\tilde{\bm{H}}} e^{-\norm*{\frac{\tilde{\bm{x}} -\bm{a}}{2\bm{\sigma}}}^2 + \bm{b}^T \tilde{\bm{h}} 
+	+ (\frac{\tilde{\bm{x}}}{\bm{\sigma}^2})^T \bm{W}\tilde{\bm{h}}} \dif \tilde{\bm{x}} \nonumber \\
+	=& \int \sum_{\tilde{\bm{h}}}^{\tilde{\bm{H}}} \prod_{ij}^{M, N} \phi_{GB_{ij}} (\tilde{x}_i, \tilde{h}_j) \dif \tilde{\bm{x}}
+\end{align}
+
+
+\subsubsection{Marginal Probability Density Functions}
+\begin{align}
+	P_{GB} (\bm{x}) =& \sum_{\tilde{\bm{h}}}^{\tilde{\bm{H}}} P_{GB} (\bm{x}, \tilde{\bm{h}}) \nonumber \\
+	=& \frac{1}{Z_{GB}} \sum_{\tilde{\bm{h}}}^{\tilde{\bm{H}}} 
+	e^{-\norm*{\frac{\bm{x} -\bm{a}}{2\bm{\sigma}}}^2 + \bm{b}^T \tilde{\bm{h}} 
+	+ (\frac{\bm{x}}{\bm{\sigma}^2})^T \bm{W}\tilde{\bm{h}}} \nonumber \\
+	=& \frac{1}{Z_{GB}} e^{-\norm*{\frac{\bm{x} -\bm{a}}{2\bm{\sigma}}}^2}
+	\prod_j^N (1 + e^{b_j + (\frac{\bm{x}}{\bm{\sigma}^2})^T \bm{w}_{\ast j}} ) \nonumber \\
+\end{align}
+
+Furthermore we have, using the factorization property
+\begin{align}
+	P_{GB} (\bm{h}) =& \int P_{GB} (\tilde{\bm{x}}, \bm{h}) \dif \tilde{\bm{x}} \nonumber \\
+	=& \frac{1}{Z_{GB}} \int e^{-\norm*{\frac{\tilde{\bm{x}} -\bm{a}}{2\bm{\sigma}}}^2 + \bm{b}^T \bm{h} 
+	+ (\frac{\tilde{\bm{x}}}{\bm{\sigma}^2})^T \bm{W}\bm{h}} \dif \tilde{\bm{x}} \nonumber \\
+	=& \frac{1}{Z_{GB}} e^{\bm{b}^T \bm{h} } \int \prod_i^M
+	e^{- \frac{(\tilde{x}_i - a_i)^2}{2\sigma_i^2} + \frac{\tilde{x}_i \bm{w}_{i\ast}^T \bm{h}}{\sigma_i^2} } \dif \tilde{\bm{x}} \nonumber \\
+	=& \frac{1}{Z_{GB}} e^{\bm{b}^T \bm{h} }
+	\biggl( \int e^{- \frac{(\tilde{x}_1 - a_1)^2}{2\sigma_1^2} + \frac{\tilde{x}_1 \bm{w}_{1\ast}^T \bm{h}}{\sigma_1^2} } \dif \tilde{x}_1 \nonumber \\
+	& \times \int e^{- \frac{(\tilde{x}_2 - a_2)^2}{2\sigma_2^2} + \frac{\tilde{x}_2 \bm{w}_{2\ast}^T \bm{h}}{\sigma_2^2} } \dif \tilde{x}_2 \nonumber \\
+	& \times ... \nonumber \\
+	&\times \int e^{- \frac{(\tilde{x}_M - a_M)^2}{2\sigma_M^2} + \frac{\tilde{x}_M \bm{w}_{M\ast}^T \bm{h}}{\sigma_M^2} } \dif \tilde{x}_M \biggr) \nonumber \\
+	=& \frac{1}{Z_{GB}} e^{\bm{b}^T \bm{h}} \prod_i^M
+	\int e^{- \frac{(\tilde{x}_i - a_i)^2 - 2\tilde{x}_i \bm{w}_{i\ast}^T \bm{h}}{2\sigma_i^2} } \dif \tilde{x}_i \nonumber \\
+	=& \frac{1}{Z_{GB}} e^{\bm{b}^T \bm{h}} \prod_i^M
+	\int e^{- \frac{\tilde{x}_i^2 - 2\tilde{x}_i(a_i + \tilde{x}_i \bm{w}_{i\ast}^T \bm{h}) + a_i^2}{2\sigma_i^2} } \dif \tilde{x}_i \nonumber \\
+	=& \frac{1}{Z_{GB}} e^{\bm{b}^T \bm{h}} \prod_i^M
+	\int e^{- \frac{\tilde{x}_i^2 - 2\tilde{x}_i(a_i + \bm{w}_{i\ast}^T \bm{h}) + (a_i + \bm{w}_{i\ast}^T \bm{h})^2 - (a_i + \bm{w}_{i\ast}^T \bm{h})^2 + a_i^2}{2\sigma_i^2} } \dif \tilde{x}_i \nonumber \\
+	=& \frac{1}{Z_{GB}} e^{\bm{b}^T \bm{h}} \prod_i^M
+	\int e^{- \frac{(\tilde{x}_i - (a_i + \bm{w}_{i\ast}^T \bm{h}))^2 - a_i^2 -2a_i \bm{w}_{i\ast}^T \bm{h} - (\bm{w}_{i\ast}^T \bm{h})^2 + a_i^2}{2\sigma_i^2} } \dif \tilde{x}_i \nonumber \\
+	=& \frac{1}{Z_{GB}} e^{\bm{b}^T \bm{h}} \prod_i^M
+	e^{\frac{2a_i \bm{w}_{i\ast}^T \bm{h} +(\bm{w}_{i\ast}^T \bm{h})^2 }{2\sigma_i^2}}
+	\int e^{- \frac{(\tilde{x}_i - a_i - \bm{w}_{i\ast}^T \bm{h})^2}{2\sigma_i^2}}
+	\dif \tilde{x}_i \nonumber \\
+	=& \frac{1}{Z_{GB}} e^{\bm{b}^T \bm{h}} \prod_i^M
+	\sqrt{2\pi \sigma_i^2}
+	e^{\frac{2a_i \bm{w}_{i\ast}^T \bm{h} +(\bm{w}_{i\ast}^T \bm{h})^2 }{2\sigma_i^2}}
+	\nonumber \\
+\end{align}
+
+Thus we can calculate the partition function, using factorization..?
+
+\subsubsection{Conditional Probability Density Functions}
+\begin{align}
+	P_{GB} (\bm{h}| \bm{x}) =& \frac{P_{GB} (\bm{x}, \bm{h})}{P_{GB} (\bm{x})} \nonumber \\
+	=& \frac{\frac{1}{Z_{GB}} e^{-\norm*{\frac{\bm{x} -\bm{a}}{2\bm{\sigma}}}^2 + \bm{b}^T \bm{h} 
+	+ (\frac{\bm{x}}{\bm{\sigma}^2})^T \bm{W}\bm{h}}}
+	{\frac{1}{Z_{GB}} e^{-\norm*{\frac{\bm{x} -\bm{a}}{2\bm{\sigma}}}^2}
+	\prod_j^N (1 + e^{b_j + (\frac{\bm{x}}{\bm{\sigma}^2})^T \bm{w}_{\ast j}} ) }
+	\nonumber \\
+	=& \prod_j^N \frac{e^{(b_j + (\frac{\bm{x}}{\bm{\sigma}^2})^T \bm{w}_{\ast j})h_j } }
+	{1 + e^{b_j + (\frac{\bm{x}}{\bm{\sigma}^2})^T \bm{w}_{\ast j}}} \nonumber \\
+	=& \prod_j^N P_{GB} (h_j|\bm{x})
+\end{align}
+
+Resulting in the probability of a particular hidden unit being activated or not being
+\begin{align}
+	P_{GB} (h_j =1 | \bm{x}) =& \frac{e^{b_j + (\frac{\bm{x}}{\bm{\sigma}^2})^T \bm{w}_{\ast j} } }
+	{1 + e^{b_j + (\frac{\bm{x}}{\bm{\sigma}^2})^T \bm{w}_{\ast j}}} \nonumber \\
+	&= \frac{1}{1 + e^{-b_j - (\frac{\bm{x}}{\bm{\sigma}^2})^T \bm{w}_{\ast j}}}
+\end{align}
+and
+\begin{align}
+	P_{GB} (h_j =0 | \bm{x}) =&
+	\frac{1}{1 + e^{b_j +(\frac{\bm{x}}{\bm{\sigma}^2})^T \bm{w}_{\ast j}}}
+\end{align}
+
+We further have
+\begin{align}
+	P_{GB} (\bm{x}|\bm{h})
+	=& \frac{P_{GB} (\bm{x}, \bm{h})}{P_{GB} (\bm{h})} \nonumber \\
+	=& \frac{\frac{1}{Z_{GB}} e^{-\norm*{\frac{\bm{x} -\bm{a}}{2\bm{\sigma}}}^2 + \bm{b}^T \bm{h} 
+	+ (\frac{\bm{x}}{\bm{\sigma}^2})^T \bm{W}\bm{h}}}
+	{\frac{1}{Z_{GB}} e^{\bm{b}^T \bm{h}} \prod_i^M
+	\sqrt{2\pi \sigma_i^2}
+	e^{\frac{2a_i \bm{w}_{i\ast}^T \bm{h} +(\bm{w}_{i\ast}^T \bm{h})^2 }{2\sigma_i^2}}}
+	\nonumber \\
+	=& \prod_i^M \frac{1}{\sqrt{2\pi \sigma_i^2}}
+	\frac{e^{- \frac{(x_i - a_i)^2}{2\sigma_i^2} + \frac{x_i \bm{w}_{i\ast}^T \bm{h}}{2\sigma_i^2} }}
+	{e^{\frac{2a_i \bm{w}_{i\ast}^T \bm{h} +(\bm{w}_{i\ast}^T \bm{h})^2 }{2\sigma_i^2}}}
+	\nonumber \\
+	=& \prod_i^M \frac{1}{\sqrt{2\pi \sigma_i^2}}
+	\frac{e^{-\frac{x_i^2 - 2a_i x_i + a_i^2 - 2x_i \bm{w}_{i\ast}^T\bm{h} }{2\sigma_i^2} } }
+	{e^{\frac{2a_i \bm{w}_{i\ast}^T \bm{h} +(\bm{w}_{i\ast}^T \bm{h})^2 }{2\sigma_i^2}}}
+	\nonumber \\
+	=& \prod_i^M \frac{1}{\sqrt{2\pi \sigma_i^2}}
+	e^{- \frac{x_i^2 - 2a_i x_i + a_i^2 - 2x_i \bm{w}_{i\ast}^T\bm{h}
+	+ 2a_i \bm{w}_{i\ast}^T \bm{h} +(\bm{w}_{i\ast}^T \bm{h})^2}
+	{2\sigma_i^2} }
+	\nonumber \\
+	=& \prod_i^M \frac{1}{\sqrt{2\pi \sigma_i^2}}
+	e^{ - \frac{(x_i - b_i - \bm{w}_{i\ast}^T \bm{h})^2}{2\sigma_i^2}} \nonumber \\
+	=& \prod_i^M \mathcal{N}
+	(x_i | b_i + \bm{w}_{i\ast}^T \bm{h}, \sigma_i^2)
+\end{align}
+
+\subsection{Gaussian-something continuous RBM?}
+
+\section{Training the RBM}
+\subsection{Sampling}
+\subsection{Cost function}
+\subsection{Optimization}
+\subsection{Kullback-Leibler Divergence}
+
+\section{The Restricted Boltzmann Machine - References}
+
+\subsection{The history}
+
+\begin{itemize}
+	\item \textbf{Summary from}
+	\begin{itemize}
+		\item \textbf{2004 Welling, Rosen-Zvi, Hinton: Exponential Family Harmoniums with an Application to Information Retrieval} \cite{Welling2005}
+\end{itemize}
+	\item First introcued in
+	\begin{itemize}
+		\item 1986 Smolensky: Harmoniums (Information processing in dynamical systems: foundations of harmony theory) \cite{Smolensky1986}
+	\end{itemize}
+	\item Later papers have studied it under various names:
+	\begin{itemize}
+		\item 1992 Y Freund, D Haussler: The combination machine (Unsupervised learning of distributions of binary vectors using 2-layer networks) \cite{Freund1992}
+		\item 2002 Hinton: The RBM (Training product of experts by minimizing contrastive divergence) \cite{Hinton2002}
+	\end{itemize}
+\end{itemize}
+
+\subsection{Gaussian-Binary RBM history}
+
+\begin{itemize}
+	\item \textbf{Summary from}
+	\begin{itemize}
+		\item \textbf{2017: Wang, Melchior, Wiskott: Gaussian-binary Restricted Boltzmann Machines on Modeling Natural Image Statistics} \cite{Melchior2017}
+\end{itemize}
+	\item First proposed by
+	\begin{itemize}
+		\item 2004 Welling, Rosen-Zvi, Hinton: Exponential Family Harmoniums with an Application to Information Retrieval \cite{Welling2005}
+	\end{itemize}
+	\item A common choice når man trenger cont visibles, ref
+	\begin{itemize}
+		\item 2009 A. Krizhevsky: Learning multiple layers of features from tiny images (master's thesis) \cite{Krizhevsky2009}
+		\item 2011 Cho, Ilin, Raiko: Improved learning of gaussian-bernoulli restricted boltzmann machines \cite{Cho2011}
+	\end{itemize}
+	\item Training known to be hard, modifiactions to improve it proposed by:
+	\begin{itemize}
+		\item 2007 Lee, Ekanadham, Ng: Used a sparse penalty during training, allowing them to learn meaningful features from natural image patches (Sparse deep belief net model for visual area v2) \cite{Lee2008}
+		\item 2009 A. Krizhevsky: Trained GRBMs on natural images and concluded the difficulties are mainly due to the existence of high-frequency noise in the images, which further prevents the model from learning the important structures. (referenced above) \cite{Krizhevsky2009}
+		\item 2011 Theis, Gerwinn, Sinz, Bethge: Illustrates that in terms of likelihood estimation GRBMs are already outperformed by simple mixture models. (In all likelihood, deep belief is not enough) \cite{Theis2011}
+		\item Focus on improving the model in the view of generative models
+		\begin{itemize}
+			\item 2010 Ranzato, Krizhevsky, Hinton: Factored 3-way restricted boltzmann machines for modeling natural images \cite{Ranzato2010}
+			\item 2010 Ranzato, Hinton: Modeling pixel means and covariances using factorized third-order boltzmann machines \cite{Ranzato2010a}
+			\item 2011 Courville, Bergstra, Bengio: A spike and slab restricted boltzmann machine \cite{Courville2011}
+			\item 2011 Le Roux, Heess, Shotton, Winn: Learning a generative model of images by factoring appearance and shape \cite{LeRoux2011}
+		\end{itemize}
+		\item 2011 Cho, Ilin, Raiko: Suggested the failure of GRBMs is due to the training algo and proposed some modifications to overcome the difficulties encountered in training GRBMs (referenced above) \cite{Cho2011}
+	\end{itemize}
+	\item All these studies have shown the failures of GRBMs empirically, but to our knowledge there is no analysis of GRBMs apart from out preliminary work:
+	\begin{itemize}
+		\item 2012 Wang, Melchior, Wiskott: (An analysis of gaussian-binary boltzmann machines for natural image) \cite{Wang2012}
+	\end{itemize}
+	which accounts the reasons behind these failiures. In this paper, we extend our work in which we consider GRBMs from the perspective of density models, i.e. how well the model learns the dist of the data.
+	\item We show an GB-RBM can be regarded as a mixture of Gaussians, which has already been mentioned briefly in previous studies:
+	\begin{itemize}
+		\item 2009 Bengio: Learning deep architectures for AI \cite{Bengio2009}
+		\item 2011 Theis, Gerwinn, Sinz, Bethge: referenced above \cite{Theis2011}
+		\item 2011 Courville, Bergstra, Bengio: referenced above \cite{Courville2011}
+	\end{itemize}
+	but has gone unheeded. This formulation makes clear that GRBMs are quite limited in the way they can represent data. However we argue this fact does not necessarily prevent the model from learning the statistical structure in the data. 
+	\item We present successful training of GRBMs both on a two-dimensional blind source separation problem and natural image patches, and that the results are comparable to that of independent component analysis (ICA). 
+	\item Based on our analysis we propose several training recipes, which allowed successful and fast training in our experiments. 
+	\item Finally, we discuss the relationship between GRBMs and above mentioned modifications of the model.
+\end{itemize}
+
+
+\begin{itemize}
+	\item \textbf{Summary from}
+	\begin{itemize}
+		\item \textbf{2012 Melchoir: Learning natural image statistics with gaussian-binary restricted boltzmann machines (Master's thesis)} \cite{Melchior2012}
+\end{itemize}
+	\item A popular variant of RBM is GB-RBM
+	\begin{itemize}
+		\item 2004 Welling, Rosen-Zvi, Hinton: \cite{Welling2005} referenced above
+	\end{itemize}
+	\item Training difficulties
+	\begin{itemize}
+		\item 2010 Fischer, Igel: RBMs difficult to train (Markov-random-fields und boltzmann maschinen)
+		\item 2012 Wang, Melchior, Wiskott: This even more critical when using GB-RBMs (referenced above) \cite{Wang2012}
+	\end{itemize}
+	Several modifications proposed to overcome training difficulties
+	\begin{itemize}
+		\item 2007 Lee, Ekanadham, Ng: Added a sparseness penalty on the gradient that forced the model to prefer sparse representations and seems to help learning meaningful features (referenced above) \cite{Lee2008}
+		\item 2011 Cho, Ilin, Raiko: Suggested the training failure is due to the training algo and proposed several improvements to overcome the problem (referenced above) \cite{Cho2011}
+		\item 2009 A. Krizhevsky: Successfully trained a deep hierarchical network and concluded that a failure is mainly because of the existence of high-frequency noise in natural images, which prevents the model from learning the important structures. (referenced above) \cite{Krizhevsky2009}
+		\item Other approaches modified the model such that it is capable of modelling higher order statistics directly:
+		\begin{itemize}
+			\item 2011 Courville, Bergstra, Bengio: referenced above \cite{Courville2011}
+			\item 2010 Ranzato, Hinton: referenced above \cite{Ranzato2010a}
+			\item 2010 Ranzato, Krizhevsky, Hinton: referenced above \cite{Ranzato2010}
+		\end{itemize}
+		All modifications showed that BG-RBMs are in principle capable of learning features comparable to the receptive fields in the early primary visual cortex V1, but in practice this is difficult to achieve.
+		\item To derive a better understanding of the limitations of the model, the authors in
+		\begin{itemize}
+			\item 2011 Le Roux, Heess, Shotton, Winn: ref above \cite{LeRoux2011}
+		\end{itemize} 
+		evaluated its capabilities from the perspective of image reconstruction. In
+		\begin{itemize}
+			\item 2011 Theis, Gerwinn, Sinz, Bethge: ref above \cite{Theis2011}
+		\end{itemize} 
+		the likelihood of the model is compared to classical machine learning methods. Although the model has been analysed to show the failures empirically, there are few works accounting for the failure analytically.
+	\end{itemize}
+	\item Other interesting points made:
+	\begin{itemize}
+		\item 1986 Hinton, Sejnowski: The Boltzmann machine (Learning and relearning in boltzmann machines) \cite{Hinton1986}
+		\item 2006 Bishop: The BM is an undirected probabilistic graphical model (Pattern recognition  and Machine Learning, chapter 8) \cite{Bishop2006}
+		\item with stochastic continu- ous or discrete units. It is often interpreted as a stochastic recurrent neural network where the state of each unit depends on the units it is connected to. The original BM has a fully connected graph with binary units, which turns into a Hopfield net if we choose deterministic rather than stochastic units. But in contrast to Hopfield nets, a BM is a generative model that allows to generate new samples from the learned distribution.
+		\item 2009 Bengio: The BM's stackability allows for constructing deep networks \cite{Bengio2009} (ref above)
+		\item 2009 Krizhevsky: BMs popular in the field of feature extraction (ref above) \cite{Krizhevsky2009}
+		\item 2006 Hinton, Salakhutdinov: BMs popular in the field of dimensionality reduction (Reducing the dimensionality of data with neural networks. SCIENCE) \cite{Hinton2006}
+		\item 2006 Bishop: A BM is a special case of a Markov Random Field (MRF) \cite{Bishop2006} (ref above)
+		\item 2002 Hinton: An MRF is itself a special case of a Product of Experts (PoE) (ref above) \cite{Hinton2002}
+		\item 2010 Fischer, Igel: A PoE model with exponential experts = an MRF with input variables $\bm{x}$ and latent variables $\bm{h}$ - This is shown by the Hammersley-Clifford Theorem (=\textbf{The fundamental theorem of random fields}, a result that gives necessary and sufficient conditions under which a positive prob dist can be represented as a Markov network/Markov random field (Wikipedia)) (ref above)
+		\item While an MRF is a particular case of a PoE, a BM is an MRF with a particular energy function that leads to a complete undirected graph. This implies a fully connected network where the pairwise communication between two units is symmetrical.
+		\item 2010 Ranzato, Hinton: Can make even complexer BMs where more than two units interact, named higher order BMs (ref above) \cite{Ranzato2010a}
+		\item An important subclass of BMs having a restricted communication structure allows an efficient calculation of the conditional probabilities. So that fast inference is possible, which made restricted BMs become very popular over the last decade.
+		\item 1985 Ackley, Hinton, Sejnowski: The original definition of BMs. Here, visible and hidden units had binary values. (A learning algorithm for boltzmann machines) \cite{Ackley1985}
+		\item Discussion on options for making the visibles continuous, pros/cons of the options
+		\begin{itemize}
+			\item 2009 Larochelle, Bengio, Lourdaour, Lamblin: Truncated Exponential RBMs (Exploring strategies for training deep neural networks.)
+		\end{itemize}
+		\item GB-RBM: \textbf{We assume the visibles to be Gaussian distributed, and therefore, a distribution over} $\mathbb{R}$. Appereantly it's natural to assume continuous variables to be Gaussian distributed. But OK in my case????
+		\item 2006 Hinton, Salakhutdinov: The GB-RBM. (ref above - Reducing the dimensionality of data with neural networks) \cite{Hinton2006}
+		\item Presents GB-RBM energy function from the general RBM one, ending up with
+		\begin{align}
+			E^{GB} (\bm{x}, \bm{h}) 
+			=& \sum_i^N \frac{(x_i - a_i)^2}{2\sigma_i^2} - \sum_j^M b_j h_j - \sum_{i,j}^{N, M} \frac{x_i w_{ij} h_j}{\sigma_i^2} \\
+			=& \sum_i^N ||\frac{\bm{x} - \bm{b}}{2 \bm{\sigma}}||^2 - \bm{b}^T \bm{h} - (\frac{\bm{x}}{\sigma^2})^T \bm{W} \bm{h}
+		\end{align}
+		where the second equation is given in clearer matrix vector notation and the fraction bar denotes the component wise division.
+		\item Notice that there exists a slightly different formulation of the GB-RBM energy
+		\begin{itemize}
+			\item 2009 Krizhevsky: ref above \cite{Krizhevsky2009}
+		\end{itemize}
+		where the quadratic term uses $\sigma_i$ instead of $\sigma_i^2$. But as stated in
+		\begin{itemize}
+			\item 2011 Cho, Ilin, Raiko: ref above \ref{Cho2011}
+		\end{itemize}
+		this leads to a counter intuitive scaling of the conditional mean by $\sigma_i^2$, so that in this work a GB-RBM is always considered to be defined as above.
+		\item Parallel tempering: an algorithm that provides a fast mixing rate and surprisingly, we already know all concepts this algorithm is working with. First of all let us reconsider the PDF of MRFs (19) where we defined the temperature parameter $T \in [1, \infty)$,  which we discarded up to now. It scales the energy down, which leads to a regularization of the PDF’s manifold. This becomes clear if we think of that the energy is applied to an exponential function to calculate the probability. If we choose a big temperature the energy is scaled down, which leads to more equally distributed probabilities, due to nature of the exponential function.
+		Therefore, we can use the temperature to generate samples, which are distributed more homogeneously.
+		The idea of PT is to run several Markov chains on different temperatures. We start Gibbs sampling from the highest temperature where all samples have the same probability. While continuing the sampling procedure, the temperature is lowered, which has the effect that regions of higher density are coming up. If the decreasing of the temperatures is smooth enough, the samples will move to all regions of higher density. This generates samples that are likely from all modes of the distribution which is illustrated in Figure 12.
+	\end{itemize}
+	\item From the section Analysis of GB-RBMs
+	\begin{itemize}
+		\item In general, a profound understanding of a model, its capabilities and limitations, requires a clear understanding of how it models data. For probabilistic models like BMs, accordingly, we need to understand how the marginal probability distribution of the input data is structured.
+		\item \textbf{BB-RBM}: Figure 15 shows the marginal probability density $P^{BB} (\bm{x})$ of a BB-RBM with two visible units $x_1$, $x_2$ and two hidden units $h_1$, $h_2$. The two visible units can take the four possible states $\bm{x} \in \{ 0,1 \}^2$, which correspond to the four positions on the plain. The probability for each state, illustrated as cylinders depend on the product of the visible experts, $e_{x1}$, $e_{x2}$. The experts themselves, referring to (39) are sigmoid functions, which depend on the hidden units and the corresponding weights. The steepness of the experts’ sigmoid, controlled by the weights, defines how likely it is to switch from an active to an inactive state and vice versa. Figure 15 also implies that RBMs can be universal approximators
+		\begin{itemize}
+			\item 2008 Le Roux, Bengio: Representational power of restricted boltzmann machines and deep belief networks. \cite{LeRoux2008} 
+		\end{itemize}
+		Let $N$ be the number of visible units and $K \leq \{ 0,1 \}^N$ be the total number of states of the PDF we want to learn. We are able to model the distribution exactly if we have one hidden unit per visible state plus a bias unit, hence $M=2^N + 1$ hidden units.
+		\item Similar to the illustration for a BB-RBM we are able to illustrate the marginal PDF for a GB-RBM. Referring to (145), the experts marginal PDF has a rather unintuitive form where one expert is an unnormalized Gaussian with mean $\bm{b}$ and the other $M$ experts are the sum of the value of one and an exponential function. But we are able to derive a more intuitive formulation of the marginal PDF using the Bayes’theorem and the polynomial expansion as proposed in
+		\begin{itemize}
+			\item 2012 Wang, Melchior, Wiskott: ref above \cite{Wang2012}
+		\end{itemize}
+		so we get
+		\begin{align}
+			P(\bm{x}) &= \sum_{\bm{h}} P(\bm{x}|\bm{h}) P(\bm{h}) \\
+			&= \mathcal{N} (\bm{x}; \bm{b} + \bm{w}_{})
+		\end{align}
+	\end{itemize}
+\end{itemize}
+Melchior's rewriting of $P(x)$ as a Mixture of Gaussians written out for $M=2$ and $N=2$:
+\begin{align}
+	P(\bm{x}) =& \eta_0 \mathcal{N}(\bm{x}|\bm{b}, \bm{\sigma}^2)
+	+ \sum_{j=1}^{N=2} \eta_j \mathcal{N} (\bm{x}| \bm{b} + \bm{w}_j, \bm{\sigma}^2) \nonumber \\
+	&+ \sum_{j=1}^{N-1=1} \sum_{k>j}^{N=2} \eta_{jk} \mathcal{N} (\bm{x}|\bm{b}+\bm{w}_j + \bm{w}_k, \bm{\sigma}^2) \\
+	=& \eta_0 \mathcal{N}(\bm{x}|\bm{b}, \bm{\sigma}^2)
+	+ \eta_1 \mathcal{N} (\bm{x}| \bm{b} + \bm{w}_1, \bm{\sigma}^2)
+	+ \eta_2 \mathcal{N} (\bm{x}| \bm{b} + \bm{w}_2, \bm{\sigma}^2) \nonumber \\
+	&+ \eta_{12} \mathcal{N} (\bm{x}|\bm{b}+\bm{w}_1 + \bm{w}_2, \bm{\sigma}^2) \\
+	=& \eta_0 \mathcal{N}(x_1|b_1, \sigma_1^2)\mathcal{N}(x_2|b_2, \sigma_2^2) \nonumber \\
+	&+ \eta_1 \mathcal{N} (x_1| b_1 + w_{11}, \sigma_1^2)\mathcal{N} (x_2| b_2 + w_{21}, \sigma_2^2) \nonumber \\
+	&+ \eta_2 \mathcal{N} (x_1| b_1 + w_{12}, \sigma_1^2) \mathcal{N} (x_2| b_2 + w_{22}, \sigma_2^2) \nonumber \\
+	&+ \eta_{12} \mathcal{N} (x_1|b_1+ w_{11} + w_{12}, \sigma_1^2) \mathcal{N} (x_2|b_2+ w_{21} + w_{22}, \sigma_2^2) \\
+\end{align}
+where
+\begin{align}
+	\eta_0 =& \frac{(\sqrt{2\pi \sigma_i^2})^M}{Z} =  \frac{2\pi \sigma_i^2}{Z} \\
+	\eta_j =& \eta_0 e^{\frac{||\bm{b} + \bm{w}_j||^2 - ||\bm{b}||^2}{2\bm{\sigma}^2} + c_j} \\
+	\eta_{jk} =& \eta_0 e^{\frac{||\bm{b} + \bm{w}_j + \bm{w}_k||^2 - ||\bm{b}||^2}{2\bm{\sigma}^2} + c_j + c_k}
+\end{align}
+giving us
+\begin{align}
+	P(\bm{x}) =& \eta_0 \mathcal{N}(x_1|b_1, \sigma_1^2)\mathcal{N}(x_2|b_2, \sigma_2^2) \nonumber \\
+	&+ \eta_0 e^{\frac{||\bm{b} + \bm{w}_1||^2 - ||\bm{b}||^2}{2\bm{\sigma}^2} + c_1}
+	\mathcal{N} (x_1| b_1 + w_{11}, \sigma_1^2)\mathcal{N} (x_2| b_2 + w_{21}, \sigma_2^2) \nonumber \\
+	&+ \eta_0 e^{\frac{||\bm{b} + \bm{w}_2||^2 - ||\bm{b}||^2}{2\bm{\sigma}^2} + c_2}
+	 \mathcal{N} (x_1| b_1 + w_{12}, \sigma_1^2) \mathcal{N} (x_2| b_2 + w_{22}, \sigma_2^2) \nonumber \\
+	&+ \eta_0 e^{\frac{||\bm{b} + \bm{w}_1 + \bm{w}_2||^2 - ||\bm{b}||^2}{2\bm{\sigma}^2} + c_1 + c_2}
+	 \mathcal{N} (x_1|b_1+ w_{11} + w_{12}, \sigma_1^2) \mathcal{N} (x_2|b_2+ w_{21} + w_{22}, \sigma_2^2)  \\
+\end{align}
+Or write
+\begin{align}
+	\bm{\mu}_0 =& \bm{b} \\
+	\bm{\mu}_j =& \bm{b} + \bm{w}_j \\
+	\bm{\mu}_{jk} =& \bm{b} + \bm{w}_j + \bm{w}_k \\
+	\Rightarrow 
+	\eta_0 =& \frac{(\sqrt{2\pi \sigma_i^2})^M}{Z} =  \frac{2\pi \sigma_i^2}{Z} \\
+	\eta_j =& \eta_0 e^{\frac{||\bm{\mu}_j||^2 - ||\bm{b}||^2}{2\bm{\sigma}^2} + c_j} \\
+	\eta_{jk} =& \eta_0 e^{\frac{||\bm{\mu}_{jk}||^2 - ||\bm{b}||^2}{2\bm{\sigma}^2} + c_j + c_k}
+\end{align}
+then
+\begin{align}
+	P(\bm{x})=& \eta_0 \mathcal{N}(\bm{x}|\bm{b}, \bm{\sigma}^2)
+	+ \eta_1 \mathcal{N} (\bm{x}| \bm{b} + \bm{w}_1, \bm{\sigma}^2)
+	+ \eta_2 \mathcal{N} (\bm{x}| \bm{b} + \bm{w}_2, \bm{\sigma}^2) \nonumber \\
+	&+ \eta_{12} \mathcal{N} (\bm{x}|\bm{b}+\bm{w}_1 + \bm{w}_2, \bm{\sigma}^2) \\
+	=& \eta_0 \mathcal{N}(\bm{x}|\bm{\mu}, \bm{\sigma}^2)
+	+ \eta_1 \mathcal{N} (\bm{x}| \bm{\mu}_1, \bm{\sigma}^2)
+	+ \eta_2 \mathcal{N} (\bm{x}| \bm{\mu}_2, \bm{\sigma}^2) \nonumber \\ 
+	&+ \eta_{12} \mathcal{N} (\bm{x}|\bm{\mu}_{12}, \bm{\sigma}^2) \\
+	=& \eta_0 \mathcal{N}(\bm{x}|\bm{\mu}_0, \bm{\sigma}^2) \nonumber \\ 
+	&+ \eta_0 e^{\frac{||\bm{\mu}_1||^2 - ||\bm{b}||^2}{2\bm{\sigma}^2} + c_1} 
+	\mathcal{N} (\bm{x}| \bm{\mu}_1, \bm{\sigma}^2) \nonumber \\ 
+	&+ \eta_0 e^{\frac{||\bm{\mu}_2||^2 - ||\bm{b}||^2}{2\bm{\sigma}^2} + c_2} 
+	\mathcal{N} (\bm{x}| \bm{\mu}_2, \bm{\sigma}^2) \nonumber \\ 
+	&+ \eta_0 e^{\frac{||\bm{\mu}_{12}||^2 - ||\bm{b}||^2}{2\bm{\sigma}^2} + c_1 + c_2}
+	\mathcal{N} (\bm{x}|\bm{\mu}_{12}, \bm{\sigma}^2) \\
+	\text{using that } 
+	\mathcal{N}(\bm{x}| \bm{\mu}, \bm{\Sigma}) 
+	=& \frac{1}{\sqrt{(2\pi)^M |\Sigma|}} e^{-\frac{1}{2} (\bm{x}-\bm{\mu})^T\Sigma^{-1} (\bm{x}-\bm{\mu})} %\nonumber \\
+	= \frac{1}{\sqrt{(2\pi\sigma_i^2)^M}} e^{-\frac{||\bm{x}-\bm{\mu}||^2}{2\bm{\sigma}^2}} \nonumber \\
+	=& \frac{1}{Z} e^{-\frac{||\bm{x}-\bm{\mu}_0||^2}{2\bm{\sigma}^2}} \nonumber \\ 
+	&+ \frac{1}{Z} e^{\frac{||\bm{\mu}_1||^2 - ||\bm{b}||^2 - ||\bm{x}-\bm{\mu}_1||^2}{2\bm{\sigma}^2} + c_1} \\ 
+	&+ \frac{1}{Z} e^{\frac{||\bm{\mu}_2||^2 - ||\bm{b}||^2 - ||\bm{x}-\bm{\mu}_2||^2}{2\bm{\sigma}^2} + c_2}  \\ 
+	&+ \frac{1}{Z} e^{\frac{||\bm{\mu}_{12}||^2 - ||\bm{b}||^2 - ||\bm{x}-\bm{\mu}_{12}||^2}{2\bm{\sigma}^2} + c_1 + c_2} \\
+\end{align}
+... and if we continue as above I suspect we'll end up with the "origininal non-MoG" form.
+\subsection{More on RBMs and GB-RBMs}
+
+\begin{itemize}
+	\item \textbf{From}
+	\begin{itemize}
+		\item \textbf{2010 Nair, Hinton: Rectified linear units improve restricted boltzmann machines} \cite{Nair2010}
+	\end{itemize}
+	\item RBMs have been used as generative models of many different types of data including
+	\begin{itemize}
+		\item 2010 Mohamed, Hinton: Sequences of mel-cepstral coefficients that represent speech (Phone recognition using restricted boltzmann machines)
+		\item 2009 Hinton, Salakhutdinov: Bags of words that represent documents (Replicated softmax: an undirected topic model)
+		\item 2007 Salakhutdinov, Mnih, Hinton: User ratings of movies (Re- stricted Boltzmann machines for collaborative filtering)
+		\item 2006 Taylor, Hinton, Roweis: In their conditional form they can be used to model high-dimensional temporal sequences such as video or motion capture data. (Modeling hu- man motion using binary latent variables)
+		\item 2006 Hinton, Osindero, Teh: Their most important use is as learning modules that are composed to form deep belief nets (A fast learning algorithm for deep belief nets)
+	\end{itemize}
+	\item More
+	\begin{itemize}
+		\item 2002 Hinton: RBMs originally developed using binary stochastic units for both visible and hidden layers (ref above - Training product of experts by minimizing contrastive divergence) \cite{Hinton2002}
+		\item 2006 Hinton, Salakhutdinov: \textbf{To deal with real-valued data such as the pixel intensities in natural images, they replaced the binary visible units by linear units with dependent Gaussian noise}. (ref above - Reducing the dimensionality of data with neural networks) \cite{Hinton2006}
+		\item 1994 Freund, Haussler: \textbf{This was first suggested here} (Unsupervised learning of distributions on binary vectors using two layer networks) \cite{Freund1992}
+	\end{itemize}
+	\item \textbf{OBS, std only squared in one term in this GB-RBM? (the visible bias term and not the weight one. Also only visible bias one divided by 2)}
+	\item It is possible to learn the variance of the noise for each visible unit but this is difficult using binary hidden units. In many applications, it is much easier to first normalise each component of the data to have zero mean and unit variance and then to use noise-free re- constructions, with the variance in equation 6 set to 1. The reconstructed value of a Gaussian visible unit is then equal to its top-down input from the binary hid- den units plus its bias. We use this type of noise-free visible unit for the models of object and face images described later.
+	\item Thorough discussion of ReLUs and modification: It is possible, however, to use a fast approximation in which the sampled value of the rectified linear unit is not constrained to be an integer. Instead it is given by $max(0, x+N(0, \sigma(x)))$ where $N(0, V)$ =Gaussian noise w/zero mean and variance V. We call a unit that uses this approximation a Noisy Rectified Linear Unit (NReLU) and \textbf{this paper shows that NReLUs work better than binary hidden units for several different tasks}. We also give an approximate probabilistic interpretation for the $max(0,x)$ nonlinearity, further justifying their use.
+	\item We have shown that NReLUs work well for discrimina- tion, \textbf{but they are also an interesting way of modeling the density of real-valued, high-dimensional data}.
+	\begin{itemize}
+		\item A standard way to do this is to use a mixture of diag- onal Gaussians. Alternatively we can use a mixture of factor analysers. Both of these models are expo- nentially inefficient if the data contains componential structure. Consider, for example, images of pairs of independent digits. If a mixture model for single digit images needs $N$ components, a single mixture model of pairs of digits needs $N^2$ components. Fortunately, this exponential growth in the number of components in the mixture can be achieved with only linear growth in the number of latent variables and quadratic growth in the number of parameters if we use rectified linear hidden units.
+		\item Consider using rectified linear units with zero bias to model data that lies on the surface of a unit hyper- sphere. Each rectified linear unit corresponds to a plane through the centre of the hypersphere. It has an activity of 0 for one half of the hypersphere and for the other half its activity increases linearly with distance from that plane. $N$ units can create $2^N$ re- gions on the surface of the hypersphere (assuming the hypersphere is at least $N$-dimensional). As we move around within each of these regions the subset of units that are non-zero does not change so we have a lin- ear model, but it is a different linear model in every region. The mixing proportions of the exponentially many linear models are defined implicitly by the same parameters as are used to define $p(\bm{v}|\bm{h})$ and, unlike a directed model, the mixing proportions are hard to compute explicitly 
+		\begin{itemize}
+			\item 2008 Nair, Hinton: Implicit mixtures of restricted boltzmann machine
+		\end{itemize}
+		\item This is a much better way of implementing an exponentially large mixture of linear models with shared latent variables than the method described in
+		\begin{itemize}
+			\item 1999 Hinton, Sallanes, Ghahramani: A hierarchical community of experts
+		\end{itemize}
+		 which uses directed linear models as the components of the mixture and a separate sig- moid belief net to decide which hidden units should be part of the current linear model. In that model, it is hard to infer the values of the binary latent variables and there can be jumps in density at the boundary be- tween two linear regions. A big advantage of switch- ing between linear models at the point where a hidden unit receives an input of exactly zero is that it avoids discontinuities in the modeled probability density.
+	\end{itemize}
+\end{itemize}
+
+\chapter{The RBM method for the quantum problem}
+\subsection{How is $\Psi$ modeled}
+\subsection{Further analysis of the GB-RBM - the marginal prob as a MoG}
+\subsection{Training - now using the variational principle}
+\subsection{Hyperparameters}
+\subsubsection{Initialization}
+\subsubsection{Sampling parameters (Metropolis)}
+\subsubsection{Number of hidden nodes}
+\subsubsection{Number of samples}
+\subsubsection{Learning rate}
+\subsection{Computational efficiency}
+Choosing a constant density $\alpha$ of hidden variables pr physical positions, i.e. $M=\alpha N$, the number of variational parameters scales as $\alpha N^2$.
+
+\part{Implementation}
+\section{Workflow}
+\section{How to use..?}
+\subsection{Monetoring the learning progress?}
+
+\section{Structure/any particular reason for choices..?}
+
+
+\part{Results and analysis}
+\chapter{Making the basic method stripped for extra stuff work - grid search and validation}
+Jeg tenker vi tar utgangspkt i Metropolis importance sampling, den virker best, i den mest omfattende utredelsen av hyperparameter search. Så kan Gibbs og metropolis brute force være "artig å sammenligne med". Hele veien i testingen har vi mulighet til å teste med eller uten interaksjon. Men siden uten har veldig god presisjon, og med er den store utfordringen, så kan kanskje hyperparameter søket gjøres MED. Så er det bare å holde track på at ikke uten har blitt dårligere liksom.
+Starter også med sigma=1
+Enkleste gradient descent
+\section{Hyperparameter grid search}
+\begin{enumerate}
+	\item The first search:
+	\begin{itemize}
+		\item What we keep constant:
+		\begin{itemize}
+			\item Sampling method: Metropolis importance sampling
+			\item Hamiltonian: With interaction (still just observing that without is very precise and our choices don't "ruin" that)
+			\item The $\sigma_{RBM}=1$
+			\item The $\omega_{HO}=1$
+			\item Optimization method: Simplest gradient descent
+		\end{itemize}
+		\item What we will change (either grid search or with the random method thing Treider talked about. If too many we can set one or more before/after the others):
+		\begin{itemize}
+			\item The Metropolis importance sampling step size $\Delta t$ (default pr now 0.45)
+			\item The learning rate $\eta$ (default pr now 0.01)
+			\item The number of samples $nSamples$ (default pr now $10^4$ or $10^5$)
+			\item Number of hidden units (starting defualt is $N$=2)
+			\item Optimization stopping criteria
+		\end{itemize}
+		\item When all working, test a variation of gradient descent?
+	\end{itemize}
+\end{enumerate}
+
+\section{Validation and limitations given the previously found optimal parameters}
+\subsection{Compared to analytical solution}
+-With/without interaction
+-With different numbers of particles and dimensions
+-Use the blocking values to take into account the error and/or standard deviation
+-plot the density thing?
+-show the learning evolution in video or similar?
+\subsection{Compared to the traditional methods benchmarks}
+\subsubsection{Precision}
+\subsubsection{Performance/computational speed/convergence rate}
+\subsubsection{"Work" required by user - setting hyperparameters. And to what extent do they, and potential wrong values for them, give instability in the method}
+
+\section{Analysis}
+\subsection{What can we extract from the weighting of the hidden features. Are we actually achieving dimensionality reduction or feature extraction here? Is the model telling us anything interesting?}
+\subsection{Important question: do we succeed at sampling the whole config space and consequently train on the whole config space? Relevant to both VMC and RBM I guess.}
+\subsection{How does it scale with 1) particles/dimensions 2) hidden nodes}
+polynomial cost, polynomial time, etc
+
+\section{More stuff}
+\subsection{Training the RBM sigma}
+\subsection{Optimize performance/parallelization}
+\subsection{More in depth gradient descent variations investigation?}
+\subsection{Try other types of hidden nodes (ReLU)}
+\subsection{Add one more hidden layer - Deep BM}
+\subsection{Collaboration with Alocias}
+\subsection{Implementing symmetries of the Hamiltoninan}
+\subsection{Try training on sampled data from analytical, for comparison? Then also test open source package?}
+\subsection{Other Hamiltonians?}
+
+\part{Conclusions and outlook}
+
+\begin{appendices}
+\chapter{Random generators and distributions in C++}
+\end{appendices}
+
+\newpage
+\bibliography{master}
+
+\end{document}
