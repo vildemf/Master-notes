@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.9.5)  15 APR 2018 18:01
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.9.5)  28 APR 2018 00:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -771,68 +771,251 @@ Overfull \hbox (6.51128pt too wide) in paragraph at lines 1913--1914
 L/cmm/m/it/10.95 D$\T1/cmr/m/n/10.95 -dimensional
  []
 
-[82] [83] [84]
-Overfull \hbox (15.17413pt too wide) in paragraph at lines 1994--1994
+[82] [83] [84] [85] [86] [87]
+Overfull \hbox (9.88644pt too wide) in paragraph at lines 2034--2036
+[]\T1/cmr/m/it/10.95 t-SNE gen-er-ally pre-serves short dis-tance in-for-ma-tio
+n \T1/cmr/m/n/10.95 Rule of thumb:
+ []
+
+[88]
+Overfull \hbox (0.19612pt too wide) in paragraph at lines 2055--2056
+[]\T1/cmr/m/n/10.95 Perhaps sim-plest ex-pam-ple of un-su-per-vised learn-ing =
+ clus-ter-ing. Aim:
+ []
+
+[89] [90]
+Overfull \hbox (59.69017pt too wide) in paragraph at lines 2127--2128
+[]\T1/cmr/m/n/10.95 Find the clos-est pair of clus-ters $\OT1/cmr/m/n/10.95 (\O
+ML/cmm/m/it/10.95 X[]; X[]\OT1/cmr/m/n/10.95 ) :  (\OML/cmm/m/it/10.95 i; j\OT1
+/cmr/m/n/10.95 ) = [][]\OML/cmm/m/it/10.95 d\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/1
+0.95 X[]; X[]\OT1/cmr/m/n/10.95 )$ 
+ []
+
+[91] [92]
+Overfull \hbox (2.06473pt too wide) in paragraph at lines 2168--2169
+[]\T1/cmr/m/n/10.95 Finally, a point $\OML/cmm/b/it/10.95 x[]$ \T1/cmr/m/n/10.9
+5 = \T1/cmr/m/it/10.95 density-reachable \T1/cmr/m/n/10.95 if it is in the $\OM
+L/cmm/m/it/10.95 ^^O$\T1/cmr/m/n/10.95 -neighborhood
+ []
+
+[93] [94]
+Overfull \hbox (3.19933pt too wide) in paragraph at lines 2211--2212
+[]\T1/cmr/m/n/10.95 For fu-ture ref-er-ence, let's de-note the set of pa-ram-e-
+ters $\OMS/cmsy/m/n/10.95 f\OML/cmm/b/it/10.95 ^^V[]\OML/cmm/m/it/10.95 ; \OT1/
+cmr/bx/n/10.95 ^^F[]\OML/cmm/m/it/10.95 ; ^^Y[]\OMS/cmsy/m/n/10.95 g$
+ []
+
+[95] [96] [97] [98]
+Overfull \hbox (15.17413pt too wide) in paragraph at lines 2283--2283
 []\T1/cmr/bx/n/14.4 Variational meth-ods and mean-field the-ory (MFT) 
  []
 
+[99] [100] [101]
+Overfull \hbox (8.84547pt too wide) in paragraph at lines 2344--2345
+\T1/cmr/m/n/10.95 Kullback-Leibler di-ver-gence (=KL-divergence=relative en-tro
+py) be-tween
+ []
 
-Overfull \hbox (6.54643pt too wide) in paragraph at lines 2001--2001
+
+Overfull \hbox (5.44572pt too wide) in paragraph at lines 2353--2354
+\T1/cmr/m/n/10.95 that min-i-mize the dif-fer-ence be-tween the vari-a-tional f
+ree-energy $\OML/cmm/m/it/10.95 F[]\OT1/cmr/m/n/10.95 (\OML/cmm/b/it/10.95 J\OM
+L/cmm/m/it/10.95 ; \OML/cmm/b/it/10.95 ^^R\OT1/cmr/m/n/10.95 )$
+ []
+
+[102] [103] [104]
+Overfull \hbox (47.21217pt too wide) in paragraph at lines 2419--2420
+[]\T1/cmr/m/n/10.95 We'll fo-cus on la-tent vari-able mod-els where some of the
+ vari-ables=hidden=cannot
+ []
+
+[105]
+Overfull \hbox (10.26404pt too wide) in paragraph at lines 2444--2446
+\T1/cmr/m/n/10.95 In the lan-guage of stat phys, $\OML/cmm/m/it/10.95 F[]\OT1/c
+mr/m/n/10.95 (\OML/cmm/b/it/10.95 ^^R\OT1/cmr/m/n/10.95 )$ \T1/cmr/m/n/10.95 =t
+he \T1/cmr/m/it/10.95 true \T1/cmr/m/n/10.95 free-energy while $\OML/cmm/m/it/1
+0.95 F[]\OT1/cmr/m/n/10.95 (\OML/cmm/b/it/10.95 ^^R\OT1/cmr/m/n/10.95 )$\T1/cmr
+/m/n/10.95 =the
+ []
+
+[106]
+Overfull \hbox (7.30998pt too wide) in paragraph at lines 2471--2472
+[]\T1/cmr/m/n/10.95 EM im-ple-ments MLE even with miss-ing or hid-den vari-able
+s through
+ []
+
+[107]
+Overfull \hbox (47.29166pt too wide) in paragraph at lines 2488--2489
+[]\T1/cmr/m/n/10.95 Energy: $\OML/cmm/m/it/10.95 ^^LE\OT1/cmr/m/n/10.95 (\OML/c
+mm/b/it/10.95 s\OML/cmm/m/it/10.95 ; \OML/cmm/b/it/10.95 J\OT1/cmr/m/n/10.95 )$
+ $\OMS/cmsy/m/n/10.95 ,$ \T1/cmr/m/n/10.95 Neg-a-tive log-complete data like-li
+-hod: $\OMS/cmsy/m/n/10.95 ^^@[]\OML/cmm/m/it/10.95 p\OT1/cmr/m/n/10.95 (\OML/c
+mm/b/it/10.95 x\OML/cmm/m/it/10.95 ; \OML/cmm/b/it/10.95 z\OMS/cmsy/m/n/10.95 j
+\OML/cmm/b/it/10.95 ^^R\OML/cmm/m/it/10.95 ; m\OT1/cmr/m/n/10.95 )$ 
+ []
+
+
+Overfull \hbox (26.15486pt too wide) in paragraph at lines 2489--2490
+[]\T1/cmr/m/n/10.95 Free en-ergy: $\OML/cmm/m/it/10.95 ^^LF[]\OT1/cmr/m/n/10.95
+ (\OML/cmm/b/it/10.95 J\OMS/cmsy/m/n/10.95 j\OML/cmm/m/it/10.95 ^^L\OT1/cmr/m/n
+/10.95 )$ $\OMS/cmsy/m/n/10.95 ,$ \T1/cmr/m/n/10.95 neg-a-tive log-marginal lik
+e-li-hood: $\OMS/cmsy/m/n/10.95 ^^@[]\OML/cmm/m/it/10.95 p\OT1/cmr/m/n/10.95 (\
+OML/cmm/b/it/10.95 x\OMS/cmsy/m/n/10.95 j\OML/cmm/m/it/10.95 m\OT1/cmr/m/n/10.9
+5 )$ 
+ []
+
+
+Overfull \hbox (14.17575pt too wide) in paragraph at lines 2491--2492
+[]\T1/cmr/m/n/10.95 Variational free-energy: $\OML/cmm/m/it/10.95 F[]\OT1/cmr/m
+/n/10.95 (\OML/cmm/b/it/10.95 J\OML/cmm/m/it/10.95 ; \OML/cmm/b/it/10.95 ^^R\OT
+1/cmr/m/n/10.95 )$ $\OMS/cmsy/m/n/10.95 ,$ \T1/cmr/m/n/10.95 Vari-a-tional free
+-energy: $\OML/cmm/m/it/10.95 F[]\OT1/cmr/m/n/10.95 (\OML/cmm/b/it/10.95 x\OML/
+cmm/m/it/10.95 ; \OML/cmm/b/it/10.95 ^^R\OT1/cmr/m/n/10.95 )$ 
+ []
+
+
+Overfull \hbox (6.54643pt too wide) in paragraph at lines 2497--2497
 []\T1/cmr/bx/n/14.4 Energy based mod-els: Max-im-ium En-tropy (Max-
  []
 
-[85]
-Overfull \vbox (207.92928pt too high) has occurred while \output is active []
+
+Overfull \hbox (3.70982pt too wide) in paragraph at lines 2502--2503
+[]\T1/cmr/m/n/10.95 Designed to per-ceive dif-fer-ences be-tween groups/categor
+ies of data. 
+ []
+
+[108]
+Overfull \hbox (2.10164pt too wide) in paragraph at lines 2524--2525
+\T1/cmr/m/n/10.95 En-tropy (Max-Ent) mod-els. Have no la-tent/hidden vari-ables
+=ideal
+ []
+
+[109]
+Overfull \hbox (8.51836pt too wide) in paragraph at lines 2536--2537
+[]$\OMS/cmsy/m/n/10.95 !$ \T1/cmr/m/n/10.95 must be ex-pres-sive enouh to cap-t
+ure com-plex cor-re-la-tions present
+ []
 
 
-[86] (./theory.aux) ) 
+Overfull \hbox (19.18176pt too wide) in paragraph at lines 2557--2558
+[]\T1/cmr/m/n/10.95 Finally: gen-er-a-tive mod-els at their most ba-sic level =
+ com-plex parametriza-
+ []
+
+[110]
+Overfull \hbox (31.75798pt too wide) in paragraph at lines 2574--2575
+[]\T1/cmr/m/n/10.95 Introduced by E. T. Jaynes in a two-part pa-per in 1957 en-
+ti-tled "\T1/cmr/bx/n/10.95 Information
+ []
+
+[111] [112] [113] [114] [115]
+Overfull \hbox (23.53183pt too wide) in paragraph at lines 2700--2701
+[]\T1/cmr/bx/n/10.95 For any energy-based gen-er-a-tive model\T1/cmr/m/n/10.95 
+, the en-ergy func-tion $\OML/cmm/m/it/10.95 E\OT1/cmr/m/n/10.95 (\OML/cmm/b/it
+/10.95 x\OML/cmm/m/it/10.95 ; \OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 ^^R[]\OM
+S/cmsy/m/n/10.95 g\OT1/cmr/m/n/10.95 )$
+ []
+
+[116] [117] [118]
+Overfull \hbox (2.87566pt too wide) in paragraph at lines 2792--2793
+[]\T1/cmr/m/n/10.95 Note: All info about the data only en-ters the train-ing pr
+o-ce-dure through
+ []
+
+[119] [120] [121] [122]
+Overfull \hbox (7.7326pt too wide) in paragraph at lines 2867--2869
+\T1/cmr/m/n/10.95 wise con-straints and $\OML/cmm/m/it/10.95 a[]$ \T1/cmr/m/n/1
+0.95 en-force the single-variable con-straint (single-
+ []
+
+[123] [124]
+Overfull \hbox (30.56303pt too wide) in paragraph at lines 2929--2930
+[]\T1/cmr/m/n/10.95 Continuous-continuous = \T1/cmr/bx/n/10.95 the RBM re-duces
+ to a multi-dimensional
+ []
+
+[125] [126] [127] [128]
+Overfull \hbox (8.05411pt too wide) in paragraph at lines 3027--3028
+[]\T1/cmr/m/n/10.95 Iteratively sam-ple from the con-di-tional dis-tri-bu-tions
+ $\OML/cmm/b/it/10.95 h[] \OMS/cmsy/m/n/10.95 ^^X \OML/cmm/m/it/10.95 p\OT1/cmr
+/m/n/10.95 (\OML/cmm/b/it/10.95 h\OMS/cmsy/m/n/10.95 j\OML/cmm/b/it/10.95 v[]\O
+T1/cmr/m/n/10.95 )$
+ []
+
+[129] [130] [131] [132]
+Overfull \hbox (9.45688pt too wide) in paragraph at lines 3125--3126
+\T1/cmr/m/n/10.95 e-ter ac-cord-ing to a \T1/cmtt/m/n/10.95 PowerLawDecay \T1/c
+mr/m/n/10.95 sched-ule: \T1/cmtt/m/n/10.95 learning_rate\T1/cmr/m/n/10.95 (t)
+ []
+
+[133]
+Overfull \hbox (4.3481pt too wide) in paragraph at lines 3135--3136
+[]\T1/cmr/m/n/10.95 Constructing a Bernoulli RBM with $\OML/cmm/m/it/10.95 L[]$
+ \T1/cmr/m/n/10.95 reg-u-lar-iza-tion also straight-
+ []
+
+[134] [135]
+Overfull \hbox (1.16663pt too wide) in paragraph at lines 3174--3175
+[]\T1/cmr/m/n/10.95 By us-ing only the 2D spin con-figs, we now want to train a
+ Bernoulli
+ []
+
+[136] [137] [138] [139]
+Overfull \hbox (4.25673pt too wide) in paragraph at lines 3291--3291
+[]\T1/cmr/bx/n/12 Rebranding Ma-chine Learn-ing as "Ar-tif-i-cal In-tel-li-genc
+e" 
+ []
+
+[140] [141] (./theory.aux) ) 
 Here is how much of TeX's memory you used:
- 4572 strings out of 493014
- 64282 string characters out of 6133352
- 134374 words of memory out of 5000000
- 8006 multiletter control sequences out of 15000+600000
+ 4573 strings out of 493014
+ 64290 string characters out of 6133352
+ 134386 words of memory out of 5000000
+ 8007 multiletter control sequences out of 15000+600000
  26044 words of font info for 71 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  38i,12n,38p,1817b,424s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/cm-sup
-er/cm-super-t1.enc}</usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfo
-nts/cm/cmbsy10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfo
-nts/cm/cmbx10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmbx6.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmbx8.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmex10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm
-extra/cmex7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmmi10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmmi5.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmmi6.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mmi8.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmm
-ib10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cmextr
-a/cmmib6.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm
-extra/cmmib8.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmr10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmr5.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmr6.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
-8.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10
-.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.p
-fb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb
-></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><
-/usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.p
-fb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbi1095.pfb
-></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx0600.pfb><
-/usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx0800.pfb></u
-sr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb></usr
-/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/l
-ocal/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/loc
-al/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm0600.pfb></usr/local
-/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/t
-exlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/tex
-live/2016/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/local/texli
-ve/2016/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb></usr/local/texlive
-/2016/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb>
-Output written on theory.pdf (86 pages, 709453 bytes).
+{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips
+/cm-super/cm-super-t1.enc}</usr/local/texlive/2016/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmbsy10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmbx6.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmbx8.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmex10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsf
+onts/cmextra/cmex7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/a
+msfonts/cmextra/cmex8.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmmi6.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmmi8.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmmib10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfo
+nts/cmextra/cmmib6.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/a
+msfonts/cmextra/cmmib8.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmr10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmr5.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmr6.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmr8.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmsy10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmsy5.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmsy6.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/c
+msy8.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/symbol
+s/msbm10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sf
+bi1095.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx
+0600.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx08
+00.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx1095
+.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx1200.p
+fb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb
+></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm0600.pfb><
+/usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></u
+sr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr
+/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/l
+ocal/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/loc
+al/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb></usr/local
+/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb>
+Output written on theory.pdf (141 pages, 895848 bytes).
 PDF statistics:
- 420 PDF objects out of 1000 (max. 8388607)
- 295 compressed objects within 3 object streams
+ 605 PDF objects out of 1000 (max. 8388607)
+ 421 compressed objects within 5 object streams
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

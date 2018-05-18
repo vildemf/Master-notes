@@ -19,7 +19,7 @@
 %\bibliography{references}
 
 \author{Vilde Moe Flugsrud}
-\title{The history of master thesises and other random gibberish}
+\title{Solving Quantum Mechanical Problems with Machine Learning}
 \date{June 2018}
 
 \begin{document}
@@ -41,8 +41,41 @@ This is an abstract text.
 Start your chapter by writing something smart. Then go get coffee.
 
 \part{Theory}
-\chapter{The established approaches}
-\section{Approximating the wave function}
+\chapter{The Quantum Many-Body Problem}
+
+\section{Many-Body Quantum Mechanics}
+When describing systems at the size of atoms and electrons, at speeds where relativistic effects are regarded as negligible, quantum mechanics is the theory used to describe the system. 
+While in classical mechanics the state of a system of $N$ particles is described by each particle's position and momentum, in quantum mechanics it is described by the complex valued wavefunction 
+In quantum mechanics, the state of a system is defined by the complex-valued wavefunction $\Psi$, which is an element of an infinite dimensional Hilbert space. That is, a complete vector space with an inner product.\cite{Kvaal2017}. 
+
+The expectation value of an operator $\hat{\bm{O}}$ for a system of $N$ particles is given as \cite{HjortJensen2015}
+\begin{align}
+	%\langle \hat{\bm{O}} \rangle
+	=& \frac{\int \Psi^{\ast}(\bm{x}_1,...,\bm{x}_N) \hat{\bm{O}}(\bm{x}_1,...,\bm{x}_N)
+	\Psi (\bm{x}_1,...,\bm{x}_N)
+	\dif \bm{x}_1 ... \dif \bm{x}_N  }
+	{\int \Psi^{\ast}(\bm{x}_1,...,\bm{x}_N)
+	\Psi (\bm{x}_1,...,\bm{x}_N)
+	\dif \bm{x}_1 ... \dif \bm{x}_N}
+\end{align}
+
+Finding $\Psi$ requires us to solve the time-independent Schrödinger equation
+\begin{align}
+	\hat{\bm{H}} \Psi =& E\Psi 
+\end{align}
+for a complex nuclear many body problem this can quickly become a problem consisting of millions of coupled second-order differential equations in $3N$ dimensions.
+
+Computing the expectation value of the observable requires solving the multidimensional integral. This can be approximated using Monte Carlo methods. But what do we do with the fact that we don't know $Psi$? We solve this by employing the variational principle.
+
+\section{Approximating the Wavefunction}
+Some selected conditions $\Psi$ must satisfy \cite{HjortJensen2015} are normalization 
+\begin{align}
+	\int_{-\infty}^{\infty} P(x,t) \dif x = \int_{-\infty}^{\infty} \Psi^{\ast}(x,t) \Psi (x,t) \dif x = 1
+\end{align}
+and that $\Psi (x,t)$ and $\partial \Psi(x,t) / \partial x$ must be finite, continuous and single valued.
+
+
+requirements from Ledum og Helgaker.
 
 \section{Methods}
 \begin{itemize}
@@ -96,12 +129,643 @@ Start your chapter by writing something smart. Then go get coffee.
 \end{itemize}
 
 \section{VMC}
-\subsection{Application of the variational principle}
-Molecular Electronic-Structure Theory - Helgaker. 2000 isbn: 0-471-96755-6.
+\subsection{The Variational Principle}
+The variatoional princple states that given any function (possibly fulfilling some conditions?) acting as the wavefunction, it will give a higher energy than the ground state energy. So we are sure to get an upper bound. This leads to a method where we construct a trial wavefunction with some number of variational parameters. Minimizing the variational parameters are then sure to give us the best upper bound of the ground state energy. In the process we have also obtained an approximated wave function. 
 
-\section{All the other ones..}
+In order to do these we will employ minimization techniques discussed later.
+
+Kvaale lecture notes, Helgaker. Two theorems
+
+\subsection{Monte Carlo Integration}
+The Monte Carlo method is an excellent approach to approximating high dimensional integrals. We do so by evaluating the function of interest at random values drawn according to some probability distribution function of interest. 
+
+Expected value of random variable $x$ is
+\begin{align}
+	E(x) = \langle x \rangle = \int p(x) x \dif x = \mu
+\end{align}
+if we have a real valued function $g(x)$ and $x$ is a random variable, $g(x)$ is a random variable as well, with the mean value defined
+\begin{align}
+	E(g(x)) = \langle g(x) \langle = \int p(x) g(x) \dif x
+\end{align}
+The $n$th moment of $x$ is defined as the expectation of the $n$th power of $x$,
+\begin{align}
+	\langle x^n \rangle = \int p(x) x^n \dif x
+\end{align}
+where we notice that the first moment recovers the definition of the expectation value.
+The central moments of $x$ are defined
+\begin{align}
+	\langle (x-\mu)^n \rangle = \int p(x) (x - \mu)^n \dif x
+\end{align}
+Where the second central moment is what we know as the variance of $X$
+\begin{align}
+	\sigma^2 = var(x) = \langle (X-\mu)^2 \rangle =& \int p(x) (x - \mu)^2 \dif x  \\
+	=& \int p(x) (x^2 - 2x \langle x \rangle + \langle x \rangle^2) \dif x \\
+	=& \langle x^2 \rangle - \langle x \rangle \langle x \rangle + \langle x \rangle^2 \dif x \\
+	=& \langle x^2 \rangle - \langle x \rangle^2 \dif x 
+\end{align}
+The variance of the function $g(x)$ is similarly defined
+\begin{align}
+	var(g(x)) = \langle (g(x) - \langle g(x) \rangle)^2 \rangle 
+	= \langle g(x)^2 \rangle - \langle g(x) \rangle^2
+\end{align}
+If two random variables $x$ and $y$ are independent, we have that
+\begin{align}
+	\langle xy \rangle = \langle x \rangle \langle y \rangle
+\end{align}
+If they are not independent, the degree of independence is measured by the covariance, which is defined
+\begin{align}
+	cov(x,y) = \langle xy \rangle - \langle x \rangle \langle y \rangle
+\end{align}
+However, zero covariance by itself does not guarantee independence.
+
+From the covariance we may derive the correlation coefficient
+\begin{align}
+	\rho(x,y) =& \frac{cov(x,y)}{sqrt{ \langle x \rangle \langle y \rangle }}, \quad
+	-1 \geq \rho(x,y) \leq 1
+\end{align}
+
+A bivariate probability distribution function $p(x,y)$ may be defined for two random variables. The expected value of a function $g(x,y)$ depending on them is then
+\begin{align}
+	E(g(x,y)) = \langle g(x,y) \rangle = \int \int p(x,y) g(x,y) \dif x \dif y
+\end{align}
+The marginal probability distribution function can be found for either of the two variables by 
+\begin{align}
+	p(x) = \int p(x,y) \dif y
+\end{align}
+The conditional probability is then given
+\begin{align}
+	p(y|x) = \frac{p(x,y)}{p(x)}
+\end{align}
+This means that if we know the marginal and conditional probabilities, the bivariate distribution can be sampled by sampling two univariate distributions. This can be generalized to multivariate distributions of more than two correlated random variables.
+
+\subsubsection{Estimators}
+Suppose random variables $x_1, x_2,...$ are drawn at random, but not necessarily independently, from the probability distribution function $p(x)$. Let $g_i$ be functions of $x_i$ and let $\lambda_i$ be a real number. Define the function $G$ by
+\begin{align}
+	G = \sum_{i=1}^N \lambda_i g_i (x_i)
+\end{align}
+The expected value of $G$ is
+\begin{align}
+	E(G) = E (\sum_i^N \lambda_i g_i(x_i)) = \sum_i^N \lambda_i E(g_i(x))
+\end{align}
+(having used the linearity of the expectation value). If all the $x_i$ are independent, the variance of $G$ becomes
+\begin{align}
+	var(G) =& \langle G^2 \rangle - \langle G \rangle^2 \\
+	=& \sum_i^N \lambda_i^2 var(g_i(x))
+\end{align}
+If $\lambda_i=\frac{1}{N}$ and all the $g_i(x)$ are identical, $g(x)$. The expected value of $G$ is then
+\begin{align}
+	E(G) = E(\frac{1}{N} \sum_i^N g(x_i) ) = \frac{1}{N} \sum_i^N E(g(x)) = E(g(x))
+\end{align} 
+$G$ is the arithmetic average of $g(x)$ and has the same mean. $G$ is said to be an \textit{estimator} of $E(g(x))$. The variance of $G$ becomes
+\begin{align}
+	var(G) = var( \frac{1}{N} \sum_i^N g(x_i)  ) = \sum \frac{1}{N^2} var(g(x)) 
+	= \frac{1}{N} var(g(x))
+\end{align}
+
+The implication of this is that as the number of samples of $x$, $N$, increases, the variance of the mean value of $G$ decreases as $\frac{1}{N}$. This is a core idea of Monte Carlo integration. That is, an integral may be estimated by a sum
+\begin{align}
+	E(g(x)) = \int p(x) g(x) \dif x = E(\frac{1}{N} \sum_{i=1}^N g(x_i))
+\end{align}
+In summary, to apply this:
+\begin{itemize}
+	\item Choose a series of random variables $x_i$ from $p(x)$
+	\item Evaluate $g(x)$ at each $x_i$
+	\item The mean of all the values of $g(x_i)$ is an estimate of the integral, and the variance of this estimate decreases as the number of samples increases.
+\end{itemize}
+
+\subsubsection{Convergence}
+\textbf{The law of large numbers}: Suppose the random variables $x_1, x_2, ..., x_N$ are independent and all drawn from the same distribution, that is i.i.d. random variables. The expecation of each $x$ is then $\mu$. As $N\rightarrow \infty$, the mean value of the $\{ x \}$ 
+\begin{align}
+	\bar{x}_N = \frac{1}{N} \sum_{i=1}^N X_i
+\end{align}
+is almost guaranteed to converge to $\mu$:
+
+To estimate the speed of convergence on the other hand, stronger assumptions are needed. We assume an estimator $G$, its mean $\langle G \rangle$ and variance $var(G)$ all exist. \textbf{The Chebychev inequality} then is
+\begin{align}
+	p(|G - \langle G \rangle | \geq \sqrt{\frac{var(G)}{\delta}}) &\leq \delta \\
+	p(|G - \langle G \rangle | \geq \sqrt{\frac{var(g)}{\delta N}}) &\leq \delta \\
+\end{align}
+with $\delta$ any postive number. This estimates the chances of generating a large deviation in a Monte Carlo calculation. By making $N$ big, we can make the variance of $G$ as small as we want. The probability of getting a large deviation relative to $\delta$ between the estimate of the integral and the true value becomes small. This is at the core of the Monte Carlo method for evaluating integrals.
+
+A much stronger statement than the Chebychev inequality about the range of values of $G$ that can be observed is given by the \textbf{central limit theorem} of probability. For any fixed value of $N$, there is a pdf that describes the values of $G$ that occur in the course of a Monte Carlo calculation (for a fixed $N$, if $G$ was calculated $M$ times, each times with a different sequence of i.d.d random variables, the set $\{ G_j\}$, $j=1,2,...,M$ has a specific distribution function). As $N\rightarrow \infty$, however, the central limit theorem shows that there is a specific limit distribution for the observed values of $G$, namely, the normal distribution. Set
+\begin{align}
+	G_N = \frac{1}{N} \sum_i^N g(x_i)
+\end{align}
+and
+\begin{align}
+	t_N = \frac{(G_N - \langle g(x) \rangle)}{\sqrt{var(G_N)}}
+	= \frac{\sqrt{N} (G_N - \langle g(x) \rangle)}{\sqrt{var(g(x))}}
+\end{align}
+then
+\begin{align}
+	lim_{N\rightarrow \infty} p(a < t_N < b)
+	= \int_a^b \frac{1}{\sqrt{2\pi}} e^{-\frac{t^2}{2}} \dif t
+\end{align}
+Let $\sigma^2 = var(g)$. We can then rewrite the above equation to specify a pdf for values of $G_N$
+\begin{align}
+	p(G_N) = \frac{1}{\sqrt{2\pi (\sigma^2/N)}} e^{\frac{N(G_N - \langle g\rangle)^2}{2\sigma^2}}
+\end{align}
+As $N\rightarrow \infty$ the observed $G_N$ occurs in ever narrower intervals near $\langle g \rangle$ and one can predict the probability of deviations measured in units of $\sigma$. That is, the observed $G_N$ is within the \textit{standard error} (i.e. $\sigma/\sqrt{N}$) of $\langle g \rangle$ 68.3\% of the time, within two standard errors of $\langle g \rangle$ 95.4\% of the time, and within three standard errors 99.7\% of the time.
+
+The central limit theorem is very powerful in that it gives a specific distribution for the values of $G_N$, but it applies only asymptotically. How large $N$ must be before the central limit theorem applies depends on the problem. If for a problem we have that the third central moment $\mu_3$ of $g$ exists, then the central limit theorem will be substantially satisfied when
+\begin{align}
+	|\mu_3| << \sigma^3 \sqrt{N}
+\end{align}
+Then confidence limits derived from the normal distribution can be applied to the results of a Monte Carlo calculation. 
+
+Without the central limit theorem, there is in general only the much weaker upper bound of the Chebychev inequality to suggest how much the observed $G_N$ deviates from the actual mean. Of course, in specific cases, studies can be made of the distribution of the estimator. Much Monte Carlo is done assuming that the theorem has been satisfied no matter what the sample size; reported errors must be considered optimistic in such cases.
+When the variance is infinite, it is sometimes possible to find a limit distribution for $G$ that will lead to a central limit theorem for that particular problem. The limit distribution will in general not be normal.
+
+The variance used in the discussion above may itself be estimated using independent values of $g(x_n)$ the following way:
+\begin{align}
+	\langle \frac{1}{N} \sum_{i=1} g^2 (x_i) - [\frac{1}{N}\sum_{i=1}^N g(x_i)]^2 \rangle
+	= \langle g^2 \rangle - \frac{1}{N^2} \langle
+	\sum_{i=1}^N g(x_i)^2 + \sum_{i,i\neq j}^N \sum_{j=1}^N g(x_i) g(x_j) \rangle
+\end{align}
+Using the independence of $g(x_i)$ and $g(x_j)$ in evaluating $\langle g(x_i) g(x_j)\rangle $, we find the right-hand side equal to 
+\begin{align}
+	(1- \frac{1}{N}) \langle g^2 \rangle - \frac{N(N-1)}{N^2} \langle g \rangle^2
+	= \frac{N-1}{N} var(g)
+\end{align}
+
+thus an estimator for $\sigma^2$ is
+\begin{align}
+	\sigma^2 \approx \frac{N}{N-1} ( \frac{1}{N} \sum_{i=1}^N g^2(x_i) -
+	( \frac{1}{N} \sum_{i=1}^N g^2(x_i))^2 )
+\end{align}
+An estimator of the variance of the estimated mean is given by
+\begin{align}
+	var(G_N) \approx \frac{1}{N-1} ( \frac{1}{N} \sum_{i=1}^N g^2(x_i) -
+	( \frac{1}{N} \sum_{i=1}^N g^2(x_i))^2 )
+\end{align}
+
+\subsubsection{Summary}
+If $x_1, x_2,...,x_n$ arr i.i.d. random variables with pdf $p(X)$, then for a function $g(x)$ an estimator is
+\begin{align}
+	G_N =& \frac{1}{N} \sum_{i=1}^N g(x_i) \\
+	\langle G_N \rangle =& \int p(x) g(x) \dif x
+\end{align}
+and
+\begin{align}
+	var(G_N) =& \frac{1}{N} var(g)
+\end{align}
+as $N\rightarrow \infty$ and if the variance exists, the distribution of possible values of $G_N$ narrows about the mean as $\sqrt{N}$; or the probability of finding a $G_N$ some fixed distance away from $\langle G_N \rangle$ becomes smaller. 
+
+The basic random variable used in Monte Carlo has been set by historical convention to be distributed uniformly between 0 and 1.
+
+Note that we can do integrations in multiple dimensions with suprisingly little loss of computational efficiency. That one can work in many dimensions – indeed one can add extra dimensions – is a characteristic of Monte Carlo quadrature in contrast to discrete numerical quadrature, and is a property that can be exploited to great advantage in many applications.
+
+To evaluate the $L$-dimensional integral over the unit hypercube 
+\begin{align}
+	\int ... \int g(x_1, x_2, ..., x_L) \dif x_1 \dif x_2 ... \dif x_L
+\end{align}
+$L$ uniform random variables could be samples, the function $g(x_1, x_2, ..., x_L)$ calculated, and the whole process repeated $N$ times. The arithmetic mean of the function values gives an unbiased estimate of the integral.
+
+Of course, given the ability to generate random variables from any distribution over any space (as discussed in the next chapter) the domain of integration need not be limited to hypercubes.
+
+Pseudorandom numbers might be wanted over truly random numbers for several reasons where one is dependent on being able to recreate program runs.
+
+\subsubsection{Monte Carlo Estimators}
+We have defined an estimator as a useful approximation to a quantity of interest $Q$ (for example an integral) which may be derived from a Monte Carlo calculation. The estimator is then the approximation (as given by earlier definitions), which is a function $\theta(\xi_1, \xi_2, ..., \xi_N)$ of the $N$ random or pseudorandom variables used in the calculation.
+
+The function $\theta$ is of course itself random, and the statement that it gives a
+satisfactory approximation to $Q$ means that it is not expected to fluctuate far from $Q$. Put a little more formally,
+\begin{align}
+	\frac{\langle (\theta - Q)^2 \rangle}{Q^2} \ll 1
+\end{align}
+
+Acceptable values of the ratio depend on the application. A Monte Carlo calculation may be intended to give a rough estimate of some numerical quantity, or it may be aimed at high precision, or at a target in between. The appropriate balance between small or zero bias and small variance will depend on these choices.
+We write
+\begin{align}
+	\langle (\theta - Q)^2 \rangle = \langle (\theta -\langle \theta \rangle)^2 \rangle
+	+ (\langle \theta \rangle - Q)^2
+\end{align}
+and observe that the quality of $\theta$ as a measure of $Q$ comes separately from the variance of $\theta$ and from the departure of its mean from $Q$. The quantity $\langle \theta \rangle - Q$ is called the \textit{bias of the estimator}. 
+
+The quadratures we have discussed are unbiased since the result is linear in the functions calculated. For some problems, however, it is very difficult to formulate unbiased estimators. As we shall see, there are many problems for which the answer required is a ratio of integrals,
+
+\begin{align}
+	Q = \frac{\int_0^1 g_1 (x) \dif x}{\int_0^1 g_2 (x) \dif x} 
+\end{align}
+for which a suitable estimator is
+\begin{align}
+	\theta (\xi_1, ..., \xi_N) = \frac{\sum_i g_1 (\xi_i)}{\sum_i g_2 (\xi_i)}
+\end{align}
+Since this is not a linear function of $g_2$, it is biased. (...example...) This $\frac{1}{N}$ behavior is typical of the bias of such ratios. The results that may be derived from a Monte Carlo calculation are more general than this, and may have different variation of the bias. It is of course best if the bias becomes 0 as $N$ grows large.
+
+An estimator $\theta$ is termed consistent for the quantity $Q$ if $\theta$ converges to $Q$ with probability 1 as $N$ approaches infinity. That is, $\theta$ is a consistent estimator of $Q$ if 
+\begin{align}
+	p(lim_{N\rightarrow \infty} \theta (\xi_1, \xi_2, ..., \xi_N)=Q) =1 
+\end{align}
+The law of large numbers states that the sample mean $\bar{x}_N$ is a consistent (and unbiased) estimator of the mean $\mu$. It further implies that estimators of quotients that are quotients of means are also consistent (although, in general, biased).
+
+While unbiased estimators are desirable, they should not be introduced at the expense of a large variance, since the overall quality is a combination of both bias and consistency. In general, one seeks the minimum of $\langle (\theta -Q)^2 \rangle$. 
+
+(example)
+
+Just as a good Monte Carlo calculation must be supplemented with an estimate of the statistical error, sources of bias should be identified. The bias should be estimated numerically or an upper bound should be determined. A useful way of estimating bias when the behavior with $N$ is known is to group the data in samples smaller than $N$, say $n=N/m$. One can average this more biased estimator over the m groups obtained and study the dependence on m:
+\begin{align}
+	\text{Bias of } \frac{\sum_{i=1}^N g_1 (\xi_i)}{\sum_{i=1}^N g_2 (\xi_i)}
+	&\approx \frac{c}{N} \\
+	\text{Bias of} \frac{1}{m} \sum_{l=1}^m (\frac{\sum_{i=n(l-1)+1}^{nl} g_1 (\xi_i)}
+	{\sum_{i=n(l-1)+1}^{nl} g_2 (\xi_i)})_{group_l}
+	&= \frac{c}{n} = \frac{cm}{N}
+\end{align}
+where $c$ is a positive constant.
+
+We note in passing that this method of grouping is also a practical way of estimating the variance of the quotient. This consists in selecting groups of numerators and denominators that are nearly independent, forming partial quotients for the groups, and then applying Equation 2.44. \cite{Kalos2008}
+
+\subsection{Markov Chains}
+Why? Because Monte Carlo requires us to sample from the probability distribution. We are not able to do this directly because the normalization constant is intractable. 
+
+What is a Markov Chain?
+A Markov Chain is a type of stochastic process. 
+
+\subsubsection{Stochastic processes}
+A stochastic process is a stochastic quantity $Y$ that can be mapped from a stochastic variable $X$ with a function $f$, and that also depends on another "normal" variable $t$, which usually represents time. That is,
+\begin{align}
+	Y_X (t) = f(X, t)
+\end{align}
+
+We may compute averages based on the given probability density $P_X(X)$ of $X$, for example
+\begin{align}
+	\langle Y(t) \rangle = \int Y_x (t) P_x(x) \dif x
+\end{align}
+More generally we may compute the $n$th moment, given time values $t_1,...,t_n$ as
+\begin{align}
+	\langle Y(t_1) ... Y(t_n) \rangle = \int Y_x(t_1) ... Y_x(t_n) P_x (x) \dif x 
+\end{align}
+Similarly we may also compute the \textbf{autocorrelation function}.
+
+The probability density for $Y_X(t)$ to take any value $y$ at time $t$ is then
+\begin{align}
+	P_1 (y, t) = \int \delta (y- Y_X (t)) P_X (x) \dif x
+\end{align}
+Similarly the joint probability density that $Y$ has the value $y_1$ at $t_1$, and also $y_2$ at $t_2$ and so on till $y_n$ at $t_n$ is
+\begin{align}
+	P_n (y_1, y_1; y_2, t_2; ...; y_n, t_n)
+	= \int \delta (y_1 - Y_x (t_1)) ... \delta (y_n - Y_x (t_n)) P_x (x) \dif x
+\end{align}
+In this way a hierarchy of probability densities $P_n (n=1,2,...)$ is defined.
+Considering $P_n$ to be defined only when all times are different, the hierarchy of functions $P_n$ then obeys the following four \textbf{consistency conditions}.
+\begin{enumerate}
+	\item $P_n \geq 0$
+	\item $P_n$ does not change on interchanging two pairs $(y_k, t_k)$ and $(y_l, t_l)$
+	\item $\int P_n (y_1, t_1; ...; y_n, t_n) \dif y_n = P_{n-1} (y_1, t_1; ...; y_{n-1}, t_{n-1}) $
+	\item $\int P_1 (y_1, t_1) \dif y_1 = 1$ 
+\end{enumerate}
+Any set of functions that obey the four consistency conditions determines a stochastic process.
+
+
+
+\subsubsection{Markov processes}
+A Markov Process is a stochastic process that has the Markov property. The Markov property is that the next state is dependent only on the current state, and no more history than that. It is that for any set of $n$ successive times (i.e. $t_1<t_2<t_3$) one has
+\begin{align}
+	P_{1|n-1} (y_n, t_n | y_1, t_1; ...; y_{n-1}, t_{n-1}) = P_{1|1} (y_n, t_n | y_{n-1}, t_{n-1})
+\end{align}
+Meaning, the conditional probability density at $t_n$, given the value $y_{n-1}$ at $t_{n-1}$, is uniquely determined and not affected by any knowledge of the values at earlier times. $P_{1|1}$ is then known as the \textbf{transition probability}.
+
+A Markov Process then is fully determined by the two functions:
+\begin{enumerate}
+	\item The initial probability distribution: $P_1 (y_1, t_1)$
+	\item The transition probability: $P_{1|1} (y_2, t_2| y_1, t_1)$ 
+\end{enumerate}
+From this one can use Kolmogorov's definition of conditional probability to successively construct all $P_n$. For example, for 
+$t_1 < t_2 < t_3$
+\begin{align}
+	P_3 (y_1, t_1; y_2, t_2; y_3, t_3) =& P_2 (y_1, t_1; y_2, t_2) P_{1|2} (y_3, t_3 | y_1, t_1; y_2, t_2) \\
+	=& P_1 (y_1, t_1) P_{1|1} (y_2, t_2| y_1, t_1) P_{1|1} (y_2, t_2| y_1, t_1) P_{1|1} (y_3, t_3 | y_2, t_2)
+\end{align}
+
+\subsubsection{The Chapman-Kolmogorov equation}
+If we integrate the equation above over $y_2$, and then divide by $P_1(y_1, t_1)$, we obtain for $t_1 < t_2 < t_3$ 
+
+\begin{align}
+	P_2 (y_1, t_1; y_3, t_3) =& P_1(y_1, t_1) P_{1|1} (y_2, t_2 | y_1, t_1) P_{1|1} (y_3, t_3| y_2, t_2) \dif y_2 \\
+	P_{1|1} (y_3, t_3| y_1, t_1) =& \int P_{1|1} (y_3, t_3|y_2, t_2) P_{1|1} (y_2, t_2 | y_1, t_1) \dif y_2
+\end{align}
+This is an identity which must be obeyed by any Markov Process. The two functions $P_1$ and $P_{1|1}$ which fully determine a Markov Process then cannot be chosen arbitrarily then, but have to obey
+\begin{enumerate}
+	\item The Chapman-Kolmogorov equation above
+	\item $P_1(y_2, t_2) = \int P_{1|1} (y_2, t_2| y_1, t_1) P_1 (y_1, t_1) \dif y_1$ ("obviously")
+\end{enumerate}
+
+Any two non-negative functions $P_1$ and $P_{1|1}$ that obey these consistency conditions uniquely determines a Markov Process.
+
+\subsubsection{Stationary processes}
+A \textit{stochastic process} in general is defined to be stationary when the moments are not affected by a shift in time, that is
+\begin{align}
+	\langle Y(t_1 + \tau)...Y(t_n + \tau) \rangle = \langle Y(t_1 )...Y(t_n ) \rangle
+\end{align}
+for all $n$, all $\tau$, and all $t_1, ..., t_n$. In particular $\langle Y \rangle$.
+
+For a stationary \textit{Markov process} we have that the transition probability $P_{1|1}$ does not depend on two times but only on the time interval; we introduce the notation
+\begin{align}
+	P_{1|1} (y_2, t_2| y_1, t_1) = T_\tau (y_2|y_1), \quad \tau = t_2 - t_1
+\end{align}
+
+The Chapman-Kolmogorov equation then becomes $(\tau, \tau' > 0)$
+\begin{align}
+	T_{\tau+\tau'} (y_3 | y_2) = \int T_{\tau'} (y_3|y_2) T_\tau (y_2|y_1) \dif y_2
+\end{align}
+If we read the integral as a product of two matrices, or integral kernels, this may be written
+\begin{align}
+	T_{\tau + \tau'} = T_{\tau'} T_{\tau}, \quad (\tau, \tau' > 0)
+\end{align}
+
+\subsubsection{Markov Chains}
+Markov chains are an especially simple class of Markov processes, which we define by the properties
+\begin{enumerate}
+	\item The range of $Y$ is a discrete set of states
+	\item The time variable is discrete and take only integer values $t=...,-2,-1,0,1,2,...$
+	\item The process is stationary (or at least \textbf{homogeneous}), so the transition probability depends on the time difference alone.
+\end{enumerate}
+A \textbf{finite} Markov chain then has a range consisting of a finite number $N$ states. We then have
+\begin{itemize}
+	\item The initial probability distribution $P_1 (y, t)$ is an $N$-component vector $p_n(t)$ ($n=1,2,...,N$).
+	\item The transition probability $T_\tau (y_2|y_1)$ is an $N\times N$ matrix.
+\end{itemize}
+
+The Markov property then leads to the equation
+\begin{align}
+	T_\tau = (T_1)^{\tau} (\tau = 0,1,2,...)
+\end{align}
+The probability distribution $p(t)$ originating from the initial distribution $p(0)$ is, in matrix notation,
+\begin{align}
+	p(t) = T^t p(0)
+\end{align}
+The study of finite Markov chains amounts to investigating the powers of an $N\times N$ matrix $T$ of which we only know that it is a \textbf{stochastic matrix}. That is,
+\begin{enumerate}
+	\item Its elements are non-negative.
+	\item Each column adds up to unity.
+\end{enumerate}
+It is clear that $T$ has a left eigenvector $(1,1,...,1)$ with eigenvalue 1, and therefore a right eigenvector $p^s$ such that $T p^s = p^s$, which is the $P_1(y)$ of the stochastic process.
+The prinicpal task of the theory then is to show that for any initial $p(0)$
+\begin{align}
+	\text{lim}_{t\rightarrow \infty} p(t) = \text{lim}_{t\rightarrow \infty} T^t p(0) = p^s
+\end{align}
+(and this has been shown by so and so except for a few exceptional cases?)
+\cite{VanKampen2007}
+
+
+\subsection{Markov Chain Monte Carlo}
+Markov Chain Monte Carlo methods are constructed to have the desired probability distribution as their equilibrium distribution, so that having reached the Markov Chain equilibrium distribution, we may obtain samples from the desired distribution. This is done using random walkers. While samples in conventional Monte Carlo integration are independent, the samples in this method are correlated.
+When solving an integral the desired equilibrium of the Markov chain is the integrand.
+
+What is a random walk?
+Assume a set of random variables $x_1, x_2,...$ represent the state of a system at some "time" $n$ for $n=1,...,N$. The probability of going from state $i$ at time $n$ to state $j$ at time $n+1$ is
+\begin{align}
+	p_{ij} = p(x_{n+1} = j| x_n = i)
+\end{align}
+and is independent of past states, prior to state $i$. The set $\{ x_n \}$, $n\geq 0$ is called a \textit{Markov chain process} with stationary (a stationary transition probability is independent of when the transition from state $i$ to state $j$ occurs in the Markov chain) transition probabilities $p_{ij}$, $i,j=1,...,N$. A Markov chain is another term for a random walk. 
+
+Random walks are frequently used as discrete approximations to continuous physical processes. Consider the motion of diffusing particles, which can be described by a differential equation. The motion of the particles is continuous but the positions, subject to collisions and perhaps random forces, fluctuate randomly. If a particle’s future position depends only on the current position, then the set $\{ x_n \}$ where $x_n$ is the position at a time "$n$" represents a Markov process.
+
+Every time the system represented by a Markov Chain leaves a state $i$, it must be in another of the possible states; thus
+\begin{align}
+	\sum_{j=1}^N p_{ij} = 1, \quad i=1,...,N
+\end{align}
+If a state $j$ can be reached from state $i$ in a finite number of steps or transitions, then state $j$ is called \textit{accessible} from state $i$. If state $i$ is accessible from state $j$, then the states are said to \textit{communicate} with each other. If the two states do not communicate, then either $p_{ij}=0$ or $p_{ji}=0$. A Markov chain is termed \textit{irreducible} if all states communicate with each other. 
+
+The $p_{ij}$ form a matrix $\bm{P}$ called the \textit{one-step transition probability matrix}. Given $\bm{P}$ and the probability distribution of the state of the process at time 0, the Markov chain is completely specified. Let $p_{ij}^n$ be the probability that the system goes from state $i$ to state $j$ in $n$ transitions. Then it can be expressed as 
+\begin{align}
+	p_{ij}^n = \sum_{k=0}^N p_{ik}^r p_{kj}^s
+\end{align}
+where $r+s = n$ and we define
+\[ p_{ij}^0 = \begin{cases}
+				 1, & i = j \\
+				 0, & i \neq j  
+\end{cases} \]
+The period of state $i$, $d(i)$, is the greatest common divisor of all integers $n\geq 1$ for which $p_{ii}^n > 0$. If $p_{ii}^n = 0$ for all $n$, then $d(i)$ is defined to be 0. If the states $i$ and $j$ communicate, then $d(i) = d(j)$. If all the states in a Markov chain have a period of 1, the system is called \textit{aperiodic}. Let $f_{ii}^n$ be the probability that starting from state $i$, the first return to state $i$ occurs at the $n$th transition,
+\begin{align}
+	f_{ii}^n = p(x_n =i, x_m\neq i, m=1,2,...., n-1| x_0 =i)
+\end{align}
+State $i$ is said to be \textit{recurrent} iff
+\begin{align}
+	\sum_{n=1}^N f_{ii}^n = 1
+\end{align}
+That is, starting from state $i$, the probability of returning to state $i$ in finite time is 1. If this is not true, the state is said to be a \textit{transient} state. If states $i$ and $j$ communicate and $i$ is recurrent, then $j$ is recurrent. Thus, all states in an equivalence class (i.e. states that communicate with each other) are either recurrent or transient. 
+
+Suppose we have a Markov chain with a recurrent aperiodic class of states. We can define the stationary probability for states $j=1,2,...,N$ by
+\begin{align}
+	\pi_j &= sum_{i=0}^N \pi_i p_{ij}, \quad pi_i \geq 0 \\
+	\sum_{i=0}^N \pi_i &= 1
+\end{align}
+$\pi_j$ is the proportion of the time that the system spends in state $j$. The quantity $\pi_i p_{ij}$ is the proportion of the time that the random walk has just entered state $j$ from state $i$. If the initial state of the random walk is chosen to be distributed as $\pi_j$, then $p(x_n=j)$ is equal to $\pi_j$, for all $n$ and $j$. 
+
+If $\pi_i > 0$ for one state $i$ in an aperiodic recurrent class, then $\pi_j > 0$ for all states $j$ in the same class. Such a class is called \textit{strongly ergodic}. When
+\begin{align}
+	\pi_i p_{ij} = \pi_j p_{ji}
+\end{align}
+for all $i\neq j$, then the Markov chain is said to be \textit{time reversible}. If the initial state $x_0$ is chosen from the set $\{ \pi_j \}$, the sequence of steps going backwards in time from any point $n$ will also be a Markov chain with transition probabilities given by $p_{ij}$. 
+
+\subsubsection{Estimators and Markov Chains}
+Markov Chains are used in simulations to model the behavior of systems whose probability distribution functions are not easily sampled. Suppose a discrete ranom variable has a probability mass function given by $p_j = p(x=j), j=1,2,..., N$. It can be sampled by creating an irreducible aperiodic Markov chain such that $p_j = \pi_j$ for $j=1,2,...,N$ and obtaining the values of $x_n$ when $n$ is large. An estimator for a property, $h(x)$, of the system, $E(h(x)) = \sum_{j=1}^N h(j) p_j$ can be formed from the states reached in the random walk,
+\begin{align}
+	E(h(x)) \approx \frac{1}{m} \sum_{i=1}^m h(x_i)
+\end{align}
+However, at step $n$ in a Markov chain, the state of the next step, $n+1$, is dependent on the properties of the previous step. Thus, it takes some number of steps, not always easily quantified, to lose the influence of the distribution of the initial state $x_0$. As a result, in forming estimators of quantities of interest, the first $k$ steps of the Markov chain are usually discarded. The estimator of the property $h(x)$ then becomes
+\begin{align}
+	E(h(x)) \approx \frac{1}{m-k} \sum_{i=k+1}^m h(x_i)
+\end{align}
+The choice of $k$ is guided by the properties of the application. 
+
+The strong serial correlation that exists between the steps of a Markov chain also effect the estimation of the standard error of the estimator in the above equation. To correct for the correlation, one approach is to divide the Markov chain into blocks large enough so that the correlation is minimized between the blocks. This approach is called \textit{batch means} or \textit{blocking}. The $m-k$ steps in the above equation are broken up into $s$ blocks or batches of lenght $r$ steps, where $s = \frac{m-k}{r}$ and both $s$ and $r$ are integers. The average value of $h(x)$ is evaluated for each of the $s$ blocks.
+\begin{align}
+	H_{\mathit{\ell}} = \frac{1}{r} \sum_{i=k+(\ell - 1)r + 1}^{k + \ell r} h(x_i), \quad \ell = 1,2,...,s
+\end{align}
+Since each of the $H_\ell$ is considered to be an i.i.d. random variable, the mean value is given by 
+\begin{align}
+	\bar{H} = \frac{1}{s} \sum_{\ell = 1}^s H_\ell
+\end{align}
+and $\bar{H}$ is used to obtain the sample estimate of the variance,
+\begin{align}
+	var(H_\ell) = \frac{1}{s-1} \sum_{\ell = 1}^s (H_\ell - \bar{H})^2
+\end{align}
+The estimate of the standard error associated with $E(h(x))$ can then be obtained as $\sqrt{var(H_\ell)/s}$. 
+ \cite{Kalos2008}
+\subsubsection{Application Example: Simulated Annealing}
+ \cite{Kalos2008}
+\subsubsection{Variance reduction - importance sampling of integral equations}
+ \cite{Kalos2008}
+
+
+\subsubsection{Different source on Markov Chains}
+Variational Monte Carlo is usually used to calculate expectation values of operators $\hat{X}$ that are diagonal or near-diagonal in the $\bm{R}$ representation. (The case of an arbitrary operator $\hat{X}$ is treated in the chapter by Nightingale.) The expectation value can be written in the form
+\begin{align}
+	\langle \hat{X} \rangle_\rho =& \frac{\sum_{\bm{R}} X(\bm{R}) \rho(\bm{R})}{\sum_{\bm{R}} \rho (\bm{R})} \\
+	\approx & \frac{1}{T} \sum_{i=1}^T X(\bm{R}_i)
+\end{align}
+where $\rho(\bm{R}) = |\Psi (\bm{R})|^2$ and $\Psi(\bm{R})$ is a trial state that approximates the egienstate of interest.
+The \textit{configurational eigenvalue} $X(\bm{R})$ is defined by
+\begin{align}
+	X(\bm{R}) \Psi (\bm{R}) = \langle \bm{R} | \hat{X} | \Psi (\bm{R}) \rangle = \sum_{\bm{R}'} \langle \bm{R} | \hat{X} | \bm{R}' \rangle \langle \bm{R}' | \Psi \rangle
+\end{align}
+and $X(\bm{R}) = \langle \bm{R}|\Psi \rangle = \langle \Psi | \bm{R} \rangle$. 
+To be of practical use it is necessary that the sum on the right hand side can be performed quickly. If the states $\bm{R}$ form a continuum, then this is the case if $\hat{X}$ is diagonal or near-diagonal (involves only low-order derivatives in the $\bm{R}$ representation).
+The operator of greatest interest is the Hamiltonian $\mathcal{H}$, in which case the configurational eigenvalue $X(\bm{R})$ is the \textit{local energy}.
+
+The second line in the first equation expresses the fact that a Monte Carlo simulation of expectation values is obtained as a time average over a sequence of $T$ configurations that are sampled with relative probability $\rho(\bm{R})$. The time average is an approximation to the quantum mechanical expectation value, which becomes an equality in the $T\rightarrow \infty$ limit. To evaluate the right hand side, we need to find a way to sample  $\rho(\bm{r})$. The \textit{generalized Metropolis} method is almost universally used to sample complicated prob dists. Although it is a very simple method, we will see that a little bit of thought invested in the implemenetation of the method can have a large effect on its efficiency by reducing sequential correlations of the sampled configs. 
+
+As the trial state $\Psi(\bm{R})$ approaches an exact eigenstate of $\hat{X}$, the configurational eigenvalue becomes a constant, equal to the eigenvalue of $\hat{X}$ for that state, i.e., both systematic and the statistical errors of the Monte Carlo estimate of the first equation vanish. Although this ideal situation is never achieved in practice for problems of interest, it does indicate that significant gains can be achieved by optimizing $\Psi(\bm{R})$ . We present later the \textit{variance minimization method} for optimizing trial states.
+\subsubsection{(cont. ) Generalized Metropolis method}
+For distributions that can't be sampled directly, at the cost of the generated samples being serially correlated.
+
+The Metropolis method is an application of a \textbf{Markov chain}. A Markov chain is specified by two ingredients: an initial prob dist and a transition matrix whose elements $M(\bm{R}_f | \bm{R}_i )$ represent the prob of making a transition from an initial state $\bm{R}_i$ to a final state $\bm{R}_f$. Clearly, since the prob must be non-negative and since the system must evolve to some state (including the initial state), we require
+\begin{align}
+	M(\bm{R}_f | \bm{R}_i) \geq 0 \quad \text{and} \quad
+	\sum_{\bm{R}_f} M(\bm{R}_f | \bm{R}_i) = 1
+\end{align}
+Such a matrix = a \textbf{stochastic matrix}.
+
+To sample the desired distribution $\rho (\bm{R})$ we start from an arbitrary initial state $\bm{R}_i$ and evolve the system by repeated application of a Markov matrix $M$ that satisifies the \textbf{stationary condition}:
+\begin{align}
+	\sum_i M(\bm{R}_f | \bm{R}_i) \rho (\bm{R}_i) = \sum_i M (\bm{R}_i | \bm{R}_f) \rho(\bm{R}_f) = \rho(\bm{R}_f)
+\end{align}
+for all states $\bm{R}_f$ where the second equality follows from previous eq. 
+
+Hence, $\rho$ is a right eigenvector of $M$ with eigenvalue 1. The stationary property implies if we start with the desired dist $\rho$ we will continue to sample the same dist. 
+
+However, we want that any intial dist should evolve to the desired dist $\rho$ under the repeated application of $M$, i.e., $lim_{n\rightarrow \infty} M^n (\bm{R}' | \bm{R}) = \rho(\bm{R}')$, independent of $\bm{R}$. 
+
+Aka, not only should $\rho$ be a right eigenvector of $M$ but it should be the \textit{dominant} right eigenvector. Necessary conditions are that transitions can be made with non-zero prob between (almost, ref) any pair of states in a finite number of steps and that $M$ not be cyclic. Such a matrix is \textbf{ergodic}. 
+
+\subsubsection{(cont.) Detailed balance condition}
+We have shown so far that we can sample $\rho$ by repeated application of a Markov matrix that satisfies the stationary condition, but we have not shown how such matrices are constructed in practice. In order to do this, the more stringent \textbf{detailed balance} condition
+\begin{align}
+	M(\bm{R}_f | \bm{R}_i ) \rho(\bm{R}_i) = M(\bm{R}_i | \bm{R}_f ) \rho(\bm{R}_f)
+\end{align}
+is usually imposed. 
+It expresses the condition that for any pair of states $\bm{R}_i$ and $\bm{R}_f$ the rate of flow is the same in both directions. It is a sufficient, but not necessary, condition. Detailed balance implies the stationary condition, but the reverse is not true.
+
+\cite{Umrigar1999}
+
+\subsection{Metropolis-Hastings Sampling}
+There are several approaches to how one should best generate new samples. One is Metropolis-Hastings method. It is based on using both a proposal probability and an acceptance probability. 
+Introduced by \cite{Metropolis1953}
+
+
+\begin{itemize}
+	\item Simple and powerful. Can be used to sample essentially any distribution function regardless of analytic complexity in any number of dimensions. Complementary disadvantages: sampling is correct only asymptotically, and successive variables produced are correlated, often very strongly. $\rightarrow$ evaluation of integrals normally produces positive correlations in the values of the integrand, with consequent increase in variance for a fixed number of steps as compared with independent samples. Also the method is not well suited to sampling distributions with parameters that change frequently.
+	\item Motivation: an analogy with the behavior of systems in stat mech that approach an equilibrium whose statistical properties are independent of the kinetics of the system.
+	\item Here
+	\begin{itemize}
+		\item \textit{system} = a point $x$ in a space $\Omega$ (typically in $\bm{R}^M$) that may be thought of as a possible description of a physical problem.
+		\item \textit{kinetics} = a stochastic transition that governs the evolution of the system: a pdf $K(X|Y)$ that ensures that the evolution of a system known to be at $Y$ will bring it near $X$ next.
+		\item $K$ = a model of the physical process by which a system changes. Or a mathematical abstraction. In a Monte Carlo calculation, it plays the role of a sampling distribution.
+	\end{itemize}
+	\item One condition for a system to evolve toward equilibrium and stay there is, simply, that the system be on the average as likely to move into a specific neighborhood of $X$ from a neighborhood of $Y$ as to move exactly in the reverse direction. If the prob dist for observing the system near $X$ in equilibrium is $f(X)$, then the kinetics must satisfy
+	\begin{align}
+		K(X|Y) f(Y) = K(Y|X)f(X)
+	\end{align}
+	This relation is called \textbf{detailed balance}. $K(X|Y)f(Y)$=the prob of moving from $Y$ to $X$ expressed as the a priori chance of finding the system near $Y$ (i.e. $f(Y)$) times the conditional probability $K(X|Y)$ that it will move from $X$ to $Y$.
+	\item For a physical system, one usually assumes $K(X|Y)$ known, and one has the task of finding $f(X)$. The Metropolis algorithm  (as in much of Monte Carlo) reverses this: one has the task of finding a convenient and correct kinetics that will equilibrate the system so that the given $f(X)$ turns out to be the chance of observing the system near $X$.
+	\item This turns out to be extremely easy given the elegant device suggested by the Metropolis algorithm. Transitions are \textit{proposed} from, say, $Y$, to $X'$ using essentially \textit{any} distribution $T(X'|Y)$. Then on comparing $f(X')$ with $f(Y)$ and taking into accoutn $T$ as well, the system is either moved to $X'$  (move 'accepted') or returned to $Y$ (move 'rejected'). Acceptance of the move occurs with probability $A(X'|Y)$, which must be calculated so as to satisfy detailed balance. 
+	\item We then have
+	\begin{align}
+		K(X|Y) = A(X|Y) T(X|Y)
+	\end{align}
+	Detailed balance requires
+	\begin{align}
+		A(X|Y) T(X|Y) f(Y) = A(Y|X) T(Y|X) f(X)
+	\end{align}
+	We expect that the ratio 
+	\begin{align}
+		\frac{T(Y|X) f(X)}{T(X|Y) f(Y) }
+	\end{align}
+	will play a significant role in determining $A$.
+	\item Given a pdf $f(X)$, where $X$=a many-dimensional vector, the Metropolis technique establishes a random walk whose steps are designed so that when repeated again and again, the asymptotic distribution of $X'$s is $f(X)$. Suppose that $X_1, X_2, ..., X_n$ are the steps in a random walk. Each of the $X'$s is a random variable and has an associated probability $\phi_1(X), \phi_2(X), ..., \phi_n(X)$, where $\phi_1(X)$ can be any distribution for $X$. The $\phi_n(X)$ have the property that asymptotically
+	\begin{align}
+		lim_{n\rightarrow \infty} \phi_n(X) = f(X)
+	\end{align}
+	At each step, in the random walk, there is a transition distribution $T(X|Y)$, that is, the pdf for a trial move to $X$ from $Y$. The $T(X|Y)$ is normalized such that
+	\begin{align}
+		\int T(X|Y) \dif X = 1
+	\end{align}
+	for all values of $Y$. A quantity $q(X|Y)$ is defined as 
+	\begin{align}
+		q(X|Y) = \frac{T(Y|X)f(X)}{T(X|Y)f(Y)} \geq 0
+	\end{align}
+	where we explicitly assume that it's possible to move from $X$ to $Y$ if one can move from $Y$ to $X$ and vice versa. From $q(X|Y)$, the probability of accepting a move can be calculated; one frequently used probability is
+	\begin{align}
+		A(X|Y) = min(1, q(X|Y))
+	\end{align}
+	\item The algorithm can now be described concretely.
+	\begin{itemize}
+		\item At step $n$ of the random walk, the value of $X$ is $X_n$; a possible next value for $X$, $X_{n+1}'$, is sampled from $T(X_{n+1}'|X_n)$, and the prob of accepting $X_{n+1}'$ is computed. If
+		\begin{itemize}
+			\item If $q(X_{n+1}'|X_n) >1$ then $A(X_{n+1}'|X_n) =1$
+			\item If $q(X_{n+1}'|X_n) <1$ then $A(X_{n+1}'|X_n) = q(X_{n+1}'|X_n)$
+		\end{itemize}
+		where
+		\begin{align}
+			q(X_{n+1}'|X_n) = \frac{T(X_n|X_{n+1}') f(X_{n+1}')}{T(X_{n+1}'|X_n) f(X_n)}
+		\end{align}
+		Then
+		\begin{itemize} 
+			\item With probability $A(X_{n+1}'|X_n)$ (that is, if $A(X_{n+1}'|X_n) > \xi$), we set $X_{n+1} = X_{n+1}'$
+			\item Otherwise, $X_{n+1} = X_n$
+		\end{itemize}
+		For $q(X_{n+1}'|X_n) > 1$, $X_{n+1}$ will always equal $X_{n+1}'$.
+	\end{itemize}
+	\item As the random walk proceeds, a recursive relationship develops between succeeding $\phi_n (X)$'s. Let $\phi_n (X)$ be the distribution of values of $X_n$; what is the distribution $\phi_{n+1}$ for the values of $X_{n+1}$? There are two contributions to the distribution of the $X_{n+1}$:
+	\begin{itemize}
+		\item The prob of entering into the vicinity $\dif X$ of $X$ when we successfully move from $X_n$ and
+		\item The prob that once we are at $X$, we will stay at $X$. 
+	\end{itemize}
+	If we start out at some value $Y$ contained in $\dif Y$, the prob of moving from the neighborhood $Y$ to the neighborhood of $X$ is $T(X|Y)\phi_n(Y) \dif Y$. The prob of successfully moving from $Y$ to $X$ is $A(X|Y)T(X|Y)\phi_n(Y) \dif Y$, so the net prob of successfully moving from any point $Y$ to the neighborhood of $X$ becomes
+	\begin{align}
+		\int A(X|Y) T(X|Y) \phi_n (Y) \dif Y
+	\end{align}
+	Similarly, the net prob that a move away from $X$ is not accepted is
+	\begin{align}
+		\int (1-A(Y|X)) T(Y|X) \dif Y
+	\end{align}
+	where $T(Y|X)$= the prob of moving from $X$ to $Y$ and $(1-A(Y|X))$ =the prob that the move was not accpeted. Upon multiplying the above equation by $\phi_n (X)$, the prob that we were at $X$, the relationship for $\phi_{n+1} (X)$ becomes
+	\begin{align}
+		\phi_{n+1} (X) = \int A(X|Y) T(X|Y) \phi_n (Y) \dif Y
+		+ \phi_n(X) \int (1-A(Y|X)) T(Y|X) \dif Y
+	\end{align}
+	The random walk generates a recursion relationship for the distribution functions.
+	\item Earlier, we asserted the asymptotic distribution sampled in the random walk would be $f(X)$. According to a theorem in Feller, if a random walk defines a system that is ergodic, then an asymptotic pdf exists and is unique if
+	\begin{align}
+		\phi_n (X) = f(X) \Rightarrow \phi_{n+1} (X) = f(X)
+	\end{align}
+	that is, if $f(X)$ is a stationary point of the recursion. Systems defined by random walks can be partitioned into several categories.
+	\begin{itemize}
+		\item If, in a random walk, the prob of returning to a neighborhood about $X$ is 0, then the system is called a \textit{null system} and the expected recurrence time is infinite. An example would be a one-dimensional system where $X_{n+1}$ 
+	\end{itemize}
+\end{itemize}
+ \cite{Kalos2008}
+
+\subsubsection{Brute Force}
+We do it quite simple.
+
+\subsubsection{Fokker-Planc and Langevin equations}
+We make the proposal distribution and acceptance distribution smarter, using two complicated equations that should be derived.
+
+\subsection{Gibbs Sampling}
+If certain conditional probabilities are available to us we may simplify the Metropolis-Hastings algorithm by using them. We see then that the acceptance probability is one, that is, all proposed samples are accepted.
+
+\subsection{Minimization}
+Minimization is a huge field in itself. The algorithms proposed here will all have their basis in the gradient descent method. 
+
+\subsubsection{Gradient Descent}
+Given the gradient $G_i$ at iteration $i$ the updating scheme for the parameters $\alpha$ is then
+\begin{align}
+	\alpha_i = \alpha_i - \eta G_i
+\end{align}
+where $\eta$ is referred to as the step size or the learning rate, as is common in machine learning.
+
+\subsubsection{Other}
+We could write about Adaptive SGD here but probably some other like AdaGrad or Adam might be more interesting. Also there is some unclearity on whether we are doing stochastic gradient descent simply by doing stochastic samples or if we should also do mini-batches.
+
+\subsection{The algorithm}
+Putting it all together, we have the variational monte carlo method. 
 
 \section{Quantum Dot}
+The quantum dot may be modeled by an Hamiltonian with a harmonic oscillator potential and a Couloumb interaction potential in order to represent the interaction between particles.
+
 
 \chapter{Statistical toolbox - inc methods shared by traditional and ML}
 \section{Building blocks}
@@ -791,7 +1455,7 @@ Choosing a constant density $\alpha$ of hidden variables pr physical positions, 
 \subsection{Monetoring the learning progress?}
 
 \section{Structure/any particular reason for choices..?}
-
+Conditionals vs. polymorhisms.
 
 \part{Results and analysis}
 \chapter{Making the basic method stripped for extra stuff work - grid search and validation}

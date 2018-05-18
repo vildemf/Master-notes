@@ -46,7 +46,7 @@ The joint probability distribution is defined as \cite{gausbinRBM}
 \end{align}
 where
 \begin{align}
-	Z = \int \int \frac{1}{Z} e^{-\frac{1}{T_0}E(\Vx,\mathbf{h})} \diff \Vx \diff \mathbf{h}
+	Z = \int \int e^{-\frac{1}{T_0}E(\Vx,\mathbf{h})} \diff \Vx \diff \mathbf{h}
 \end{align}
 
 It is common to ignore $T_0$ by setting it to one.
@@ -227,6 +227,10 @@ The goal is to sample positions $\Vx$ according to the probability density given
 It was suggested by Carleo that this method should mainly used for simple systems where the wave function is positive definite.
 In this method we sample from the joint probability of $\Vx$ and $\Vh$, in the form of a two step sampling process. The samples $\Vx$ by themselves then model the probability density $|\Psi(\Vx)|^2$ as we wish.
 The updated samples are generated according to the conditional probabilities $P(X_i|\Vh)$ and $P(H_j|\Vx)$ respectively and accepted with the probability of $1$. 
+
+The conditionals can be derived from the joint probability distribution $F_{rbm}(\VX, \VH)$ given earlier, and are
+
+
 
 \subsubsection{Conditionals when using $\Psi(x) = \sqrt{F_{rbm}}$}
 When the wave function is represented by $\Psi = \sqrt{F_{rbm}}$ as Carleo suggested for a simple system, the condition probabilities are
