@@ -375,6 +375,47 @@ where $c$ is a positive constant.
 
 We note in passing that this method of grouping is also a practical way of estimating the variance of the quotient. This consists in selecting groups of numerators and denominators that are nearly independent, forming partial quotients for the groups, and then applying Equation 2.44. \cite{Kalos2008}
 
+\subsection{Local Energy}
+How do we relate the quantum mechanical energy to a Monte Carlo estimator? We have that \cite{Toulouse2016}
+\begin{align}
+	E_v =& \frac{\langle \Psi | \hat{H} | \Psi \rangle}{\langle \Psi | \Psi \rangle}  \\
+	=& \frac{ \int \Psi^\ast (\bm{R}) \hat{H} \Psi(\bm{R}) \dif \bm{R} }
+	{\int \Psi^\ast \Psi(\bm{R}) \dif \bm{R}} \\
+	=& \frac{ \int \Psi^\ast (\bm{R}) (\Psi(\bm{R}) \frac{1}{\Psi(\bm{R})}) \hat{H} \Psi(\bm{R}) \dif \bm{R} }
+	{\int | \Psi(\bm{R})|^2 \dif \bm{R}} \\
+	=&  \frac{ \int \Psi^\ast (\bm{R}) \Psi(\bm{R}) \frac{\hat{H} \Psi(\bm{R}) }{\Psi(\bm{R})}  \dif \bm{R} }
+	{\int | \Psi(\bm{R})|^2 \dif \bm{R}} \\
+	=&  \frac{ \int | \Psi(\bm{R})|^2  E_L(\bm{R})  \dif \bm{R} }
+	{\int | \Psi(\bm{R})|^2 \dif \bm{R}} \\
+	=& \int P(\bm{R}) E_L (\bm{R}) \dif \bm{R}
+\end{align}
+
+where the local energy is defined $E_L = \frac{\hat{H} \Psi(\bm{R}) }{\Psi(\bm{R})} $ and $P(x) = \frac{| \Psi(\bm{R})|^2 }{ \int | \Psi(\bm{R})|^2 \dif \bm{R} }$ is the normalized probability given by the squared absolute wave function. 
+
+We then recognize that we can use as our Monte Carlo \textit{estimator} the quantity
+\begin{align}
+	\frac{1}{N} \sum_{i=1}^N E_L(\bm{R}_i)
+\end{align}
+with $\bm{R_i}$ sampled from $P(\bm{R})$ to approximate, as $N \rightarrow \infty$, 
+\begin{align}
+	\langle \frac{1}{N} \sum_{i=1}^N E_L(\bm{R}_i) \rangle = \int P(\bm{R}) E_L(\bm{R}) \dif \bm{R} = E_v
+\end{align}
+
+Toulouse et al. \cite{Toulouse2016} gives the definition of local energy as: The expectation value of an operator $\hat{O}$ can be computed by averaging the corresponding local value
+\begin{align}
+	O(\bm{R}_f) = \frac{ \langle \bm{R}_f | \hat{O} |\Psi \rangle }{ \langle \bm{R}_f | \Psi \rangle }
+\end{align}
+at the Monte Carlo points $\bm{R}_f$ after the accept/reject step.
+
+Umrigar \cite{Umrigar1999} defines $E_L$, or generally a \textbf{configurational eigenvalue} $X (\bm{R})$ as
+\begin{align}
+	X(\bm{R}) \Psi(\bm{R}) = \langle \bm{R} | \hat{X} | \Psi(\bm{R}) \rangle
+	 = \sum_{\bm{R}'} \langle \bm{R} | \hat{X} | \bm{R}' \rangle \langle \bm{R}' | \Psi \rangle
+\end{align}
+
+More on how we need the local energy because we need operators that are diagnoal/near diagonal in the used basis in 
+\cite{Umrigar1999} and Carleo seminar notes.
+
 \subsection{Markov Chains}
 Why? Because Monte Carlo requires us to sample from the probability distribution. We are not able to do this directly because the normalization constant is intractable. 
 
@@ -415,7 +456,7 @@ Considering $P_n$ to be defined only when all times are different, the hierarchy
 	\item $\int P_1 (y_1, t_1) \dif y_1 = 1$ 
 \end{enumerate}
 Any set of functions that obey the four consistency conditions determines a stochastic process.
-
+\cite{VanKampen2007}
 
 
 \subsubsection{Markov processes}
@@ -436,6 +477,7 @@ $t_1 < t_2 < t_3$
 	P_3 (y_1, t_1; y_2, t_2; y_3, t_3) =& P_2 (y_1, t_1; y_2, t_2) P_{1|2} (y_3, t_3 | y_1, t_1; y_2, t_2) \\
 	=& P_1 (y_1, t_1) P_{1|1} (y_2, t_2| y_1, t_1) P_{1|1} (y_2, t_2| y_1, t_1) P_{1|1} (y_3, t_3 | y_2, t_2)
 \end{align}
+\cite{VanKampen2007}
 
 \subsubsection{The Chapman-Kolmogorov equation}
 If we integrate the equation above over $y_2$, and then divide by $P_1(y_1, t_1)$, we obtain for $t_1 < t_2 < t_3$ 
@@ -451,6 +493,7 @@ This is an identity which must be obeyed by any Markov Process. The two function
 \end{enumerate}
 
 Any two non-negative functions $P_1$ and $P_{1|1}$ that obey these consistency conditions uniquely determines a Markov Process.
+\cite{VanKampen2007}
 
 \subsubsection{Stationary processes}
 A \textit{stochastic process} in general is defined to be stationary when the moments are not affected by a shift in time, that is
@@ -472,6 +515,7 @@ If we read the integral as a product of two matrices, or integral kernels, this 
 \begin{align}
 	T_{\tau + \tau'} = T_{\tau'} T_{\tau}, \quad (\tau, \tau' > 0)
 \end{align}
+\cite{VanKampen2007}
 
 \subsubsection{Markov Chains}
 Markov chains are an especially simple class of Markov processes, which we define by the properties
@@ -506,6 +550,95 @@ The prinicpal task of the theory then is to show that for any initial $p(0)$
 \end{align}
 (and this has been shown by so and so except for a few exceptional cases?)
 \cite{VanKampen2007}
+
+
+
+\subsection{Metropolis-Hastings algorithm}
+How do we use Markov Chains to sample from $P(\bm{R})$ then?
+
+\subsubsection{Ergodicity}
+The point of using Markov Chains is to be able to sample our desired distribution $P(\bm{R})$. We start from an arbitrary initial state $\bm{R}_i$ and evolve the system by repeated application of a Markov transition matrix $T$. The stationary property, which implies that
+\begin{align}
+	\sum_i T(\bm{R}_f | \bm{R}_i) P (\bm{R}_i) = \sum_i T (\bm{R}_i | \bm{R}_f) P (\bm{R}_f) = P(\bm{R}_f)
+\end{align}
+(where we used that $P$ is an eigenvector of $T$ with eigenvalue 1), and ensures that if we start with the desired distribution $P$, we will continue to sample from that same distribution.
+
+However, we want that \textit{any} initial distribution should evolve to the desired distribution $P$ under the repeated application of $T$, i.e., $lim_{n\rightarrow \infty} M^n (\bm{R}' | \bm{R}) = \rho(\bm{R}')$, independent of $\bm{R}$. 
+
+Aka, not only should $\rho$ be a right eigenvector of $M$ but it should be the \textit{dominant} right eigenvector. Necessary conditions are that transitions can be made with non-zero prob between (almost, ref) any pair of states in a finite number of steps and that $M$ not be cyclic. Such a matrix is \textbf{ergodic}. 
+\cite{Umrigar1999}
+
+\subsubsection{Detailed balance condition}
+We have shown so far that we can sample $\rho$ by repeated application of a Markov matrix that satisfies the stationary condition, but we have not shown how such matrices are constructed in practice. In order to do this, the more stringent \textbf{detailed balance} condition
+\begin{align}
+	M(\bm{R}_f | \bm{R}_i ) \rho(\bm{R}_i) = M(\bm{R}_i | \bm{R}_f ) \rho(\bm{R}_f)
+\end{align}
+is usually imposed. 
+It expresses the condition that for any pair of states $\bm{R}_i$ and $\bm{R}_f$ the rate of flow is the same in both directions. It is a sufficient, but not necessary, condition. Detailed balance implies the stationary condition, but the reverse is not true.
+\cite{Umrigar1999}
+A Markov chain satisfying the detailed balance condition is said to be \textbf{reversible}.\cite{Toulouse2016} 
+
+\subsubsection{obs: When is a Markov chain a random walk?}
+In practice, a Markov chain is realized by a \textbf{random walk}. More in \cite{Toulouse2016} p. 293.
+
+Starting from an initial point $\bm{R}_1$ (or walker) - i.e., a delta-function distribution $\delta (\bm{R} - \bm{R}_1)$ - sample the second point $\bm{R}_2$ by drawing from the probability distribution $P(\bm{R}_2|\bm{R}_1)$, then a third point $\bm{R}_3$ by drawing from $P(\bm{R}_3 | \bm{R}_2)$, and so on. After disregarding a certain number of iterations $M_{eq}$ corresponding to a transient phase called \textit{equilibration}, the random walk samples the stationary distribution $\rho(\bm{R})$ in the sense that
+\begin{align}
+	\rho(\bm{R}) = E[\delta (\bm{R} - \bm{R}_k) ] \approx \frac{1}{M} \sum_{k=1}^M \delta (\bm{R} - \bm{R}_k)
+\end{align}
+and the averages of the estimators of the observables of interest are calculated.
+
+The rate of convergence to the stationary distribution $\rho(\bm{R})$ and the autocorrelation times of the observables are determined by the second largest eigenvalue of the matrix $P$ (see, e.g., Ref. \cite{Gilks1996}). The random walk must be sufficiently long so as to obtain a representative sample of states, making a nonnegligible contribution to the expected values. 
+\cite{Toulouse2016}
+
+\subsubsection{The Metropolis-Hastings Algorithm}
+In the Metropolis-Hastings algorithm , one realizes a Markov chain with the following random walk. Starting from a point $\bm{R}_i$, a new point $\bm{R}_f$ is determined in two steps:
+\begin{enumerate}
+	\item A temporary point $\bm{R}_f'$ is proposed with the probability $P_{prop} (\bm{R}_f' | \bm{R}_i)$,
+	\item The point $\bm{R}_f'$ is accepted (i.e., $\bm{R}_f = \bm{R}_f'$) with probability $P_{acc} (\bm{R}_f' | \bm{R}_i)$ or rejected (i.e., $\bm{R}_f = \bm{R}_i$) with probability $P_{rej}(\bm{R}_f' | \bm{R}_i) = 1 - P_{acc} (\bm{R}_f' | \bm{R}_i)$.
+\end{enumerate}
+The corresponding transition probability can be written as
+\[ P(\bm{R}_f |\bm{R}_i ) = \begin{cases}
+				P_{acc}(\bm{R}_f |\bm{R}_i ) P_{prop} (\bm{R}_f |\bm{R}_i )  
+				& \quad \text{if} \bm{R}_f \neq \bm{R}_i \\
+				1 - \int  P_{acc}(\bm{R}_f' |\bm{R}_i ) P_{propr} (\bm{R}_f' |\bm{R}_i )  \dif \bm{R}_f'
+				& \quad \text{if} \bm{R}_f = \bm{R}_i  
+\end{cases} \]
+or, in a single expression,
+\begin{align}
+	P(\bm{R}_f |\bm{R}_i ) =& P_{acc}(\bm{R}_f |\bm{R}_i ) P_{prop} (\bm{R}_f |\bm{R}_i ) \\
+	&+ [1-\int  P_{acc}(\bm{R}_f' |\bm{R}_i ) P_{propr} (\bm{R}_f' |\bm{R}_i )  \dif \bm{R}_f'] \delta(\bm{R}_i - \bm{R}_f)
+\end{align}
+
+The proposal probability $P_{prob}(\bm{R}_f |\bm{R}_i )$ is a stochastic matrix, i.e.
+\begin{align}
+	P_{prob}(\bm{R}_f |\bm{R}_i ) \geq 0 \quad \text{and} \quad
+	\int P_{prob}(\bm{R}_f |\bm{R}_i ) \dif \bm{R}_f = 1,
+\end{align}
+ensuring that $P(\bm{R}_f| \bm{R}_i)$ fullfills the non-negativity condition. The second term with the delta function ensures that $P(\bm{R}_f| \bm{R}_i)$ fullfills the normalization condition. (Nonnegativity and column normalization then ensures $P(\bm{R}_f| \bm{R}_i)$ is a \textbf{stochastic matrix}).
+
+The acceptance probability is chosen so as to fulfill the \textbf{detailed balance} condition,
+\begin{align}
+	P(\bm{R}_f| \bm{R}_i)  \rho (\bm{R}_i) = P(\bm{R}_i| \bm{R}_f) \rho (\bm{R}_f)
+\end{align}
+
+that is, for $\bm{R}_f \neq \bm{R}_i$,
+\begin{align}
+	\frac{ P_{acc} (\bm{R}_f| \bm{R}_i) }{ P_{acc} (\bm{R}_i| \bm{R}_f) }
+	= \frac{ P_{prop} (\bm{R}_i| \bm{R}_f) \rho (\bm{R}_f) }
+	{ P_{prop} (\bm{R}_f| \bm{R}_i) \rho (\bm{R}_i) }
+\end{align}
+Several choices are possible. The choice of Metropolis et al. \cite{Metropolis1953} maximizes the acceptance probability
+\begin{align}
+	P_{acc} (\bm{R}_f | \bm{R}_i) = \text{min} \{ 1, 
+	\frac{ P_{prop} (\bm{R}_i| \bm{R}_f) \rho (\bm{R}_f) }
+	{ P_{prop} (\bm{R}_f| \bm{R}_i) \rho (\bm{R}_i) } \}
+\end{align}
+The acceptance probability is not a stochastic matrix, even though both the proposal and the total Markov matrices are stochastic. Since only the ratio $\rho (\bm{R}_f)/\rho (\bm{R}_i)$ is involved in the above form of the accpetance probability, it is not necessary to calculate the normalization constaint of the probability density $\rho (\bm{R})$. It is clear that this acceptance probability is optimal, but there is a considerable scope for ingenuity in choosing a proposal probability $P_{prop} (\bm{R}_f| \bm{R}_i)$ that leads to a small autocorrelation time.
+
+\cite{Toulouse2016}
+
+
+
 
 
 \subsection{Markov Chain Monte Carlo}
@@ -738,11 +871,257 @@ Introduced by \cite{Metropolis1953}
 \end{itemize}
  \cite{Kalos2008}
 
-\subsubsection{Brute Force}
-We do it quite simple.
+\subsubsection{Choice of proposal distribution}
+The original paper of Metropolis et al. \cite{Metropolis1953} employed a symmetric proposal matrix, in which cae the proposal matrix drops out of the formula for the acceptance. The advante of having a nonsymmetric proposal matrix was pointed out by Hastings \cite{Hastings1970}. One has a lot of freedom in the choice of the proposal probability $P_{prop} (\bm{R}_f | \bm{R}_i)$. The only constraints are that
+\begin{enumerate}
+	\item $P_{prop} (\bm{R}_f | \bm{R}_i)$ must be a stochastic matrix leading to an ergodic Markov chain (which means which conditions again?)
+	\item It must be possible to efficiently sample $P_{prop} (\bm{R}_f | \bm{R}_i)$ with a direct sampling method.
+\end{enumerate}
+The proposal probability determines 
+\begin{enumerate}
+	\item The average size of the proposed moves $\bm{R}_i \rightarrow \bm{R}_f$ and 
+	\item The average acceptance rate of these moves.
+\end{enumerate}
+In order to reduce \textbf{sequential correlation}, one has to 
+\begin{enumerate}
+	\item Make moves as large as possible, but 
+	\item With a high acceptance rate.
+\end{enumerate}
+In practice, for a given form of the proposal matrix, there is a compromise to be found between
+\begin{enumerate}
+	\item The average size of the proposed moves
+	\item The average accpetance rate
+\end{enumerate}
+\cite{Toulouse2016}
 
-\subsubsection{Fokker-Planc and Langevin equations}
-We make the proposal distribution and acceptance distribution smarter, using two complicated equations that should be derived.
+\subsubsection{Proposal distribution - simplest choice}
+The simplest choice for $P_{prop} (\bm{R}_f | \bm{R}_i)$ is a distribution that is uniform inside a small cube $\Omega(\bm{R}_i)$ centered in $\bm{R}_i$ and of side length $\Delta$ and zero outside
+\[ P_{prop} (\bm{R}_f | \bm{R}_i) = \begin{cases}
+				 \frac{1}{\Delta^{3N}} & \quad \text{if} \bm{R}_f \in \Omega(\bm{R}_i) \\
+				 0 & \quad \text{elsewhere}  
+\end{cases} \]
+In practice, a move according to this probability is propsed,
+\begin{align}
+	\bm{R}_f = \bm{R}_i + \frac{\Delta}{2} \chi
+\end{align}
+where $\chi$ is a vector of $3N$ random numbers drawn from the uniform distribution between $-1$ and $1$. The size of the cube $\Delta$ can be adjusted so as to \textbf{minimize the autocorrelation time of the local energy}, but the latter remains large and the sampling is inefficient.
+\cite{Toulouse2016}
+
+\subsubsection{Proposal distribution - Fokker-Planc and Langevin equations}
+Clever choices use information from the distribution $\rho(\bm{R})$, in particular its local gradient, to guide the sampling. A choice for $P_{prop} (\bm{R}_f | \bm{R}_i)$ which would lead to large moves with an acceptance probability equal to 1 would be $P_{prop} (\bm{R}_f | \bm{R}_i) = \rho(\bm{R}_f)$, independently from $\bm{R}_i$, but we would then be back to the initial problem of sampling a complicated distribution $\rho(\bm{R})$. A good choice for $P_{prop} (\bm{R}_f | \bm{R}_i)$ is the Green function of the Fokker-Planck equation in the short-time approximation
+\begin{align}
+	P_{prop} (\bm{R}_f | \bm{R}_i) = 
+	\frac{1}{(2\pi \tau)^{3N/2}}
+	e^{- \frac{ ( \bm{R}_f - \bm{R}_i -\bm{v}(\bm{R}_i)\tau )^2 }{ 2\tau } }
+\end{align}
+where
+\begin{align}
+	\bm{v}(\bm{R}) = \frac{ \nabla \Psi (\bm{R}) }{ \Psi (\bm{R}) }
+\end{align}
+is called the \textbf{drift velocity} of the wave function and $\tau$ is the \textbf{time step which can be adjusted so as to minimize the autocorrelation time of the local energy}. In parctice, a move according to this probability is proposed
+\begin{align}
+	\bm{R}_f = \bm{R}_i + \bm{v} (\bm{R}_i) \tau + \bm{\eta}
+\end{align}
+where $\bm{\eta}$ is a vector of $3N$ random numbers drawn from the Gaussian distribution of average 0 and standard deviation $\sqrt{\tau}$. The term $\eta$ describes an \textbf{isotropic Gaussian diffusion process (or Wiener process)}. The term $\bm{v}(\bm{R}_i) \tau$ is a \textbf{drift term} which moves the random walk in the direction of increasing $| \Psi (\bm{R})|$. 
+
+The optimal size of the move is smaller in regions where $\bm{v}(\bm{R})$ is changing rapidly. For example, $\bm{v}(\bm{R})$ has a discontinuity at the nuclear positions. Hence, it is more efficient to make smaller moves for electrons in the core than for electrons in the valence regions. In doing this, care must be taken to ensure the \textbf{detailed balance} condition. An elegant solution is provided in the VMC algorithm of (Two Refs) where the electron moves are made in spherical coordinates centered on the nearest nucleus and the size of radial moves is proportional to the distance to the nearest nucleus.
+In addition, the size of the angular moves gets larger as one approaches a nucleus. This algorithm allows one to achieve, in many cases, an autocorrelation time of the local energy close to 1.
+\cite{Toulouse2016}
+
+\subsubsection{Practical considerations}
+Mentioned in relation to nucleus discontinuity issues because we need the derivatives for the sampling to make sense: (There is also a derivative discontinuity when two electrons overlap, but this is less problematic since electrons repel each other)
+\cite{Umrigar1999}
+
+\subsubsection{One or all particles}
+\subsubsection{If one particle at the time - choose them randomly or sequentially}
+\subsection{Convergence and errors}
+\subsubsection{Notes from Umrigar1999}
+In the Monte Carlo method, direct sampling methods, were feasible, are preferable to the Metropolis method, since the points generated by the latter are \textbf{serially correlated}, sometimes with very long \textbf{correlation times}. 
+
+The rate at which the initial distribution evolves to the desired distribution $\rho$ and the \textbf{autocorrelation time} of estimates of various observables is governed by the subdominant eigenvalues. The ideal situation (realized in direct sampling methods) is that all the other eigenvalues are zero. In that case a distribution of initial configurations evolves to $\rho$ in a single Monte Carlo step and every measurement is independent. In practice, Markov matrices with short autocorrelation times for the values of interest are constructed not by analyzing the eigenvalue spectrum of the matrix but by using heuristic arguments to device matrices that allow the system to evolve rapidly through configuration space.
+
+The points sampled by the Metropolis method are sequentially correlated, resulting in a loss of computational efficiency. The effective number of independent observations in a Monte Carlo run of length $N$ is only $N/T_{corr}$ where $T_{corr}$ is the autocorrelation time of the observable of interest for the particular form of the Metropolis method used. It is clearly advantageous to reduce $T_{corr}$. This can be done by either
+\begin{enumerate}
+	\item Increasing the average sixe of the proposed moves or by
+	\item Increasing the acceptance of the moves
+\end{enumerate}
+
+Some observations on the Metropolis method:
+\begin{itemize}
+	\item The Metropolis method automatically samples $\rho(\bm{R})/\sum \rho(\bm{R})$ and can only be used to calculate expectation values of the form
+	\begin{align}
+		\frac{\sum \rho(\bm{R}) X(\bm{R})} {\sum \rho(\bm{R})}
+	\end{align}
+	\item The variance of the estimate for the expectation value $\langle X \rangle$ is given by
+	\begin{align}
+		\frac{T_{corr}}{N} (\frac{\sum (X(\bm{R}_i))^2}{N} - (\frac{\sum X(\bm{R}_i)}{N})^2  )
+	\end{align}
+	That is, the effective number of configurations $N_{eff}$ is smaller than $N$ by a factor of $T_{corr}$, which we define to be the autocorrelation time.
+	\item As mentioned, for a given functional form of $S(\bm{R}_f | \bm{R_i})$, the acceptance decreases as the volume $\Omega(\bm{R}_i)$ (and therefore the average size of the proposed moves) increases, so there exists an optimal $\Omega(\bm{R}_i)$ for which the system evolves the fastest. There is folklore that the optimal occurs when the average acceptance ratio is close to 1/2. In fact the optimal choice may have an average accpetance that is anywhere between zero and one. A much \textbf{better cirterion is to maximize the rate at which the system diffuses} through configuration space
+	\begin{align}
+		\langle A(\bm{R}_f | \bm{R}_i) (\bm{R}_f - \bm{R}_i)^2 \rangle
+	\end{align}
+	The real measure of goodness is of course \textbf{the autocorrelation time for the observable of interest}.
+\end{itemize}
+
+The efficiency of the algorithm is inversely proportional to the autocorrelation time of observables of interest, thus the autocorrelation time is a measure of the algorithm's efficiency. It is determined as follows. The enture Monte Carlo run (after discarding the equilibration updates), consists of $N$ Monte Carlo updates that are divided into $N_b$ blocks each consisting of $N_s$ Monte Carlo steps for each of the $N$ electrons. The local energy is measured after each Monte Carlo update. The autocorrelation time is given by 
+\begin{align}
+	T_{corr} = N_s (\frac{\sigma_b}{\sigma})^2
+\end{align}
+where $\sigma$ and $\sigma_b$ are the root-mean-square fluctuations of the individual energies and of the block average energies respectively. $N_s$ must be chosen such that $N_s \gg T_{corr}$. The autocorrelation time presented in the article table 1 were obtained using values of $N_s$ that were at least 100 times greater than $T_{corr}$. Using $N_s \approx 10 T_{corr}$ results in estimates of $T_{corr}$ that are too low by as much as 20\%. When Monte Carlo moves consist of moving one electron at a time, it takes twice the computer time to move all the electron as compared to an algorithm where they are all moved at once \cite{Ceperley1977}. Hence, in order to have a fair comparison, table 1 has values of $T_{corr}^\ast = 2T_{corr}$ for algorithms moving only one electron at a time. We note that $\sigma$ and the variational energy $\bar{E}$ \textbf{depend on the trial wavefunction but not on the alrogithm used}. $T_{corr}$ and the accpetance $\bar{A}$ \textbf{depend on both the algorithm and the trial wavefunction}.
+\cite{Umrigar1999}
+
+\subsubsection{Results discussion in Umrigar 1999}
+For each of the algorithms $\Delta$ etc. were crudely optimized to yield the smallest possible $T_{corr}$. Table 1 shows the values of $T_{corr}^\ast$ for approximately optimal values of the parameters. Moderate variations of the parameters about their optimal values affect the efficiency of the algorithm only slightly. For example, changing the value of $\Delta_r$ from 5 to 4 alters the value of $T_{corr}$ by less than 10\% for each of the wavefunctions. We see that large improvements of $T_{corr}$ are achieved - it gets smaller by factors of ... respectively for the different wavefunctions as we progress from algorithm 1 to 4.
+
+Note that for each of the four algorithms $T_{corr}$ is smaller for the good Ne wavefunction than for the simple Ne wavefunction. The likely reason for this is that the good Ne wavefunction has a more rapidly varying local energy (but with smaller amplitude of course) and consequently it takes fewer Monte Carlo steps to wander from a region where the local energy is too high to one where it is too low and vice versa. Hence the gain in efficiency from improving the wavefunction is greater than would be supposed by merely comparing their respective values of $\sigma$.
+
+For algorithm 1 there is a considerable increase in $T_{corr}$ in going from Ne to Ar, while for algorithm 4, $T_{corr}$ increases very little. This does not mean that calculations for heavy atoms can be performed as rapidly as those of light atoms, unless, of course, pseudopotentials are used to eliminate the core electrons. 
+\begin{enumerate}
+	\item First, the time for evaluating determinants in the wavefunctions scales as $N^3$. 
+	\item Second, the fluctuation in the local energy $\sigma$ increases with the number of electrons $N$. The dependence of $\sigma$ on $N$ is different depending on whether one is interested in 
+	\begin{itemize}
+		\item progressively heavier neutral atoms, or in 
+		\item increasing the number of atoms of the same species. 
+	\end{itemize}
+\end{enumerate}
+It is not known how $\sigma$ scales with the nuclear charge $Z$. We show later empirically that going from the lightest to the heaviest first-row homonuclear molecules the increase is somewhat larger than $Z^2$, but that for the heavier molecules the increase is nealry linear in $Z$. \textbf{The statistical error goes down as the square root of the number of Monte Carlo updates or equivalently the computer time}. Hence, if we assume $\sigma \sim Z^2$, \textbf{then the computer time needed to obtain a given statistical error scales as} $T \sim Z^7$, while if $\sigma \sim Z$ , then $T \sim Z^5$. 
+
+On the other hand, the scaling is not as bad if one is interested in increasingly larger clusters of atomes of fixed $Z$. In that case $\sigma \sim \sqrt{N}$ and so $T \sim N^4$ . 
+
+The scaling for each of these situations is worse of course if one uses a Metropolis method for which $T_{corr}$ \textbf{increases with system size}. The poor scaling wrt $Z$ is the reason why it is necessary to employ pseudopotentials in calculations involving second row and heavier atoms.
+
+One of the values $T_{corr} = T_{corr}^\ast /2 = 0.85$ in the table may at first sight seem impossible since one may suppose that the best possible value for $T_{corr}$ is 1. The reason it is in fact possible is that we are using a single-electron move algorithm and updating the local energy at each Monte Carlo step but $T_{corr}$ is in \textbf{units of all-electron moves} (?).
+\cite{Umrigar1999}
+
+\subsubsection{Variance minimization method for optimizing wavefunctions - Umrigar 1999 discussion}
+\begin{itemize}
+	\item Optimized trial wavefunctions that closely approximate eigenstates of Hamiltonians are essential ingredients of accurate electronic structure calculations employing quantum Monte Carlo methods. The quality of these trial wavefunctions is relevant both for
+	\begin{itemize}
+		\item expectation values of physical interest and for 
+		\item the variance of the Monte Carlo estimators. 
+	\end{itemize}
+	\item As the trial wave function approaches an exact eigenstate of the Hamiltonian, the energy and expectation values of operators commuting with the Hamiltonian satisfy a \textbf{zero-variance principle}, i.e., 
+	\begin{itemize}
+		\item the expectation values approach the exact eigenstate values, while 
+		\item the Monte Carlo variance goes to zero.
+	\end{itemize}
+\end{itemize}
+
+A major advantage of the quantum Monte Carlo methods is that \textbf{there is no restriction on the form of the trial wavefunction} $\Psi (\bm{R})$. Hence, any insight one may have, as regards to the nature of the many-body correlations can be built into $\Psi(\bm{R})$ and tested. To exploit this freedom it is necessary to have a method for optimizing arbitrary wavefunctions.
+
+\begin{itemize}
+	\item The method consists of the minimization of the variance of the local energy (Refs) over a set of $N_c$ configurations $\{ \bm{R}_i \}$ sampled from the square of the best wavefunction, $\Psi_0$, available before we start the optimization, i.e.,
+	\begin{align}
+		\sigma_{opt}^2 [\Psi] = \sum_i^{N_c} [ \frac{ \mathcal{H}\Psi(\bm{R}_i) }{ \Psi(\bm{R}_i) } - \bar{E} ]^2
+		\frac{ w(\bm{R}_i) }{ \sum_i^{N_c} w(\bm{R}_i) }
+	\end{align}
+	where 
+	\begin{align}
+		\bar{E} = \sum_i^{N_c} \frac{ \mathcal{H} \Psi(\bm{R}_i) }{ \Psi(\bm{R_i}) }
+		\frac{ w(\bm{R}_i) }{ \sum_i^{N_c} w(\bm{R}_i) } 
+	\end{align}
+	is the average energy over the sample of configurations. The weights
+	\begin{align}
+		w(\bm{R}_i) = | \frac{ \Psi(\bm{R}_i) }{ \Psi_0 (\bm{R}_i) } |^2
+	\end{align}
+	are introduced to allow the \textbf{nodes} (??) of the wavefunction to move freely during the optimization and to provide the correct weighting (??). The ratio of each of the weights to the average weight is not allowed to exceed a max value; otherwise, it is possible for the optimizer to achieve a small value of $\sigma_{opt}$ by having a few configurations gain a very large weight and a local energy that is very close to $\bar{E}$. Typically, 3000 configurations are sufficient to optimize a wavefunction with 50-100 parameters.
+	\item Variance minimization is more effective than energy minimization because the smallest possible variance is zero whereas the energy is unbounded from below on the necessarily sparse set of $N_c$ configurations on which the optimization is performed (\textbf{in a many-dimensional space any number of configurations, that can fit in computer memory, is a sparse sample}). A direct attempt to minimize the energy of a many-dimensional, multi-parameter wavefunction frequently leads to a wavefunction that has
+	\begin{itemize}
+		\item A low estimated energy on the $N_c$ configurations used to perform the optimization but 
+		\item A higher energy than that of the initial wavefunction on a new set of Monte Carlo configurations.
+	\end{itemize}
+	The "optimiziation" results in a worse wavefunction! (This is overfitting???!!!)
+	\item  There are other advantages to variance minimization. Since the function to be minimized is a sum of squares, effective optimization techniques such as the Levenberg-Marquardt method can be employed. In practice we employ a modified (REF - by the author, unpublished, the program is available upon request) \textbf{Levenberg-Marquardt} method wherein up-hill moves are permitted under certain conditions. 
+	\item Another advantage is that since any eigenstate has zero variance, the method can be used to optimize trial wavefunctions for excited states as well, including those that have the same symmetry as the ground state. 
+	\item Finally, the method can be used even for Hamiltonians that have a spectrum that is unbounded from below, e.g., a relativistic Hamiltonian.
+	\item In practice one optimizes a combination of the variance and the energy by a trivial modification of the procedure described above. One possibility (Ref) is to replace $\bar{E}$ by $E_{guess}$, where $E_{guess}$ is chosen to be slightly lower than the best current estimate for the energy. A more elegant solution \cite{Meierovich1996} is to optimize $\sigma^2 / \bar{E}^2$.
+	\item We note that the variance minimization method has been extended to simultaneously otpimize several trial states (Ref), to find optimized trial states of transfer matrixes (Ref), and to find the subdominant trial state of a Markov matrix (Ref). The latter two are of relevance to static and dynamic equilibrium problems in statistical mechanics.
+\end{itemize}
+\cite{Umrigar1999}
+
+\subsubsection{OBS!!! minimization of variance vs energy}
+Optimizing wavefunctions by minimizing the variance of the energy is an old idea dating back to the 1930s. The first application within Monte Carlo methods may have been by Conroy [77], but the method was popularized within QMC by the work of Umrigar et al [78]. It is now generally believed that it is better to minimize the VMC energy than its variance, but it has proved more difficult to develop robust and efficient algorithms for this purpose. Since the trial wavefunction forms used cannot generally represent energy eigenstates exactly, except in trivial cases, the minima in the energy and variance do not coincide. Energy minimization should therefore produce lower VMC energies, and although it does not necessarily follow that it produces lower DMC energies, experience indicates that, more often than not, it does.
+\cite{Needs2010}
+
+\subsubsection{Forms of Many-Body Wavefunctions}
+We next discuss the functional form of the wavefunctions used in electronic structure calculations of atoms and molecules.
+\begin{itemize}
+	\item Quantum chemistry methods such as Configuration Interaction (CI) expand the wavefunction as a linear combination of determinants of single-particle orbitals. In the limit of an infinite sum this is exact but the rate of convergence is very slow, in part because the true wavefunction has a cusp at elecron coincidences but the determinants, used to expand the wavefunction, do not. 
+	\item In the quantum Monte Carlo methods the above form of the wavefunction is multiplied by a generalized Jastrow factor (also known as a Feenberg factor), expressed in terms of electron-electron and electron-nucleus coordinates, which allows the trial wavefunction to have the correct cusp at electron coincidences. 
+	\item Since the Jastrow factor is everywhere positive, it does not alter the nodes of the wavefunction and so it is necessary to have multiple determinants to accurately describe the nodes of the wavefunction. The intuition one has is that 
+	\begin{itemize}
+		\item the \textbf{near-degeneracy correlation} (?) is most effectively described by the linear combination of determinants, whereas 
+		\item the Jastrow factor describes well the remaining correlation (which requires very large number of determinants in a purely determinantal wavefunction) and allows the imposition of the electron-electron cusps.
+	\end{itemize}
+	In practice it's possible to construct rather compact quantum Monte Carlo wavefunctions with typically 50 to 100 parameters (!!!) that have an energy that is comparable to a CI wavefunction with orders of magnitude (!!!) more parameters.
+	\item Some more discussion, slaters, spin, etc
+	\item In order to obtain a wavefunction with a small variance of the local energy, it is important that the trial wavefunction satisfy a set of \textbf{cusp conditions} which prescribe the proper derivative discontinuity at the collision points to \textbf{ensure that the divergence in the local potential is canceled by an opposite divergence in the local kinetic energy}. Kato (REF) first rigorously derived these conditions as a general property of Coulombic systems. He showed that in the limit that two particles of masses $m_i$ and $m_j$ and charges $q_i$ and $q_j$ approach each other and all other interparticle distances remain larger than zero,
+	\begin{align}
+		\frac{ \partial \hat{\Psi} }{ \partial r_{ij} } |_{r_{ij}=0} = \mu_{ij} q_i q_j \Psi (r_{ij} = 0),
+	\end{align}
+	where $\mu_{ij} = m_i m_j/(m_i + m_j)$ is the reduced mass of the two-particle subsystem and $\hat{\Psi}$ is the average of $\Psi$ over an infinitesimally small sphere centered at $r_{ij} = 0$. 
+	\item Pack and Byers-Brown (Ref) generalized Kato's result by solving the multiparticle Schrodinger equation in the neighborhood of a two-particle coincidence. Writing the wavefunction near such a collision point, $\bm{r}_{ij}=0$, as
+	\begin{align}
+		\Psi = \sum_{l=l_0}^\infty \sum_{m=-l}^l f_{lm} (r) r^l Y_{lm} (\theta, \phi)
+	\end{align}
+	where $r=r_{ij}$; $\theta=\theta_{ij}$; $\phi=\phi_{ij}$, and the $Y_{lm} (\theta, \phi)$ are the usual spherical harmonics, and, expanding $f_{lm}(r) = \sum_{k=0}^\infty f_{lm}^{(k)} r^k$, they found for electron-electron collisions,
+	\begin{align}
+		f_{lm} (r) = f_{lm}^{(0)} [ 1 + \frac{1}{2(l+1)}r + O(r^2) ]
+	\end{align}
+	\item The terms $r^l Y_{lm} (\theta, \phi)$ are analytic functions that can be well described by the slater determinants, while the terms $ [ 1 + \frac{1}{2(l+1)}r ]$ are nonanalytic functions of the individual electron coordinates, having cusps of magnitude $\frac{1}{2(l+1)}$ (though they are of course analytic functions of the interparticle distance $r$). 
+	\item The local energy at the collision point is finite provided that the cusp condition (given in the equation that expressed $f_{lm}(r)$) is obeyed for the lowest value $l_0$ appearing in the sum in the $\Psi$ expression.
+	\item Some discussion of parallel/antiparallel spin cusp factor.
+	\item \textbf{Results}:
+	\begin{itemize}
+		\item Improvements to quantum Monte Carlo wavefunctions, while staying within the form stated (Jastrow times sum of slaters), can be made by either
+		\begin{itemize}
+			\item Adding more determinants or by
+			\item \textbf{Including higher-order correlations in the Jastrow factor}.
+		\end{itemize}
+		Unfortunately \textbf{there has not been sufficient systematic study of either}, in part because, in implementing either of these improvements, 
+		\begin{itemize}
+			\item Multiple choices have been made in choosing the precise functional form and also because
+			\item \textbf{One is never completely sure that the best parameters, for a given functional form, have been obtained}.
+		\end{itemize}
+	\end{itemize}
+	Nevertheless, some conclusions can be drawn from existing studies.
+	\item Subsection which reviews a study of the improvements obtained by adding low-lying determinants (Ref) to wavefunctions of first-row homonuclear diatomic molecules 
+	\item Subsection which reviews the improvements obtained from using higher-order correlations (Ref) in the Jastrow factor.
+	\begin{itemize}
+		\item Early quantum Monte Carlo work was done using a two-body (electron-electron) Jastrow factor. Since then it has become apparent that inclusion of three-body (electron-electron-nucleus) terms results in a large lowering of the energy (Ref). The results for molecules presented in the previous subsection were all obtained with a three-body Jastrow factor. 
+		\item It is natural to ask whether it is worthwhile to include four-body ($e^3-n$) correlations in the Jastrow factors. A systematic expansion of the Jastrow factor consists of a polynomial in scaled inter-particle coordinates. By "scaled" we mean that a monotonic function is used to map the infinite range of the inter-particle coordinates onto a finite interval. As shown in table 2 the number of terms in such an expansion grows rapidly, both as a function of the body order and as a function of the polynomial order of the expansion. If some or all of the particles are identical then the theory of invariants can be used to reduce the computational effort required to evaluate the function. This was first done for identical bosons, for which it was possible to include upto 5-body correlations (REF!!!) and later for electronic structure calculations where four-body ($e^3-n$) correlations were included (Ref).
+		\item In table 3 we show the variational Monte Carlo energyies $E^{VMC}$ and the standard deviation of the local energies $\sigma_{VMC}$ of the Li, Be, and Ne atoms for wavefunctions containing two-body, three-body and four-body correlations. Inclusion of the three-body correlations results in a large improvement in the energy and a large reduction in the standard deviation of the local energy. For Li, Be and Ne, 95\%, 89\% and 84\% of the part of the correlation energy missing in the two-body wavefunctions is recovered while the standard deviation of the local energy is reduced by factors of 6, 4, and 2 respectively. 
+		\item Although not shown in the table, a further advantage accrues from the fact that the auto-correlation time of the local energies sampled in the VMC and in diffusion MC are somewhat reduced. 
+		\item We observe from table 3 that inclusion of the four-body correlations also results in a significant but smaller improvement in both the variational energies and the fluctuations of the local energy. That improvement gets smaller with increasing atomic number and is disappointingly small for Ne.
+		\item Some more discussion in relation to DMC
+		\item The best possible Jastrow factor (one that includes all-body correlations and has an infinite-order polynomial) would have a VMC energy that equals the fixed-node DMC energy. Hence, a measure of the efficiency of the four-body contributions to the Jastrow factor is
+		\begin{align}
+			\eta = \frac{ E_{VMC}^{(n-1)-body} - E_{VMC}^{n-body} }{ E_{VMC}^{(n-1)-body} - E_{DMC} }
+		\end{align}
+		The percent efficiency is much larger going from two-body correlations to three-body correlations than going from three-body correlations to four-bodt correlations. In the latter case, it rapidly decreases from 60\% for Li to 31\% for Be to 9\% for Ne. The reduction in the root mean square fluctuations of the local energy is 24\% for Li, 12\% for Be and 2\% for Ne. 
+		\begin{itemize}
+			\item These somewhat disappointing results are probably due to flaws of the \textbf{nodal surface of the trial wavefunction}, which the four-body interaction Jastrow factor is not designed to correct.(???) That is, the approximate, fixed-node, DMC wavefunction has discontinuous derivative almost everwhere across the nodal surface. On the other hand, a Jastrow factor expressed in terms of inter-particle coordinates, will have non-analyticities only at the $(3N-3)$-dimensional surface where particles coincide, which constitute only a vanishingly small fraction of the entire $3N-1$-dimensional nodal surface.
+			\item Hence, over most of the nodal surface, we are \textbf{attempting to describe a non-analytic function as a finite sum of analytic functions} and we expect the convergence to be slow. 
+			\item The validity of the above argument has been tested by performing calculations for the nodeless, bosonic ground states of the Hamiltonians of the same atoms. As expected, the efficiency for the \textbf{bosonic} states is very much greater than for the fermionic states and the reader is referred to (REF!!!!!) for details.
+		\end{itemize}
+		\item Another interesting observation that emerges from the calculations on the bosonic states is that the fluctuations of the local energy $\sigma$ are much smaller than for the corresponding fermionic states, despite the fact that the absolute energies are larger for the bosonic states. This indicates that the \textbf{difficulty of obtaining a good parameterization of the nodal surface of a fermionic state, or more generally of any excited state, is a significant bottleneck in the search for optimized trial wavefunctions}.
+	\end{itemize}
+	\item For any given wavefunction it is relevant to ask whether further improvements can be made most economically by 
+	\begin{enumerate}
+		\item increasing the variational freedom of the determinantal part of the wavefunction (by increasing the number of single-particle basis functions and/or the number of determinants) or by 
+		\item improving the Jastrow part of the wavefunction (by increasing the polynomial-order and/or the body-order).
+	\end{enumerate}
+	It is clear that 
+	\begin{itemize}
+		\item if we follow the former route to the limit of a complete basis of Slater determinants then the exact result can be obtained, even without a Jastrow factor. However, the rate of convergence would be exceedingly slow, because the Slater determinants lack singularities present in the wavefunction, namely, cusps at electron-electron coincidence points.
+		\item These cusps can already be built into the wavefunction at the level of the two-body correlations by including a Jastrow factor. Incorporating three-body correlations is clearly very advantageous, but the results show that inclusion of four-body correlations may not be the most economical next step to further improvement of the wavefunction, at least for the heavier systems. 
+		\item Instead, it may be preferable ti unclude more determinants in the wavefunction. Once a sufficiently large number of determinants have been included, it seems likely that it may again become more economical to improve the Jastrow part by including the four-body correlations.
+		\item Such explorations are needed in order to fully exploit the flexibility that QMC offers over conventional quantum chemistry methods for the construction of accurate, yet relatively compact, wavefunctions.
+	\end{itemize}
+\end{itemize}
+
+\cite{Umrigar1999}
 
 \subsection{Gibbs Sampling}
 If certain conditional probabilities are available to us we may simplify the Metropolis-Hastings algorithm by using them. We see then that the acceptance probability is one, that is, all proposed samples are accepted.
@@ -1452,10 +1831,15 @@ Choosing a constant density $\alpha$ of hidden variables pr physical positions, 
 \part{Implementation}
 \section{Workflow}
 \section{How to use..?}
-\subsection{Monetoring the learning progress?}
+\subsection{Monitoring the learning progress?}
 
 \section{Structure/any particular reason for choices..?}
-Conditionals vs. polymorhisms.
+Conditionals vs. polymorhisms. Polymorphism and encapsulation.
+
+Other QMC software packages (as pr 2009 - check updates maybe?):
+Some of the QMC methods are implemented in several existing codes and packages that are available for use by communities at large. We will mention the packages which are most familiar to us: CASINO [86], QMCPACK [87], QWALK [88], and CHAMP [89]. QMCPACK and QWALK are distributed under Open Source licenses.
+Although not a software package, we mention here the novel approach for meeting the high computer demands of DMC by Korth et al. [90]. It is a distributed computational system that uses the power of  38000 PCs located all over the world. The system yields  15 teraflops of sustained computing power.
+\cite{Lester2009}
 
 \part{Results and analysis}
 \chapter{Making the basic method stripped for extra stuff work - grid search and validation}
