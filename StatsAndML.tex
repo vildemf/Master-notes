@@ -11,6 +11,14 @@
 \usepackage{bm}
 \usepackage{enumerate}
 \usepackage{mathtools}
+\usepackage{booktabs} 
+
+\usepackage{caption}
+\captionsetup[figure]{font=normalsize}
+\captionsetup[table]{font=normalsize}
+
+\newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}
+
 
 \newcommand*\dif{\mathop{}\!\mathrm{d}}
 \DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
@@ -44,14 +52,13 @@ Start your chapter by writing something smart. Then go get coffee.
 \chapter{The Quantum Many-Body Problem}
 
 \section{Many-Body Quantum Mechanics}
-When describing systems at the size of atoms and electrons, at speeds where relativistic effects are regarded as negligible, quantum mechanics is the theory used to describe the system. 
-While in classical mechanics the state of a system of $N$ particles is described by each particle's position and momentum, in quantum mechanics it is described by the complex valued wavefunction 
-In quantum mechanics, the state of a system is defined by the complex-valued wavefunction $\Psi$, which is an element of an infinite dimensional Hilbert space. That is, a complete vector space with an inner product.\cite{Kvaal2017}. 
+Quantum mechanics is the theory used to study systems at the size of atoms and subatomic particles at speeds where relativistic effects are negligible. While in classical mechanics the state of a system of $N$ particles is given by each particle's position and momentum, in quantum mechanics it is determined by the complex valued wavefunction $\Psi$, which is an element of an infinite dimensional Hilbert space. That is, a complete vector space with an inner product.\cite{Kvaal2017}
 
+Given a system's wavefunction we can calculate all physical quantities of interest\cite{Kvaal2017}. We call them observables and in quantum mechanics they are represented by hermition operators.
 The expectation value of an operator $\hat{\bm{O}}$ for a system of $N$ particles is given as \cite{HjortJensen2015}
 \begin{align}
 	%\langle \hat{\bm{O}} \rangle
-	=& \frac{\int \Psi^{\ast}(\bm{x}_1,...,\bm{x}_N) \hat{\bm{O}}(\bm{x}_1,...,\bm{x}_N)
+	\langle \hat{\bm{O}} \rangle =& \frac{\int \Psi^{\ast}(\bm{x}_1,...,\bm{x}_N) \hat{\bm{O}}(\bm{x}_1,...,\bm{x}_N)
 	\Psi (\bm{x}_1,...,\bm{x}_N)
 	\dif \bm{x}_1 ... \dif \bm{x}_N  }
 	{\int \Psi^{\ast}(\bm{x}_1,...,\bm{x}_N)
@@ -59,11 +66,18 @@ The expectation value of an operator $\hat{\bm{O}}$ for a system of $N$ particle
 	\dif \bm{x}_1 ... \dif \bm{x}_N}
 \end{align}
 
-Finding $\Psi$ requires us to solve the time-independent Schrödinger equation
+For a system of $N$ particles in 3 spatial dimensions we see that this becomes a $3N$-dimensional integral. Furthermore, in order to compute it, we first need to have $\Psi$. This requires us (if we are interested in the ground state energy fex - see nuclear book) to solve the time-independent Schrödinger equation
 \begin{align}
-	\hat{\bm{H}} \Psi =& E\Psi 
+	\hat{\bm{H}} \Psi =& E\Psi .
 \end{align}
-for a complex nuclear many body problem this can quickly become a problem consisting of millions of coupled second-order differential equations in $3N$ dimensions.
+For a complicated many body problem this can turn out to be a problem consisting of millions of coupled second-order differential equations in $3N$ dimensions.
+
+To do:
+\begin{itemize}
+	\item Include spin as an example of several coordinates ala kvaal
+	\item The postulates
+\end{itemize}
+
 
 Computing the expectation value of the observable requires solving the multidimensional integral. This can be approximated using Monte Carlo methods. But what do we do with the fact that we don't know $Psi$? We solve this by employing the variational principle.
 
@@ -74,33 +88,33 @@ Some selected conditions $\Psi$ must satisfy \cite{HjortJensen2015} are normaliz
 \end{align}
 and that $\Psi (x,t)$ and $\partial \Psi(x,t) / \partial x$ must be finite, continuous and single valued.
 
+Furthermore we have that \cite{Helgaker2000} (for molecular electroic-structure systems)
+\begin{enumerate}
+	\item The approximate state should be an eigenfunction of the number operator.
+	\item The exact wavefunction is antisymmetric with respect to the permutation of any pair of electrons.
+	\item For a bound state, the exact wave function is square-integrable and hence normalizable.
+	\item The exact wavefunction is variational in the sense that, for all possible variations $\delta \Psi$ that are orthogonal to the wavefunction, the energy is stable (More in: Epstein's The Variation Method in Quantum Chemistry).
+	\item The exact wavefunction is size-extensive. 
+	\item In non-relativistic theory, the exact stationary states are eigenfunctions of the total and projected spin operators.
+	\item Within the Born-Oppenheimer approximation, the exact stationary states form a basis for an irreducible representation of the molecular point group. 
+	\item Owing to the presence of the Couloumb potential, the molecular electronic Hamiltonian becomes singular when two electrons coincide in space.
+	\item Asymptotic behavior at large distances from the molecule
+	\item Changes in a characteristic way under gauge transformations of the potentials associated with electromagnetic fields.
+\end{enumerate}
 
-requirements from Ledum og Helgaker.
+
+Evt also requirements from \cite{Ledum2017}
 
 \section{Methods}
+Brief overview over quantum many body methods.
+Summary from \cite{Ledum2017}
+
 \begin{itemize}
-	\item Summary from
-	\begin{itemize}
-			\item Ledum master \cite{Ledum2017}
-	\end{itemize}
-	\item The advent of computer simulations during the last several decades have in par- ticular made it possible to study moderately sized quantum mechanical systems from  rst principles. Our ability to solve—in closed form—the governing equations of quantum mechanics (QM) vanishes extremely quickly as the number of constituent particles exceed just a few.
-	\item Any approximative scheme which aims to solve the many-body schrodinger equa- tion from scratch subject to some (more or less) well-de ned simpli cations is called an ab initio method. Working from  rst principles the aim of such algorithms is to extract information from a theoretical QM system in a reasonable amount of time. In order to accomplish this, a number of complicating intricacies need to be disre- garded. The magnitude of the simpli cations—essentially the number and impor- tance of complicating factors dropped—determine both the e cacy and the e ciency of the method: More simpli cations made allow solutions to be found for larger sys- tems (albeit less precise solutions), whereas extremely precise solutions can be found for small systems if very few simpli cations are employed.
-	\item Despite tremendous increases in available numerical computational power in the latter half of the previous-, and the early parts of the current century, any such approximate scheme used is still heavily limited w.r.t. the system size. In practice, most methods are limited to systems of containing on the order of between $10^2$ (for high- precision methods such as con guration interaction, coupled cluster, di usion Monte Carlo, etc.) and $10^5$ electrons (for faster Hartree-Fock and density functional methods).
+	\item In practice, most methods are limited to systems of containing on the order of between $10^2$ (for high- precision methods such as con guration interaction, coupled cluster, di usion Monte Carlo, etc.) and $10^5$ electrons (for faster Hartree-Fock and density functional methods).
 	\cite{Hu2015} \cite{VandeVondele2012} \cite{Bowler2010}
-	\item As previously noted, solving the Schrodinger equation (SE) exactly by hand is impos- sible in the overwhelming majority of interesting cases. However, methods which can get close to the exact solution exists. Full Con guration Interaction (FCI) or direct di- agonalization of the Hamiltonian is exact in the limit of an in nite orbital basis set but su ers from an exponential complexity scaling (in system and basis size). 
-	\begin{itemize}
-		\item Molecular Electronic-Structure Theory - Helgaker. 2000 isbn: 0-471-96755-6.
-	\end{itemize}
-	\item The related Confguration Interaction (CI) and Coupled Cluster (CC) approaches both truncate the FCI expansion of Slater determinants, thus gaining speed but loosing some accuracy.
-	\begin{itemize}
-		\item S. Kvaal. Lecture notes for FYS-KJM4480. Lecture notes. Sept. 2017
-		\item I. Shavitt and R.J. Bartlett. Many-Body Methods in Chemistry and Physics. MBPT and Coupled-Cluster Theory. Cambridge University Press, 2009. isbn: 0-521- 81832-X
-	\end{itemize}
-	\item Diffusion Monte Carlo (DMC) techniques can in principle provide the exact solution to the SE by imaginary-time evolution of an initial wave function guess
-	\begin{itemize}
-		\item M. Hjorth-Jensen. Computational Physics. Lecture notes. Aug. 2015. url: https: //github.com/CompPhysics/ComputationalPhysics/blob/master/doc/Lectures/ lectures2015.pdf .
-		\item B.L. Hammond, W.A. Lester Jr., and P.J. Reynolds. Monte Carlo Methods in Ab Initio Quantum Chemistry. Wspc, 1994. isbn: 981-02-0322-5.
-	\end{itemize}
+	\item As previously noted, solving the Schrodinger equation (SE) exactly by hand is impos- sible in the overwhelming majority of interesting cases. However, methods which can get close to the exact solution exists. Full Configuration Interaction (FCI) or direct diagonalization of the Hamiltonian is exact in the limit of an in nite orbital basis set but suffers from an exponential complexity scaling (in system and basis size). \cite{Helgaker2000}
+	\item The related Confguration Interaction (CI) and Coupled Cluster (CC) approaches both truncate the FCI expansion of Slater determinants, thus gaining speed but loosing some accuracy. \cite{Kvaal2017} \cite{Hammond1994}
+	\item Diffusion Monte Carlo (DMC) techniques can in principle provide the exact solution to the SE by imaginary-time evolution of an initial wave function guess. \cite{HjortJensen2015} \cite{Hammond1994}
 	\item In practice, DMC methods are highly dependent on this ansatz and thus require as input the results of less accurate method but faster methods. One example may be the Variational Monte Carlo (VMC) method: conceptually simpler and faster than DMC, but not as accurate
 	\begin{itemize}
 		\item B.L. Hammond, W.A. Lester Jr., and P.J. Reynolds. Monte Carlo Methods in Ab Initio Quantum Chemistry. Wspc, 1994. isbn: 981-02-0322-5.
@@ -128,6 +142,10 @@ requirements from Ledum og Helgaker.
 	\end{itemize}
 \end{itemize}
 
+
+
+
+
 \section{VMC}
 \subsection{The Variational Principle}
 The variatoional princple states that given any function (possibly fulfilling some conditions?) acting as the wavefunction, it will give a higher energy than the ground state energy. So we are sure to get an upper bound. This leads to a method where we construct a trial wavefunction with some number of variational parameters. Minimizing the variational parameters are then sure to give us the best upper bound of the ground state energy. In the process we have also obtained an approximated wave function. 
@@ -136,153 +154,147 @@ In order to do these we will employ minimization techniques discussed later.
 
 Kvaale lecture notes, Helgaker. Two theorems
 
+\subsubsection{Simple formulation}
+Given a \textit{trial state} $| \Psi_T \rangle$, the following inequality holds:
+\begin{align}
+	E_T = \frac{ \langle \Psi_T | \hat{H} | \Psi_T \rangle }{ \langle \Psi_T |\Psi_T \rangle } \geq E_0
+\end{align}
+where $E_0$ is the ground state eigenvalue of the Hamiltonian $\hat{H}$, and $E_T$ is the trial eigenvalue. The variational principle holds for the ground state, but also for excited states, provided that $|\Psi_T \rangle$ is orthogonal to all the eigenstates having eigenvalue lower than that of the state one wants to approximate.
+\cite{HjortJensen2017}
+
 \subsection{Monte Carlo Integration}
-The Monte Carlo method is an excellent approach to approximating high dimensional integrals. We do so by evaluating the function of interest at random values drawn according to some probability distribution function of interest. 
+\subsubsection{Introductory statistics}
 
-Expected value of random variable $x$ is
+For a continuous random variable $X$ distributed according to the probability density $p(X)$ the $n$th \textbf{moment} of $X$ is defined as
 \begin{align}
-	E(x) = \langle x \rangle = \int p(x) x \dif x = \mu
+	\langle X^n \rangle = \int p(x) x^n \dif x ,
 \end{align}
-if we have a real valued function $g(x)$ and $x$ is a random variable, $g(x)$ is a random variable as well, with the mean value defined
+where we notice that the zeroth moment recovers the \textbf{normalization condition} of the total probability,
 \begin{align}
-	E(g(x)) = \langle g(x) \langle = \int p(x) g(x) \dif x
+	1 = \int p(x) \dif x ,
 \end{align}
-The $n$th moment of $x$ is defined as the expectation of the $n$th power of $x$,
+and the first moment recovers the definition of the \textbf{expectation value} of $X$, 
 \begin{align}
-	\langle x^n \rangle = \int p(x) x^n \dif x
-\end{align}
-where we notice that the first moment recovers the definition of the expectation value.
-The central moments of $x$ are defined
-\begin{align}
-	\langle (x-\mu)^n \rangle = \int p(x) (x - \mu)^n \dif x
-\end{align}
-Where the second central moment is what we know as the variance of $X$
-\begin{align}
-	\sigma^2 = var(x) = \langle (X-\mu)^2 \rangle =& \int p(x) (x - \mu)^2 \dif x  \\
-	=& \int p(x) (x^2 - 2x \langle x \rangle + \langle x \rangle^2) \dif x \\
-	=& \langle x^2 \rangle - \langle x \rangle \langle x \rangle + \langle x \rangle^2 \dif x \\
-	=& \langle x^2 \rangle - \langle x \rangle^2 \dif x 
-\end{align}
-The variance of the function $g(x)$ is similarly defined
-\begin{align}
-	var(g(x)) = \langle (g(x) - \langle g(x) \rangle)^2 \rangle 
-	= \langle g(x)^2 \rangle - \langle g(x) \rangle^2
-\end{align}
-If two random variables $x$ and $y$ are independent, we have that
-\begin{align}
-	\langle xy \rangle = \langle x \rangle \langle y \rangle
-\end{align}
-If they are not independent, the degree of independence is measured by the covariance, which is defined
-\begin{align}
-	cov(x,y) = \langle xy \rangle - \langle x \rangle \langle y \rangle
-\end{align}
-However, zero covariance by itself does not guarantee independence.
-
-From the covariance we may derive the correlation coefficient
-\begin{align}
-	\rho(x,y) =& \frac{cov(x,y)}{sqrt{ \langle x \rangle \langle y \rangle }}, \quad
-	-1 \geq \rho(x,y) \leq 1
+	\mu = E(X) = \langle X \rangle = \int p(x) x \dif x .
 \end{align}
 
-A bivariate probability distribution function $p(x,y)$ may be defined for two random variables. The expected value of a function $g(x,y)$ depending on them is then
+
+Furthermore we have that the \textbf{central moments} of $X$ are defined
 \begin{align}
-	E(g(x,y)) = \langle g(x,y) \rangle = \int \int p(x,y) g(x,y) \dif x \dif y
+	\langle (X-\mu)^n \rangle = \int p(x) (x - \mu)^n \dif x .
 \end{align}
-The marginal probability distribution function can be found for either of the two variables by 
+
+Of particular interest here is the second central moment, which is what we know as the \textbf{variance} of $X$
 \begin{align}
-	p(x) = \int p(x,y) \dif y
+	\sigma^2 = var(X) = \langle (X-\mu)^2 \rangle =& \int p(x) (x - \mu)^2 \dif x  \\
+	=& \int p(x) (x^2 - 2x \langle X \rangle + \langle X \rangle^2) \dif x \\
+	=& \langle X^2 \rangle - 2\langle X \rangle \langle X \rangle + \langle X \rangle^2  \\
+	=& \langle X^2 \rangle - \langle X \rangle^2
 \end{align}
-The conditional probability is then given
+The square root of the variance, $\sigma$, is called the \textbf{standard deviation} or \textbf{standard error}. 
+
+For two random variables $X$ and $Y$ we have that the expectation of a linear combination of them is equal to a linear combination of their expectations, $E(\lambda_1 X + \lambda_2 Y) = \lambda_1 E(X) + \lambda_2 E(Y)$. This is true whether $X$ and $Y$ are dependent or independent. In the variance however we see a difference between these two cases. We have in general that
 \begin{align}
-	p(y|x) = \frac{p(x,y)}{p(x)}
+	var(\lambda_1 X + \lambda_2 Y) =& \lambda_1^2 var(X) + \lambda_2^2 var(Y) + 2 \lambda_1 \lambda_2 ( \langle XY \rangle
+	- \langle X \rangle \langle Y \rangle) \\
+	=& \lambda_1^2 var(X) + \lambda_2^2 var(Y) + 2 \lambda_1 \lambda_2 cov (X, Y)
 \end{align}
-This means that if we know the marginal and conditional probabilities, the bivariate distribution can be sampled by sampling two univariate distributions. This can be generalized to multivariate distributions of more than two correlated random variables.
+The covariance $cov(X, Y) = \langle XY \rangle	- \langle X \rangle \langle Y \rangle$ measures the degree of independence between the two random variables. This is related to the probability of independent random events. If the two random variables are \textbf{independent}, we have that their joint probability can be written as a product of their respective probability distributions,
+\begin{align}
+	p(X, Y) = p(X) p(Y) .
+\end{align}
+Hence the expectation of the product $XY$ is
+\begin{align}
+	\langle XY \rangle = \int p(x, y) xy \dif x \dif y = \int p(x) x \dif x \int p(y) y \dif y
+	=\langle X \rangle \langle Y \rangle
+\end{align}
+We see from this that if the two random variables are independent, $cov(X,Y) = 0$. Zero covariance by itself does not, however, guarantee independence.
+
+From the covariance we may derive the \textbf{correlation coefficient}
+\begin{align}
+	\rho(X,Y) =& \frac{cov(X,Y)}{\sqrt{ \langle X \rangle \langle Y \rangle }}, \quad
+	-1 \geq \rho(X,Y) \leq 1
+\end{align}
+
+Given the \textbf{bivariate probability distribution function} $p(X,Y)$ of two random variables, the \textbf{marginal probability distribution function} can be found for either of the them by 
+\begin{align}
+	p(X) = \int p(X,y) \dif y
+\end{align}
+The \textbf{conditional probability} is then given
+\begin{align}
+	p(Y|X) = \frac{p(X,Y)}{p(X)}
+\end{align}
+This can be generalized to multivariate distributions of more than two random variables.
+
 
 \subsubsection{Estimators}
-Suppose random variables $x_1, x_2,...$ are drawn at random, but not necessarily independently, from the probability distribution function $p(x)$. Let $g_i$ be functions of $x_i$ and let $\lambda_i$ be a real number. Define the function $G$ by
+Suppose the variables $X_1, X_2,...$ are drawn randomly, but not necessarily independently, from the probability distribution function $p(X)$. Let $g$ be a function of $X$ and define the function $G$ by
 \begin{align}
-	G = \sum_{i=1}^N \lambda_i g_i (x_i)
+	G = \frac{1}{N} \sum_{i=1}^N g(x_i)
 \end{align}
-The expected value of $G$ is
+The expected value of $G$ is then
 \begin{align}
-	E(G) = E (\sum_i^N \lambda_i g_i(x_i)) = \sum_i^N \lambda_i E(g_i(x))
-\end{align}
-(having used the linearity of the expectation value). If all the $x_i$ are independent, the variance of $G$ becomes
-\begin{align}
-	var(G) =& \langle G^2 \rangle - \langle G \rangle^2 \\
-	=& \sum_i^N \lambda_i^2 var(g_i(x))
-\end{align}
-If $\lambda_i=\frac{1}{N}$ and all the $g_i(x)$ are identical, $g(x)$. The expected value of $G$ is then
-\begin{align}
-	E(G) = E(\frac{1}{N} \sum_i^N g(x_i) ) = \frac{1}{N} \sum_i^N E(g(x)) = E(g(x))
+	\langle G \rangle = \langle \frac{1}{N} \sum_i^N g(X_i) \rangle = \frac{1}{N} \sum_i^N \langle g(X) \rangle = \langle g(X) \rangle
 \end{align} 
-$G$ is the arithmetic average of $g(x)$ and has the same mean. $G$ is said to be an \textit{estimator} of $E(g(x))$. The variance of $G$ becomes
+$G$ is the arithmetic average of the samples $g(X_i)$ and has the same expectation value as $g(X)$. $G$ is said to be an \textbf{estimator} of $\langle g(X) \rangle$. 
+
+If all the $X_i$ are independent, the variance of $G$ is
 \begin{align}
-	var(G) = var( \frac{1}{N} \sum_i^N g(x_i)  ) = \sum \frac{1}{N^2} var(g(x)) 
-	= \frac{1}{N} var(g(x))
+	var(G) = var( \frac{1}{N} \sum_i^N g(X_i)  ) = \sum_i^N \frac{1}{N^2} var(g(X)) 
+	= \frac{1}{N} var(g(X))
 \end{align}
 
-The implication of this is that as the number of samples of $x$, $N$, increases, the variance of the mean value of $G$ decreases as $\frac{1}{N}$. This is a core idea of Monte Carlo integration. That is, an integral may be estimated by a sum
+The implication of this is that as the number of samples of $X$, $N$, increases, the variance of the mean value of $G$ decreases as $\frac{1}{N}$. This is a core idea of Monte Carlo integration. That is, since we may estimate an integral with a sum
 \begin{align}
-	E(g(x)) = \int p(x) g(x) \dif x = E(\frac{1}{N} \sum_{i=1}^N g(x_i))
+	\langle g(X) \rangle = \int_{-\infty}^\infty p(x) g(x) \dif x = \langle \frac{1}{N} \sum_{i=1}^N g(X_i) \rangle,
 \end{align}
-In summary, to apply this:
-\begin{itemize}
-	\item Choose a series of random variables $x_i$ from $p(x)$
-	\item Evaluate $g(x)$ at each $x_i$
-	\item The mean of all the values of $g(x_i)$ is an estimate of the integral, and the variance of this estimate decreases as the number of samples increases.
-\end{itemize}
+
+The next question is then, how does the sample average $G$ approach the expected value as $N$ increases?
+
 
 \subsubsection{Convergence}
-\textbf{The law of large numbers}: Suppose the random variables $x_1, x_2, ..., x_N$ are independent and all drawn from the same distribution, that is i.i.d. random variables. The expecation of each $x$ is then $\mu$. As $N\rightarrow \infty$, the mean value of the $\{ x \}$ 
-\begin{align}
-	\bar{x}_N = \frac{1}{N} \sum_{i=1}^N X_i
-\end{align}
-is almost guaranteed to converge to $\mu$:
+We here present three results about the estimator $G$.
 
-To estimate the speed of convergence on the other hand, stronger assumptions are needed. We assume an estimator $G$, its mean $\langle G \rangle$ and variance $var(G)$ all exist. \textbf{The Chebychev inequality} then is
+\begin{enumerate}
+\item \textbf{The Law of Large Numbers}: Suppose we have independent, identically distributed (i.i.d.) random variables $X_1,...,X_N$. The expectation of each $X$ is then $\mu$. As $N\rightarrow \infty$, the mean value of the $\{ X_i \}$, 
 \begin{align}
-	p(|G - \langle G \rangle | \geq \sqrt{\frac{var(G)}{\delta}}) &\leq \delta \\
-	p(|G - \langle G \rangle | \geq \sqrt{\frac{var(g)}{\delta N}}) &\leq \delta \\
+	\bar{X}_N = \frac{1}{N} \sum_{i=1}^N X_i
 \end{align}
-with $\delta$ any postive number. This estimates the chances of generating a large deviation in a Monte Carlo calculation. By making $N$ big, we can make the variance of $G$ as small as we want. The probability of getting a large deviation relative to $\delta$ between the estimate of the integral and the true value becomes small. This is at the core of the Monte Carlo method for evaluating integrals.
+is \textit{almost sure to converge} to $\mu$, meaning
+\begin{align}
+	p(\lim_{N\to \infty} \bar{X_N} = \mu) = 1 .
+\end{align}
 
-A much stronger statement than the Chebychev inequality about the range of values of $G$ that can be observed is given by the \textbf{central limit theorem} of probability. For any fixed value of $N$, there is a pdf that describes the values of $G$ that occur in the course of a Monte Carlo calculation (for a fixed $N$, if $G$ was calculated $M$ times, each times with a different sequence of i.d.d random variables, the set $\{ G_j\}$, $j=1,2,...,M$ has a specific distribution function). As $N\rightarrow \infty$, however, the central limit theorem shows that there is a specific limit distribution for the observed values of $G$, namely, the normal distribution. Set
+\item \textbf{The Chebychev Inequality}:
+To estimate the \textit{speed} of convergence we must make stronger assumptions. We assume an estimator $G$, its mean $\langle G \rangle$ and variance $var(G)$ all exist. The Chebychev inequality then is
 \begin{align}
-	G_N = \frac{1}{N} \sum_i^N g(x_i)
+	p\bigg (|G - \langle G \rangle | \geq \sqrt{\frac{var(G)}{\delta}} = \sqrt{\frac{var(g)}{\delta N}} \bigg ) \leq \delta 
 \end{align}
-and
-\begin{align}
-	t_N = \frac{(G_N - \langle g(x) \rangle)}{\sqrt{var(G_N)}}
-	= \frac{\sqrt{N} (G_N - \langle g(x) \rangle)}{\sqrt{var(g(x))}}
-\end{align}
-then
-\begin{align}
-	lim_{N\rightarrow \infty} p(a < t_N < b)
-	= \int_a^b \frac{1}{\sqrt{2\pi}} e^{-\frac{t^2}{2}} \dif t
-\end{align}
-Let $\sigma^2 = var(g)$. We can then rewrite the above equation to specify a pdf for values of $G_N$
-\begin{align}
-	p(G_N) = \frac{1}{\sqrt{2\pi (\sigma^2/N)}} e^{\frac{N(G_N - \langle g\rangle)^2}{2\sigma^2}}
-\end{align}
-As $N\rightarrow \infty$ the observed $G_N$ occurs in ever narrower intervals near $\langle g \rangle$ and one can predict the probability of deviations measured in units of $\sigma$. That is, the observed $G_N$ is within the \textit{standard error} (i.e. $\sigma/\sqrt{N}$) of $\langle g \rangle$ 68.3\% of the time, within two standard errors of $\langle g \rangle$ 95.4\% of the time, and within three standard errors 99.7\% of the time.
+with $\delta$ any postive number. By making $N$ big, we can make the variance of $G$ as small as we want, and the probability of the estimate differing from the true value by a large deviation relative to $\delta$ becomes small. This is at the core of the Monte Carlo method for evaluating integrals.
 
-The central limit theorem is very powerful in that it gives a specific distribution for the values of $G_N$, but it applies only asymptotically. How large $N$ must be before the central limit theorem applies depends on the problem. If for a problem we have that the third central moment $\mu_3$ of $g$ exists, then the central limit theorem will be substantially satisfied when
+\item \textbf{The Central Limit Theorem}:
+This theorem makes a much stronger statement about the possible values of $G$ than the Chebychev inequality. For any fixed value of $N$, the values of $G$ are described by some probability distribution function. The central limit theorem shows that as $N\rightarrow \infty$ there is a specific limit distribution. That is, the \textbf{normal distribution}, specified by
 \begin{align}
-	|\mu_3| << \sigma^3 \sqrt{N}
+	p(G) = \frac{1}{\sqrt{2\pi \cdot var(G)}} e^\frac{( G - \langle G \rangle )^2 }{2 \cdot var(G)}
+	= \frac{1}{\sqrt{2\pi \frac{\sigma^2}{N} }} e^{\frac{N(G - \langle g\rangle)^2}{2\sigma^2}}
 \end{align}
-Then confidence limits derived from the normal distribution can be applied to the results of a Monte Carlo calculation. 
+where $\sigma^2 = var(g)$. 
+As $N\rightarrow \infty$ the values of $G$ occurs ever closer to $\langle g \rangle$. Given the standard deviation $\sigma/\sqrt{N}$, we have that the values of $G$ are within one standard deviation 68.3\% of the time, within two standard deviations 95.4\% of the time, and within three standard deviations 99.7\% of the time.
+The central limit theorem is very powerful in that it gives a specific distribution for the values of $G$, but it applies only asymptotically. How large $N$ must be before the central limit theorem applies depends on the problem.
 
-Without the central limit theorem, there is in general only the much weaker upper bound of the Chebychev inequality to suggest how much the observed $G_N$ deviates from the actual mean. Of course, in specific cases, studies can be made of the distribution of the estimator. Much Monte Carlo is done assuming that the theorem has been satisfied no matter what the sample size; reported errors must be considered optimistic in such cases.
+\end{enumerate}
+
+
+Without the central limit theorem, there is in general only the much weaker upper bound of the Chebychev inequality to suggest how much the observed $G$ deviates from the actual mean. Of course, in specific cases, studies can be made of the distribution of the estimator. Much Monte Carlo is done assuming that the theorem has been satisfied no matter what the sample size; reported errors must be considered optimistic in such cases.
 When the variance is infinite, it is sometimes possible to find a limit distribution for $G$ that will lead to a central limit theorem for that particular problem. The limit distribution will in general not be normal.
 
-The variance used in the discussion above may itself be estimated using independent values of $g(x_n)$ the following way:
+The variance used in the discussion above may itself be estimated using independent values of $g(X_i)$ the following way:
 \begin{align}
-	\langle \frac{1}{N} \sum_{i=1} g^2 (x_i) - [\frac{1}{N}\sum_{i=1}^N g(x_i)]^2 \rangle
+	\langle \frac{1}{N} \sum_{i=1} g^2 (X_i) - [\frac{1}{N}\sum_{i=1}^N g(X_i)]^2 \rangle
 	= \langle g^2 \rangle - \frac{1}{N^2} \langle
-	\sum_{i=1}^N g(x_i)^2 + \sum_{i,i\neq j}^N \sum_{j=1}^N g(x_i) g(x_j) \rangle
+	\sum_{i=1}^N g(X_i)^2 + \sum_{i,i\neq j}^N \sum_{j=1}^N g(X_i) g(X_j) \rangle
 \end{align}
-Using the independence of $g(x_i)$ and $g(x_j)$ in evaluating $\langle g(x_i) g(x_j)\rangle $, we find the right-hand side equal to 
+Using the independence of $g(X_i)$ and $g(X_j)$ in evaluating $\langle g(x_i) g(x_j)\rangle $, we find the right-hand side equal to 
 \begin{align}
 	(1- \frac{1}{N}) \langle g^2 \rangle - \frac{N(N-1)}{N^2} \langle g \rangle^2
 	= \frac{N-1}{N} var(g)
@@ -290,26 +302,26 @@ Using the independence of $g(x_i)$ and $g(x_j)$ in evaluating $\langle g(x_i) g(
 
 thus an estimator for $\sigma^2$ is
 \begin{align}
-	\sigma^2 \approx \frac{N}{N-1} ( \frac{1}{N} \sum_{i=1}^N g^2(x_i) -
-	( \frac{1}{N} \sum_{i=1}^N g^2(x_i))^2 )
+	\sigma^2 \approx \frac{N}{N-1} ( \frac{1}{N} \sum_{i=1}^N g^2(X_i) -
+	( \frac{1}{N} \sum_{i=1}^N g^2(X_i))^2 )
 \end{align}
 An estimator of the variance of the estimated mean is given by
 \begin{align}
-	var(G_N) \approx \frac{1}{N-1} ( \frac{1}{N} \sum_{i=1}^N g^2(x_i) -
-	( \frac{1}{N} \sum_{i=1}^N g^2(x_i))^2 )
+	var(G) \approx \frac{1}{N-1} ( \frac{1}{N} \sum_{i=1}^N g^2(X_i) -
+	( \frac{1}{N} \sum_{i=1}^N g^2(X_i))^2 )
 \end{align}
 
 \subsubsection{Summary}
-If $x_1, x_2,...,x_n$ arr i.i.d. random variables with pdf $p(X)$, then for a function $g(x)$ an estimator is
+If $X_1,...,X_N$ arr i.i.d. random variables with pdf $p(x)$, then for a function $g(x)$ an estimator is
 \begin{align}
-	G_N =& \frac{1}{N} \sum_{i=1}^N g(x_i) \\
-	\langle G_N \rangle =& \int p(x) g(x) \dif x
+	G =& \frac{1}{N} \sum_{i=1}^N g(X_i) \\
+	\langle G \rangle =& \int_{-\infty}^\infty p(x) g(x) \dif x
 \end{align}
 and
 \begin{align}
 	var(G_N) =& \frac{1}{N} var(g)
 \end{align}
-as $N\rightarrow \infty$ and if the variance exists, the distribution of possible values of $G_N$ narrows about the mean as $\sqrt{N}$; or the probability of finding a $G_N$ some fixed distance away from $\langle G_N \rangle$ becomes smaller. 
+as $N\rightarrow \infty$ and if the variance exists, the distribution of possible values of $G$ narrows about the mean as $\sqrt{N}$; or the probability of finding a $G$ some fixed distance away from $\langle G \rangle$ becomes smaller. 
 
 The basic random variable used in Monte Carlo has been set by historical convention to be distributed uniformly between 0 and 1.
 
@@ -928,6 +940,8 @@ The optimal size of the move is smaller in regions where $\bm{v}(\bm{R})$ is cha
 In addition, the size of the angular moves gets larger as one approaches a nucleus. This algorithm allows one to achieve, in many cases, an autocorrelation time of the local energy close to 1.
 \cite{Toulouse2016}
 
+OBS!! \cite{Lervag2010} discusses issues with the fact that $\Delta t$ doesn't actually go to zero, which is the "assumption" here. He references a book on this as well.
+
 \subsubsection{Practical considerations}
 Mentioned in relation to nucleus discontinuity issues because we need the derivatives for the sampling to make sense: (There is also a derivative discontinuity when two electrons overlap, but this is less problematic since electrons repel each other)
 \cite{Umrigar1999}
@@ -935,6 +949,71 @@ Mentioned in relation to nucleus discontinuity issues because we need the deriva
 \subsubsection{One or all particles}
 \subsubsection{If one particle at the time - choose them randomly or sequentially}
 \subsection{Convergence and errors}
+
+The final estimate of the energy after Metropolis is given by $\langle E \rangle \pm \Delta E$ where:
+\begin{align}
+	\langle E \rangle =& \frac{1}{N_{steps}} E_{cumulative} \\
+	\Delta E =& \sqrt{ \frac{1}{N_{steps}-1} ( \frac{1}{N_steps} E_{cumulative}^2 - \langle E \rangle^2 ) }
+\end{align}
+
+\begin{itemize}
+	\item Main hypothesis underlying the Central Limit Theorem: data used to construct the averages are sampled independently. Quite reasonable assumption in a measurement process.
+	\item But: in the case of the computation of an integral by means of any method based on the Markov chain theory this requirement is not satisfied by construction. Data are sampled based on a transition matrix, and the resulting random walk has a certain degree of memory of the past events. Two consecutive samples will always be correlated to each other.
+	\item But, we can hope that after a certain number of steps memory is lost, and data will become effectively independent. Is it possible to estimate this typical \textbf{correlation length}?
+	\item Based on the previous argument one can define a measure of the autocorrelation by looking at the variance of the expectation of $F(X)$ (the function we want to integrate over to get the integral $I$) wrt $P(X)$:
+	\begin{align}
+		(\Delta I)^2 = \langle \frac{1}{N^2} \sum_{i=1}^N F(X_i) \sum_{i=1}^N F(X_j) \rangle - \langle F \rangle^2
+	\end{align}
+	\begin{itemize}
+		\item (From where comes the motivation for the first term..? It seems very different from $\langle F^2 \rangle = \frac{1}{N} \sum_{i=1}^N F^2(X_i)$ which it is seemingly compared to by putting it there)
+	\end{itemize}
+	The corresponding standard deviation is the estimate of the statistical error on the integral of $F$. The first term can be recast in the following way:
+	\begin{align}
+		\langle \frac{1}{N^2} \sum_{i=1}^N F(X_i) \sum_{i=1}^N F(X_j) \rangle 
+		=& \frac{1}{N^2} \sum_{i,j=1}^N \int P[X_1, ..., X_N] F(X_i) F(X_j) \dif X_1 ... \dif X_N \\
+		=& \frac{1}{N^2} \sum_{i,j=1}^N \langle F(X_i) F(X_j) \rangle
+	\end{align}
+	Since the Markov chain is stationary, this quantity is expected to depend only on the difference of the indexes $\tau = i-j$. We will then define an \textbf{autocorrelation coefficient}:
+	\begin{align}
+		c(F)_\tau = \frac{\langle F(X_i) F(X_{i+\tau}) \rangle - \langle F \rangle^2}
+		{ \langle F^2 \rangle - \langle  \rangle^2 }
+	\end{align}
+	\begin{itemize}
+		\item Now $ \langle F^2 \rangle$ is being "compared" to  $\langle F(X_i) F(X_j) \rangle $ "instead", ie without the part $\frac{1}{N^2} \sum_{i,j=1}^N $. why?	
+	\end{itemize}
+	The coefficient is normalized to the variance $\sigma^2 (F)$, in such a way that $C(F)_0 = 1$.
+	Correlation coefficients are related to the average of the product of the $F$ in the following way:
+	\begin{align}
+		\langle F(X_i) F(X_{i+\tau}) \rangle = c(F)_\tau \sigma^2 (F) + \langle F \rangle^2
+	\end{align}
+	we can use the previous expression to estimate the error on $I$:
+	\begin{align}
+		(\Delta I)^2 =& \frac{1}{N^2} \sum_{i,j=1}^N \langle F(X_i) F(X_j) \rangle - \langle F \rangle^2 \\
+		=& \frac{1}{N} \sigma^2 (F) \sum_{\tau=1}^N c(F)_\tau + \langle F \rangle^2 - \langle F \rangle^2 \\
+		=& \frac{\sigma^2 (F)}{N} \sum_{\tau=1}^N c(F)_\tau
+	\end{align}
+	As it can be seen \textbf{the error not only depends on the variance of} $F$, \textbf{but also on the sum over all the autocorrelation coefficients of} $F$. 
+	\item This is the main consequence of having autocorrelated samples: the statistical error is underestimated by the variance of $F$, and needs to be corrected by a factor that depends on the autocorrelation length. 
+	\item Usually the coefficients $c(F)_\tau$ have an exponential decay. If we approximate them as $c(F)_\tau \sim e^{-\frac{\tau}{\bar{\tau}}}$, the sum of the coefficients can be approximated as:
+	\begin{align}
+		\sum_{\tau=1}^N c(F)_\tau \sim \int_0^\infty \dif \tau e^{-\frac{\tau}{\bar{\tau}}} = \bar{\tau}
+	\end{align}
+	This means: It is sufficient to fit the exponential decay of the autocorrelation coefficients in order to find an estimate of the characteristic autocorrelation length that corrects the estimate of the error on the integral. In particular the correct expression for the error is:
+	\begin{align}
+		\Delta I \approx \sqrt{ \frac{1}{N-1} \sigma^2 (F) \bar{\tau} }
+	\end{align}
+	which has the simple interpretation: We are not generating $N$ independent samples of the variable $X$ during our Markov process, but rather $\frac{N}{\bar{\tau}}$ of them, and this number must be used as the correct count of events for the error estimation. 
+	\item Important to be extremely careful about the estimation of autocorrelations. Underestimation of the statistical errors leads to a wrong interpretation of the results and to wrong physical conclusions.
+	\item Autocorrelations also play a crucial role in choosing the step width $\Delta$ in the (simple) Metropolis-Hastings algorithm. A common criterion is to choose it in such a way that the fraction of accepted moves is about 50\%. However, the \textbf{ideal value is clearly the one minimizing the autocorrelations among samples}, and quite often this value corresponds to acceptances of the order 30 to 40\%. 
+	\item Once the value of $\bar{\tau}$ has been estimated, it is possible to organize the calculation in such a way that the statistical error computed by the code is more realistic by using a \textbf{reblocking} technique. In practice the values of the quantity to be averaged are summed up in blocks of $N_b$ elements each:
+	\begin{align}
+		F_l^b = \sum_{i=1}^{N_b} F(X_i)
+	\end{align}
+	(Not divided by $N_b$...?) Then, the $F_l^b$ are used as the data on which performing the computation of the variance and of the standard deviation. If $N_b \gtrsim \bar{\tau}$, the standard deviation will be corrected by the effects of the autocorrelation of the original data. 
+	\item Typically calculations store block values so that the values can be "reblocked" for example by combining pairs of blocks. The estimated error should be unchanged if the blocks are uncorrelated. In addition, the ratio of the block variance to the variance of the original function can be used to estimate the number of independent samples, and therefore the autocorrelation time.
+\end{itemize}
+\cite{HjortJensen2017}
+
 \subsubsection{Notes from Umrigar1999}
 In the Monte Carlo method, direct sampling methods, were feasible, are preferable to the Metropolis method, since the points generated by the latter are \textbf{serially correlated}, sometimes with very long \textbf{correlation times}. 
 
@@ -1090,7 +1169,7 @@ We next discuss the functional form of the wavefunctions used in electronic stru
 	\item Subsection which reviews the improvements obtained from using higher-order correlations (Ref) in the Jastrow factor.
 	\begin{itemize}
 		\item Early quantum Monte Carlo work was done using a two-body (electron-electron) Jastrow factor. Since then it has become apparent that inclusion of three-body (electron-electron-nucleus) terms results in a large lowering of the energy (Ref). The results for molecules presented in the previous subsection were all obtained with a three-body Jastrow factor. 
-		\item It is natural to ask whether it is worthwhile to include four-body ($e^3-n$) correlations in the Jastrow factors. A systematic expansion of the Jastrow factor consists of a polynomial in scaled inter-particle coordinates. By "scaled" we mean that a monotonic function is used to map the infinite range of the inter-particle coordinates onto a finite interval. As shown in table 2 the number of terms in such an expansion grows rapidly, both as a function of the body order and as a function of the polynomial order of the expansion. If some or all of the particles are identical then the theory of invariants can be used to reduce the computational effort required to evaluate the function. This was first done for identical bosons, for which it was possible to include upto 5-body correlations (REF!!!) and later for electronic structure calculations where four-body ($e^3-n$) correlations were included (Ref).
+		\item It is natural to ask whether it is worthwhile to include four-body ($e^3-n$) correlations in the Jastrow factors. A systematic expansion of the Jastrow factor consists of a polynomial in scaled inter-particle coordinates. By "scaled" we mean that a monotonic function is used to map the infinite range of the inter-particle coordinates onto a finite interval. As shown in table 2 the number of terms in such an expansion grows rapidly, both as a function of the body order and as a function of the polynomial order of the expansion. If some or all of the particles are identical then the theory of invariants can be used to reduce the computational effort required to evaluate the function. This was first done for identical bosons, for which it was possible to include upto 5-body correlations \cite{Huang1997} and later for electronic structure calculations where four-body ($e^3-n$) correlations were included (Ref).
 		\item In table 3 we show the variational Monte Carlo energyies $E^{VMC}$ and the standard deviation of the local energies $\sigma_{VMC}$ of the Li, Be, and Ne atoms for wavefunctions containing two-body, three-body and four-body correlations. Inclusion of the three-body correlations results in a large improvement in the energy and a large reduction in the standard deviation of the local energy. For Li, Be and Ne, 95\%, 89\% and 84\% of the part of the correlation energy missing in the two-body wavefunctions is recovered while the standard deviation of the local energy is reduced by factors of 6, 4, and 2 respectively. 
 		\item Although not shown in the table, a further advantage accrues from the fact that the auto-correlation time of the local energies sampled in the VMC and in diffusion MC are somewhat reduced. 
 		\item We observe from table 3 that inclusion of the four-body correlations also results in a significant but smaller improvement in both the variational energies and the fluctuations of the local energy. That improvement gets smaller with increasing atomic number and is disappointingly small for Ne.
@@ -1103,7 +1182,7 @@ We next discuss the functional form of the wavefunctions used in electronic stru
 		\begin{itemize}
 			\item These somewhat disappointing results are probably due to flaws of the \textbf{nodal surface of the trial wavefunction}, which the four-body interaction Jastrow factor is not designed to correct.(???) That is, the approximate, fixed-node, DMC wavefunction has discontinuous derivative almost everwhere across the nodal surface. On the other hand, a Jastrow factor expressed in terms of inter-particle coordinates, will have non-analyticities only at the $(3N-3)$-dimensional surface where particles coincide, which constitute only a vanishingly small fraction of the entire $3N-1$-dimensional nodal surface.
 			\item Hence, over most of the nodal surface, we are \textbf{attempting to describe a non-analytic function as a finite sum of analytic functions} and we expect the convergence to be slow. 
-			\item The validity of the above argument has been tested by performing calculations for the nodeless, bosonic ground states of the Hamiltonians of the same atoms. As expected, the efficiency for the \textbf{bosonic} states is very much greater than for the fermionic states and the reader is referred to (REF!!!!!) for details.
+			\item The validity of the above argument has been tested by performing calculations for the nodeless, bosonic ground states of the Hamiltonians of the same atoms. As expected, the efficiency for the \textbf{bosonic} states is very much greater than for the fermionic states and the reader is referred to \cite{Huang1997} for details.
 		\end{itemize}
 		\item Another interesting observation that emerges from the calculations on the bosonic states is that the fluctuations of the local energy $\sigma$ are much smaller than for the corresponding fermionic states, despite the fact that the absolute energies are larger for the bosonic states. This indicates that the \textbf{difficulty of obtaining a good parameterization of the nodal surface of a fermionic state, or more generally of any excited state, is a significant bottleneck in the search for optimized trial wavefunctions}.
 	\end{itemize}
@@ -1825,28 +1904,166 @@ then
 \subsubsection{Number of hidden nodes}
 \subsubsection{Number of samples}
 \subsubsection{Learning rate}
+\section{Algorithm}
 \subsection{Computational efficiency}
 Choosing a constant density $\alpha$ of hidden variables pr physical positions, i.e. $M=\alpha N$, the number of variational parameters scales as $\alpha N^2$.
 
-\part{Implementation}
-\section{Workflow}
-\section{How to use..?}
-\subsection{Monitoring the learning progress?}
+\part{Implementation, results and analysis}
+\chapter{Implementation}
+\section{Code structure}
+Conditionals vs. polymorhisms. Polymorphism and encapsulation. Modularity. Object orientation. Diagrams, code snippets. 
 
-\section{Structure/any particular reason for choices..?}
-Conditionals vs. polymorhisms. Polymorphism and encapsulation.
+Issue:
+It is natural for the MC method to have the options Met brute force / hastings / gibbs. However - the type of wf partly dictates which can be used. Positive def wf -> gibbs. General - Met brute force/hastings. In the latter case MC method user may decide. But how to communicate this choice efficiently to the wf model? An if test at every function call - seems extremely unnecessary. Making subclasses of the wf or wf model - too restricting because natural to have both options for the same data model. If there were virtual functions based on if tests at a class level rather than polymorphisms..
 
 Other QMC software packages (as pr 2009 - check updates maybe?):
 Some of the QMC methods are implemented in several existing codes and packages that are available for use by communities at large. We will mention the packages which are most familiar to us: CASINO [86], QMCPACK [87], QWALK [88], and CHAMP [89]. QMCPACK and QWALK are distributed under Open Source licenses.
 Although not a software package, we mention here the novel approach for meeting the high computer demands of DMC by Korth et al. [90]. It is a distributed computational system that uses the power of  38000 PCs located all over the world. The system yields  15 teraflops of sustained computing power.
 \cite{Lester2009}
 
-\part{Results and analysis}
-\chapter{Making the basic method stripped for extra stuff work - grid search and validation}
+Other RBM software: PyDeep (Jan Melchior), Paysage (high bias/ low variance), 
+
+RBM+Quantum: NetKet (Carleo)
+
+The use of \textit{Abstract Base Classes} (ABCs) and its motivation for using pointers.
+\begin{itemize}
+	\item A class is abstract when it contains \textit{virtual methods}. A virtual method is a method declared with the keyword \texttt{virtual}, and is a way to signal \textit{dynamic binding}. Dynamic binding is used when derived classes provide method implementations that should be selected at run time (over the base class method).
+	\item Efficiency vs. flexibility are the primary tradeoffs between static and dynamic binding. Static binding is generally more efficient since it has less time and space overhead, and since it enables method inlining. Dynamic binding is more flexible since it enables developers to extend the behavior of a system transparently - however, dynamically bound objects are difficult to store in shared memory.
+	\item Virtual methods have a fixed interface, but derived implementations can change.
+	\item Virtual method dispatching (dynamic \textit{dispatch} is the process of selecting which implementation of a polymorphic operation (method or function) to call at run time) uses object's "dynamic type" to select the appropriate method that is invoked at run-time. - The selected method will depend on the class of the \textit{object} being pointed at and \textit{not} on the pointer type. 
+	\item Using virtual methods adds a small amount of time and space overhead to the class/object size and method invocation time.
+	\item ABCs support the notion of a general concept of which only more concrete object variants are actually used.
+	\item ABCs are only used as a base class for subsequent derivations
+	\begin{itemize}
+		\item Therefore, it's illegal to create objects of ABCs
+		\item However it \textit{is} legal to declare pointers or references to such objects
+		\item ABCs force \textit{definitions} in subsequent derived classes for undefined methods.
+	\end{itemize}
+	\item In \texttt{C++}, an ABC is created by defining a class with at least one "pure virtual method". 
+	\item \textbf{Calling Mechanisms}: Given a pointer to a class object (e.g., \texttt{Foo *ptr}) how is the method call \texttt{ptr->f (arg)} resolved?
+	\begin{itemize}
+		\item There are three basic approaches:
+		\begin{enumerate}
+			\item Static Binding
+			\item Virtual Method Tables
+			\item Method Dispatch Tables
+		\end{enumerate}
+		\item C++ and Jave use both static binding and virtual method tabels, whereas Smalltalk and Objective C use method dispatch tables
+		\item Note: Type checking is orthogonal to binding time
+		\item Static binding:
+		\begin{itemize}
+			\item Method \texttt{f}'s address is determined at compile/link time
+			\item Provides for strong type checking, completely checkable/resolvable at compile time
+			\item Main advantage: the \textit{most} efficient scheme (e.g. it permits inline method expansion)
+			\item Main disadvantage: the \textit{least} flexible scheme
+		\end{itemize}
+		\item Virtual method tables:
+		\begin{itemize}
+			\item Method \texttt{f()} is converted into an index into a table of pointers to functions (i.e. "virtual method table") that permit run-time resolution of the calling adress. The \texttt{*ptr} object keeps track of its type via a hidden pointer (\texttt{vptr}) to its associated virtual method table (\texttt{vtable})
+			\item Virtual methods provide an exact specification of the type signature. The user is guaranteed that only operations specified in class declarations will be accepted by the compiler.
+			\item Main advantages
+			\begin{enumerate}
+				\item More flexible than static binding
+				\item There only a constant amount of overhead (compared with method dispatching)
+				\item E.g., in C++, pointers to functions are stored in a separate table, \textit{not} in the object!
+			\end{enumerate}
+			\item Main disadvantages: Less efficient, e.g., often not possible to inline the virtual method calls...
+		\end{itemize}
+	\end{itemize}
+	\item Summary:
+	\begin{itemize}
+		\item Dynamic binding enables applications and developers to defer certain implementation decisions until run-time. I.e., which implementation is used for a particular interface.
+		\item It also facilitates a decentralized architecture that promotes flexibility and extensibility. E.g., it is possible to modify functionality without modifying existing code
+		\item There may be some additional time/space overhead from using dynamic binding. However, alternative solutions also incur overhead, e.g., the union/switch approach.
+	\end{itemize}
+\end{itemize}
+Source \url{http://www.cs.wustl.edu/~schmidt/PDF/C++-dynamic-binding4.pdf}.
+
+\begin{itemize}
+	\item A \textit{polymorphic class} = a class that declares or inherits a virtual function.
+	\item Abstract base classes cannot be used to instantiate objects. But it is not totally useless. It can be used to create pointers to it, and take advantage of all its polymorphic abilities.
+\end{itemize}
+Source \url{http://www.cplusplus.com/doc/tutorial/polymorphism/}
+
+We now have motivations for using pointers for member data (so that member data can be abstract base classes). What could be motivations for using dynamic memory allocations, "notoriously tricky to manage correctly"? 
+
+
+\begin{itemize}
+	\item Chapter 7 Classes
+	\begin{itemize}
+		\item If we do not supply initializers to objects, they are default initialized. Classes control default initialization by defining a special constructor, known as the \textbf{default constructor}. The default constructor is one that takes no arguments. If our class does not \textit{explicitly} define any constructors, the compiler will \textit{implicitly} define the default constructor for us. The compiler-generated constructor is known as the \textbf{synthesized default constructor}. For most classes, this synthesized constructor initializes each data member of the class as follows:
+		\begin{itemize}
+			\item If there is an in-class initializer (i.e., in the header, if we have written int a=0), use it to initialize the member.
+			\item Otherwise, default-intialize the member (typically set to a string member to the empty string, etc. See reference for more details.)
+		\end{itemize}
+		\item The new parts in these definitions are the colon and the code between it and the curly braces that define the (empty) function bodies. This new part is a \textbf{constructor initializer list}, which specifies initial values for one or more data members of the object being created. The constructor initializer is a list of member names, each of which is followed by that member’s initial value in parentheses (or inside curly braces). Multiple member initializations are separated by commas.
+		\item In addition to defining how objects of the class type are initialized, classes also control what happens when we \textbf{copy}, \textbf{assign}, or \textbf{destroy} objects of the class type. If we do not define these operations, the compiler will synthesize them for us. Although the compiler will synthesize the copy, assignment, and destruction operations for us, it is important to understand that for some classes the default versions do not behave appropriately. In particular, the synthesized versions are unlikely to work correctly for classes that allocate resources that reside outside the class objects themselves. As one example, in Chapter 12 we’ll see how C++ programs allocate and manage dynamic memory. As we’ll see in § 13.1.4 (p. 504), classes that manage dynamic memory, generally cannot rely on the synthesized versions of these operations. 
+		\item Warning: Until you know how to define the operations covered in Chapter 13, the resources your classes allocate should be stored directly as data members of the class.
+	\end{itemize}
+	\item Chapter 12 Dynamic Memory
+	\begin{itemize}
+		\item Warning: Until you have read Chapter 13, your classes should allocate dynamic memory only if they use smart pointers to manage that memory.
+		\item \textbf{Classes with Resources that Have Dynamic Lifetime}: Programs tend to use dynamic memory for one of three purposes:
+		\begin{enumerate}
+			\item They don't know how many objects they'll need
+			\item They don't know the precise type of the object they need
+			\item They want to share data between several objects.
+			\item (My addition: what about the size of the resource? is it not an issue that it could be too big for the stack?)
+		\end{enumerate}
+		The container classes are an example of classes that use dynamic memory for the first purpose and we'll see examples of the second in chapter 15. In this section, we'll define a class that uses dynamic memory in order to let several objects share the same underlying data.
+		\item Some classes allocate resources with a lifetime that is independent of the original object. As an example, assume we want to define a class named \texttt{Blob} that will hold a collection of elements. Unlike the containers, we want \texttt{Blob} objects that are copies of one another to share the same elements. That is, when we copy a \texttt{Blob}, the original and the copy should refer to the same underlying elements.
+		In general, when two objects share the same underlying data, we can’t unilaterally destroy the data when an object of that type goes away.
+		\item One common reason to use dynamic memory is to allow multiple objects to share the same state.
+		\item The easiest way to implement a new collection type is to use one of the library containers to manage the elements. That way, we can let the library type manage the storage for the elements themselves. In this case, we’ll use a vector to hold our elements.
+		\item However, we can’t store the vector directly in a Blob object. Members of an object are destroyed when the object itself is destroyed. For example, assume that b1 and b2 are two Blobs that share the same vector. If that vector were stored in one of those Blobs—say, b2—then that vector, and therefore its elements, would no longer exist once b2 goes out of scope. To ensure that the elements continue to exist, we’ll store the vector in dynamic memory.
+		\item To implement the sharing we want, we’ll give each StrBlob a shared\_ptr to a dynamically allocated vector. That shared\_ptr member will keep track of how many StrBlobs share the same vector and will delete the vector when the last StrBlob using that vector is destroyed.
+		\item Each constructor uses its constructor initializer list (§ 7.1.4, p. 265) to initialize its data member to point to a dynamically allocated vector. The default constructor allocates an empty vector.
+		\item The constructor that takes an initializer\_list passes its parameter to the corresponding vector constructor (2.2.1, p. 43). That constructor initializes the vector’s elements by \textbf{copying the values in the list}.
+		\item Like our Sales\_data class, StrBlob uses the default versions of the operations that copy, assign, and destroy objects of its type (§ 7.1.5, p. 267). By default, these operations copy, assign, and destroy the data members of the class. Our StrBlob has only one data member, which is a shared\_ptr. Therefore, when we copy, assign, or destroy a StrBlob, its shared\_ptr member will be copied, assigned, or destroyed.
+		\item As we’ve seen, copying a shared\_ptr increments its reference count; assigning one shared\_ptr to another increments the count of the right-hand operand and decrements the count in the left-hand operand; and destroying a shared\_ptr decrements the count. If the count in a shared\_ptr goes to zero, the object to which that shared\_ptr points is automatically destroyed. Thus, the vector allocated by the StrBlob constructors will be automatically destroyed when the last StrBlob pointing to that vector is destroyed.
+		\item The language itself defines two operators that allocate and free dynamic memory. The new operator allocates memory, and delete frees memory allocated by new.
+		\item For reasons that will become clear as we describe how these operators work, using these operators to manage memory is considerably more error-prone than using a smart pointer. Moreover, classes that do manage their own memory—unlike those that use smart pointers—cannot rely on the default definitions for the members that copy, assign, and destroy class objects (§ 7.1.4, p. 264). As a result, programs that use smart pointers are likely to be easier to write and debug.
+		\item Objects allocated on the free store are unnamed, so new offers no way to name the objects that it allocates. Instead, new returns a pointer to the object it allocates.
+		\item By default, dynamically allocated objects are default initialized (§ 2.2.1, p. 43), which means that objects of built-in or compound type have undefined value; objects of class type are initialized by their default constructor
+		\item We can initialize a dynamically allocated object using direct initialization (§ 3.2.1, p. 84). We can use traditional construction (using parentheses), and under the new standard, we can also use list initialization (with curly braces). For the same reasons as we usually initialize variables, it is also a good idea to initialize dynamically allocated objects.
+	\end{itemize}
+	\item Chapter 13 Copy Control (12.1.4, p.504: classes that manage dynamic memory, generally cannot rely on the synthesized versions of constructor(?), copy, assign and destroy operators.)
+	\item Chapter 15 Object-Oriented Programming
+	\begin{itemize}
+		\item Ordinarily, we cna bind a reference or a pointer only to an object that has the same type as the corresponding reference or pointer or to a type that involves an acceptable \texttt{const} conversion. Classes related by inheritance are an important exception: We can bind a pointer or reference to a base-class type to an object of a type derived from that base class. Fex, we can use a \texttt{Base\&} to refer to a \texttt{Derived} object, and we can assign the address of a \texttt{Derived} object to a \texttt{Base*}.
+		\item When we use types related by inheritance, we often need to distinguish between the \textbf{static type} of a variable or other expression and the \textbf{dynamic type} of the object that expression represents. The static type of an expression is always known at compile time - it is the type with which a variable is declared or that an expression yields. The dynamic type is the type of the object in memory that the variable or expression represents. The dynamic type may not be known until run time. For example we may know that the static type of \texttt{item} is \texttt{Base\&}. The dynamic type depends on the type of argument to which \texttt{item} is bound. That type cannot be known until a call is executed at run time. If \texttt{item} has been bound to a \texttt{Derived} object, then the static type of \texttt{item} will differ from its dynamic type. As we've seen, the static type of \texttt{item} is \texttt{Base\&}, but in this case the dynamic type is \texttt{Derived}. Note: only expressions that are either a reference or a pointer can have a dynamic type that differ from its static type.
+	\end{itemize}
+\end{itemize}
+\cite{Lippman2013}
+
+\begin{itemize}
+	\item In other words: moving only one electron at the time ostensibly halves the required computation cost associated with computing the ratio of the slater determinants.
+	This of course comes at the cost of correlation—subsequent samples are less correlated if we simul- taneously move multiple electrons—a complication which we will return to shortly.
+	Even after the splitting however, the direct evaluation of our determinants still requires $\mathcal{O}(N^3)$ operations, albeit with a pre-factor 1/8 compared to the original full determinant. It turns out that we can do better.
+	\item Only the upper diagonal part of the inter particle distance matrix $r_{ij}$ needs to be filled, since $r_{ij}=r_{ji}$. 
+\end{itemize}
+\cite{Ledum2017}
+
+\section{Computational efficiency}
+Speed ups, optimization, scaling with nparticles, ndim, nh, nSamples. (this might need to be updated/referred back to later when method adjustments introduced)
+How does it scale with 1) particles/dimensions 2) hidden nodes. polynomial time, polynomial cost, etc
+
+\section{How to use}
+Monitoring the learning progress?
+
+
+\chapter{Validation}
+\section{Unit tests}
+
+\section{Comparison with analytical results}
+
+\subsection{Hyperparameter search}
+Making the basic method stripped for extra stuff work - grid search and validation
 Jeg tenker vi tar utgangspkt i Metropolis importance sampling, den virker best, i den mest omfattende utredelsen av hyperparameter search. Så kan Gibbs og metropolis brute force være "artig å sammenligne med". Hele veien i testingen har vi mulighet til å teste med eller uten interaksjon. Men siden uten har veldig god presisjon, og med er den store utfordringen, så kan kanskje hyperparameter søket gjøres MED. Så er det bare å holde track på at ikke uten har blitt dårligere liksom.
 Starter også med sigma=1
 Enkleste gradient descent
-\section{Hyperparameter grid search}
+
+\subsubsection{Old}
 \begin{enumerate}
 	\item The first search:
 	\begin{itemize}
@@ -1870,34 +2087,221 @@ Enkleste gradient descent
 	\end{itemize}
 \end{enumerate}
 
-\section{Validation and limitations given the previously found optimal parameters}
-\subsection{Compared to analytical solution}
+\subsubsection{New}
+\begin{enumerate}
+	\item Constant: brute force, uniform initialization, sigmaRBM=1, omegaHO=1, simple gradient descent
+    \item What we vary: 
+    \begin{enumerate}
+        \item Metropolis step size (which is chosen to optimize autocorrelation time). Autocorrelation time can be reduced by either increasing the average size of moves, or by increasing the acceptance of the moves. Acceptance decreases as the step size increases. Thus, there exists an optimal average step size for which the system evolves the fastest through config space. (Umrigar1999). We want large moves and large acceptance. We get the autocorr time from the blocking. Dvs kan forvente at autocorrelation time plottet mot step vil ha et minimum der det mot stor step size øker pga lavere acceptance, og mot liten step size øker pga for liten endring i systemet.
+        \item number of samples (decreasing variance vs comp efficiency), 
+        \item learning rate (convergence speed vs causing oscillations or even moving away from the minima. see figure 8 in highbias/lowvariance.), 
+        \item nh (model accuracy vs comp efiiciency) 
+    \end{enumerate}
+    \item Thus the factors we try to control here are:
+    \begin{enumerate}
+        \item Low variance, so the MC estimator is good -> to control this we need control of the autocorrelation time
+        \item Minimization convergence rate of the model
+        \item Model accuracy
+        \item All this within computational efficiency
+    \end{enumerate}
+\end{enumerate}    
+
+\subsection{Hyperparameters and validation: Without interaction}
+\subsubsection{Search: Sampling step - no interaction}
+Settings:
+\begin{enumerate}
+	\item Sampling = brute force
+	\item Training: simple gradient descent, learningrate=0.1, number of iterations=500, metropolis step = 2.5, metropolis samples=1e5. Random uniform initialization.
+	\item Model: number of particles=number of dimensions = number of hidden nodes=2. No interaction.
+	\item Sampling the trained model: number of samples: $2^{20 + log_2 (10/9) + 0.0001} \approx 1.165165205\cdot 10^6 \approx 1.165 \cdot 10^6$. Number of effective samples after equilibration: $1048648\approx 1.049 \cdot 10^6$. Number of samples having cut out more "equilibration" in order to reach power of two: $1048576 \approx 1.049 \cdot 10^6$.
+\end{enumerate}
+
+% https://www.inf.ethz.ch/personal/markusp/teaching/guides/guide-tables.pdf
+% http://ctan.uib.no/macros/latex/contrib/booktabs/booktabs.pdf
+\begin{table*}\centering
+\ra{1.3}
+\caption{Caption}
+\label{tabsteptest1}
+\begin{tabular}{rrrrrrrr}
+\toprule
+Step & av & bl av & std err & bl std err & ac t & ind s & acc \\ 
+\midrule 
+$10^{-2}$ & 1.99773 & 1.99773 & 0.00008850 & 0.00487296 & 32768 & 32   & 0.99783  \\
+$10^{-1}$ & 2.00349 & 2.00350 & 0.00003784 & 0.00167173 & 4096  & 256  & 0.97798  \\
+$1$       & 2.00096 & 2.00096 & 0.00003585 & 0.00021843 & 256   & 4096 & 0.78916  \\
+$10$      & 2.00054 & 2.00054 & 0.00003551 & 0.00025089 & 512   & 2048 & 0.06443 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+Results in table \ref{tabsteptest1}
+\begin{itemize}
+	\item As expected we see a minimia in autocorrelation time with respect to the step size. This is at the size of order $10^0$.
+	\item Note: the non-blocking average and std error includes a few more samples, since it has not yet been reduced to a number that is a power of two. The number the two uses respectively is given by the settings presented earlier.
+	\item Should ideally make these table values an average of 5-10 runs.
+\end{itemize}
+
+Lets look closer at step sizes in the range 0-10.
+\begin{itemize}
+	\item Sampling the trained model: number of samples: $2^{20 + log_2 (10/9) + 0.00001} \approx 1.1650925202\cdot 10^6 \approx 1.165 \cdot 10^6$. Number of effective samples after equilibration: $1048582\approx 1.049 \cdot 10^6$. Number of samples having cut out more "equilibration" in order to reach power of two: $1048576 \approx 1.049 \cdot 10^6$.
+\end{itemize}
+\begin{table*}\centering
+\ra{1.3}
+\caption{Caption}
+\label{tabsteptest2}
+\begin{tabular}{rrrrrrrr}
+\toprule
+Step & av & bl av & std err & bl std err & ac t & ind s & acc \\ 
+\midrule 
+0.5 & 2.00035 & 2.00035 & 0.00003540 & 0.000359498 & 512 & 2048 & 0.893938 \\
+1.0 & 2.00063 & 2.00063 & 0.00003546 & 0.000211527 & 256 & 4096 & 0.789428 \\
+1.5 & 2.00088 & 2.00088 & 0.00003557 & 0.000162987 & 256 & 4096 & 0.689953 \\
+2.0 & 2.00076 & 2.00076 & 0.00003564 & 0.000138987 & 128 & 8192 & 0.597779 \\
+2.5 & 2.00086 & 2.00086 & 0.00003583 & 0.000127686 & 128 & 8192 & 0.514680 \\
+3.0 & 2.00090 & 2.00090 & 0.00003586 & 0.000120759 & 128 & 8192 & 0.440857 \\
+3.5 & 2.00087 & 2.00087 & 0.00003578 & 0.000118058 & 128 & 8192 & 0.375640 \\
+4.0 & 2.00070 & 2.00070 & 0.00003592 & 0.000122996 & 128 & 8192 & 0.319908 \\
+4.5 & 2.00076 & 2.00076 & 0.00003576 & 0.000128711 & 256 & 4096 & 0.272488 \\
+5.0 & 2.00081 & 2.00081 & 0.00003596 & 0.000137216 & 256 & 4096 & 0.232234 \\
+5.5 & 2.00065 & 2.00065 & 0.00003573 & 0.000141635 & 256 & 4096 & 0.198736 \\
+6.0 & 2.00058 & 2.00058 & 0.00003546 & 0.000148299 & 128 & 8192 & 0.170833 \\
+6.5 & 2.00081 & 2.00081 & 0.00003594 & 0.000162370 & 256 & 4096 & 0.148120 \\
+7.0 & 2.00055 & 2.00055 & 0.00003542 & 0.000175658 & 256 & 4096 & 0.128891 \\
+7.5 & 2.00051 & 2.00051 & 0.00003529 & 0.000182094 & 256 & 4096 & 0.112497 \\
+8.0 & 2.00050 & 2.00050 & 0.00003561 & 0.000197362 & 256 & 4096 & 0.099038 \\
+8.5 & 2.00039 & 2.00039 & 0.00003550 & 0.000213424 & 512 & 2048 & 0.088305 \\
+9.0 & 2.00099 & 2.00099 & 0.00003580 & 0.000229988 & 512 & 2048 & 0.079053 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+Conclusions from table \ref{tabsteptest2}:
+\begin{itemize}
+	\item The ideal step size is in the interval 2.0-4.0. 
+	\item Did another run in the interval 2.0-4.0 increasing with 0.2 at each run. However, it never went below the autocorrelation time of 128. The 2-factor blocking method seems limited as to what accuracy we can estimate the autocorrelation time, since the block sized is always \textit{doubled} at each iteration. With this method we have to be satisfied with the knowledge that the best step size is somewhere in the 2.0-4.0 range.
+	\item Btw: should have seeded the runs..?
+\end{itemize}
+
+So: we end this section by saying that step=2.5 is good enough for now. It seems ok to assume the autocorrelation is then at most at 128 samples, leading to at least 8192 independent samples, when doing a run with $2^{20 + log_2 (10/9) + 0.00001} \approx 1.1650925202\cdot 10^6 \approx 1.165 \cdot 10^6$ (before equilibration etc cutoff).
+
+\subsubsection{Search: Learning rate}
+\begin{itemize}
+	\item Seed the random uniform initialization to keep constant. Seed=2. The MC sampler was not seeded with a constant.
+	\item Model: number of particles=number of dimensions = number of hidden nodes=2. No interaction.
+	\item Setting number of samples to $2^{20 + log_2 (10/9) + 0.0001} \approx 1.165165205\cdot 10^6 \approx 1.165 \cdot 10^6$.
+	\item 1000 training epochs
+	\item (These runs take around 4 hours at the moment)
+\end{itemize}
+
+Do log plots of the absolute error. And the variance (since we expect it to go to zero) and the norm of the gradient (since it's what influences the minimization). Would it be interesting to plot the abs value of each component of the gradient for cases of few (eight) parameters..? To see if some stabilizes quickly and others oscillate fex?
+
+\begin{figure}
+\centering
+ \includegraphics[width = 0.9\linewidth]{thesisfigures/ValidationDifferentLR.png}
+ \caption{The learning rate without interaction}
+ \label{fig:ValidationDifferentLR}
+\end{figure}
+
+\subsubsection{Search: Number of samples}
+Think about:
+\begin{itemize}
+	\item Given the autocorrelation time found, how many do we need to get acceptable number of independent samples, and thereby an acceptable actual variance?
+	\item Two different settings to consider what "acceptable variance" is:
+	\begin{enumerate}
+ 			\item What variance does gradient descent require to work as well as possible?
+ 			\item When just sampling, to get an estimate of the energy, what variance do we accept then
+ 	\end{enumerate}
+ 	Do we fex accept more variance in the first case? If not because it's not important for gradient descent with low variance, then because of the many iterations and the computational cost?
+\end{itemize}
+
+\subsubsection{Search: Number of hidden units}
+-First: Does it actually increase accuracy?
+-How does it change autocorrelation time? More dependencies and complexities increases it or? Any behaviors we can use as general guidelines for what requirements more hidden units puts on step sizes and number of samples?
+-Does it affect the learning rate?
+-Having all this information we can ask - what tradeoff between number of hidden units and computatioanl time is the best for us.
+
+
+\subsection{Hyperparameters and validation: With interaction}
+
+\begin{itemize}
+	\item Number of particles=number of dimensions=2
+	\item Metropolis step = 0.5, number of samples = $10^5$. 
+\end{itemize}
+
+\begin{figure}
+\centering
+ \includegraphics[width = 0.9\linewidth]{thesisfigures/validationIntHidden.png}
+ \caption{With interaction, simple gradient descent, differing number of hidden nodes. $\eta=0.2$.}
+ \label{fig:validationIntHidden}
+\end{figure}
+
+
+\subsection{Validation without interaction}
 -With/without interaction
 -With different numbers of particles and dimensions
 -Use the blocking values to take into account the error and/or standard deviation
 -plot the density thing?
 -show the learning evolution in video or similar?
-\subsection{Compared to the traditional methods benchmarks}
-\subsubsection{Precision}
-\subsubsection{Performance/computational speed/convergence rate}
-\subsubsection{"Work" required by user - setting hyperparameters. And to what extent do they, and potential wrong values for them, give instability in the method}
 
-\section{Analysis}
-\subsection{What can we extract from the weighting of the hidden features. Are we actually achieving dimensionality reduction or feature extraction here? Is the model telling us anything interesting?}
-\subsection{Important question: do we succeed at sampling the whole config space and consequently train on the whole config space? Relevant to both VMC and RBM I guess.}
-\subsection{How does it scale with 1) particles/dimensions 2) hidden nodes}
-polynomial cost, polynomial time, etc
+\subsection{Validation with interaction}
+\subsubsection{Number of hidden units}
+\subsection{Hyperparameters and validation: Without interaction}
 
-\section{More stuff}
-\subsection{Training the RBM sigma}
-\subsection{Optimize performance/parallelization}
-\subsection{More in depth gradient descent variations investigation?}
-\subsection{Try other types of hidden nodes (ReLU)}
-\subsection{Add one more hidden layer - Deep BM}
-\subsection{Collaboration with Alocias}
-\subsection{Implementing symmetries of the Hamiltoninan}
-\subsection{Try training on sampled data from analytical, for comparison? Then also test open source package?}
-\subsection{Other Hamiltonians?}
+
+
+
+
+
+\chapter{Selecting the best method}
+Accuracy, performance/computational speed/convergence rate. "Work" required by user - setting hyperparameters. And to what extent do they, and potential wrong values for them, give instability in the method
+\section{Sampling methods}
+Gibbs/Brute Force/Importance sampling (the general vs pos def wf)
+Ultimate goal here is the tradeoff between small variance and computational time. Small autocorrelation time = more of our samples are effective, reducing variance for fewer total samples. However, if the better sampling requires a lot of computational time, we might end up spending more time achieving this variance than the same variance with a more brute force method anyways. «Optimal selection can helpminimize the number of samples that must be taken to evaluate the integral of interest and thus substantially reduce simulation time.» (Rubenstein2017)
+
+\subsection{Gibbs}
+\subsection{Metropolis Brute Force}
+\subsection{Metropolis Importance Sampling}
+
+\section{Initialization}
+Does it bias the result since we only reach local minimia? smarter choices?
+
+\subsection{Random uniform}
+\subsection{Random Gaussian}
+Different standard deviations, big/small
+
+\section{Optimization methods}
+
+
+
+\begin{itemize}
+	\item Number of particles=number of dimensions=2
+	\item Metropolis step = 0.5, number of samples = $10^5$. 
+\end{itemize}
+
+\begin{figure}
+\centering
+ \includegraphics[width = 0.9\linewidth]{thesisfigures/AdamAndHidden.png}
+ \caption{With interaction. Going back to study the effect of different hidden nodes, now with ADAM. $\eta=0.05$.}
+ \label{fig:AdamAndHidden}
+\end{figure}
+
+\section{(Training the sigmas)}
+\section{(Parallelization)}
+\section{(Different layers)}
+\section{(Deep machine)}
+
+
+
+\chapter{Results}
+\section{Compare to performance of other standard methods}
+\section{One body densities}
+\section{Varying omega}
+\section{Feature extraction, interpretation of the model}
+Plot the Jastrow form
+\section{(Slater determinants, complete fermionic description)}
+
+
+
 
 \part{Conclusions and outlook}
 
