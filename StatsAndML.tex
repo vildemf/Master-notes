@@ -1910,8 +1910,67 @@ Choosing a constant density $\alpha$ of hidden variables pr physical positions, 
 
 \part{Implementation, results and analysis}
 \chapter{Implementation}
-\section{Code structure}
+\section{Code Structure}
+In developing the structure of the code other libraries with relevant methods have been considered for inspiration. Both QMC packages such as QWALK and QMCPACK and RBM libraries such as Paysage and PyDeep, and finally the NetKet library which provides neural quantum states for spin lattice problems. 
+
+
+
+\begin{figure}
+\centering
+ \includegraphics[width = 0.75\linewidth]{thesisfigures/classes.png}
+ \caption{Class structure. Colored classes are the ones the user interacts with. Colored classes are wrapped around the white ones (instances) placed inside them. Arrows between colored classes indicate which colored classes interact with each other. The direction of the arrow signifies that one class "acts on" the other. Arrows between white classes signifies inheritence. The direction of the arrow signifies the base class.}
+ \label{fig:classes}
+\end{figure}
+
+
+With inspiration from QMC methods we have a \texttt{Hamiltonian} class and a \texttt{NeuralQuantumState} class (figure \ref{fig:classes}). The former stores information about the Hamiltonian of the system, for example the harmonic oscillator frequency $\omega$ and provides methods for computing kinetic and potential energy. The latter stores information about the NQS wavefunction, such as the weights and bias, and provide methods for a number of tasks like computing the wavefunction and computing its Laplacian and the gradient with respect to the network parameters.
+
+With inspiration from RBM libraries (and machine learning libraries in general) we have a class which represents the \textit{model} called \texttt{QuantumModel}, a class which allows for \textit{sampling} from the model called \texttt{MonteCarloMethod} and a class which \textit{trains} the model called \texttt{Trainer} (figure \ref{fig:classes}). The \texttt{QuantumModel} class controls the \texttt{Hamiltonian} and \texttt{NeuralQuantumState} classes. If a user creates an instance of \texttt{MonteCarloMethod} the \texttt{QuantumModel} is also provided with a \texttt{Sampler} object. While the \texttt{Sampler} object is used by the \texttt{MonteCarloMethod} class and can be made quite general, an efficient implementation is model-dependent to the extent that it was deemed most useful to let it be controlled by the model class. Finally, there is the \texttt{GradientDescent} class of which an instance is controlled by the \texttt{Trainer} class.
+
+While a central goal for the code has been efficiency, another has been extendability. Since there are several parts of the code which solve almost distinct problems implementing distinc methods, a natural choice of programming paradigm is \textbf{object oriented programming (OOP)}. Some of the benefits of OOP is that it allows programmers to focus on parts of the code without taking into account details of how the other parts are implemented. This means extensions or changes can be made within a part of the code without the rest of the program being affected. Some of the means to reach this end inclue \textbf{encapsulation}, which means that by making details of a class private we know that other parts of the code do not depend on them, and \textbf{modularity}, which means organizing the code in a modular structure where it is natural apply encapsulation. The class structure described in the previous paragraph is built on these principles. 
+
+Another important concept in object oriented programming is \textbf{polymorphism}. The greek word translates to "many forms" and is the idea of the same interface having different implementations. This can be extremely useful. 
+A simple example of polymorphism which has been employed is function \textbf{overloading}. This happens when a class implements the same function twice but with different input parameters. When the function is called, it is the implementation which corresponds to the given input parameters that automatically overloads the other. This is for example used in the function \texttt{quantumForce()} in the \texttt{NeuralQuantumState} class where a slightly different implementation is given depending on whether one wants to compute the quantum force for the current state of the system or for a trial state. Function overloading is an example of compile time polymorphism because it is known at compile time which implementation will be executed.
+
+Another example of polymorphism lends itself by considering the implementation of the sampling algorithm. As we have seen, there are several versions of this method to choose between. However, most parts of the code do not need to be aware of this. For example, the \texttt{QuantumModel} class only needs to know that it should call a \texttt{sample()} method, not how this method is implemented. Polymorphism allows for en elegant way of making use of this relationship in the implementation. We have done so by making \texttt{Sampler} a base class with derived classes \texttt{Metropolis} and \texttt{Gibbs}. All of them have the method \texttt{sample()}. While the derived classes inherit the base class method and thus have two implementations of the same method, one implementation will \textbf{override} the other and be the one actually executed. By default it is the derived implementation that overrides the base. Making several implementations of the same function interface is signlaled by the \texttt{virtual} keyword. 
+When the base class represents a general concept of which only more concrete object variants are actually used, we can make it an \textbf{abstract base class (ABCs)} \cite{Lippman2013}. This is done by making the base class' virtual method a \textbf{pure} virtual method by setting it to zero. ABCs are only meant to be used as a base class for subsequent derivations. It is therefore illegal to create objects of ABCs. One can, however, declare \textbf{pointers} to them.
+Pointers allow for efficient use of the polymorphic implementation. If we make the \texttt{QuantumModel} class store the sampler object in a \texttt{Sampler} pointer, it is possible for this pointer to point to an object of either \texttt{Metropolis} or \texttt{Gibbs}. The appropriate implementation to execute is invoked at run-time depending on what derived type the \texttt{Sampler} pointer is pointing to. As opposed to function overloading, then, function overriding is referred to as run-time polymorphism. Using virtual functions adds some time and space overhead to the class size and function invocation time. Using them is thus a trade-off between flexibility and efficiency. 
+
+One should also consider when to use \textbf{dynamic memory allocation}. While often deemed dangerous because it is the programmer's responsibility to ensure that memory is freed at the right time, it is useful in cases where one does not know the size or numbers of objects needed, the precise type or one wants several objects to share data. When using dynamically allocated memory in this project we have used \textbf{smart pointers}, which automatically deletes objects when no pointers are referring to them, making the use more "safe".
+
+
+
+
+
+\begin{comment}
+Abstract base class. support the notion of a general concept of which only more concrete object variants are actually used.
+ABCs are only used as a base class for subsequent derivations
+– Therefore, it’s illegal to create objects of ABCs
+– However it is legal to declare pointers or references to such objects
+
+Pointers
+Dynamic binding
+Efficiency vs flexibility
+Using virtual methods adds a small amount of time and space overhead to the class/object size and method invocation time.
+
+Such methods are declared with the keyword \texttt{virtual} which signals dynamic binding. Dynamic binding refers to the fact that the method to be called is selected at runtime. 
+
+
+Function overriding is an example of runtime polyimorphism becuase it is unkown until runtime which implementation will be executed.
+
+
+
+OOP
+- encapsulation - modularity
+Polymorhpism
+Abstract classes, virtual functions
+Shared pointers, dynamic
+
 Conditionals vs. polymorhisms. Polymorphism and encapsulation. Modularity. Object orientation. Diagrams, code snippets. 
+
+
+
+
 
 Issue:
 It is natural for the MC method to have the options Met brute force / hastings / gibbs. However - the type of wf partly dictates which can be used. Positive def wf -> gibbs. General - Met brute force/hastings. In the latter case MC method user may decide. But how to communicate this choice efficiently to the wf model? An if test at every function call - seems extremely unnecessary. Making subclasses of the wf or wf model - too restricting because natural to have both options for the same data model. If there were virtual functions based on if tests at a class level rather than polymorphisms..
@@ -2034,7 +2093,7 @@ We now have motivations for using pointers for member data (so that member data 
 		\item When we use types related by inheritance, we often need to distinguish between the \textbf{static type} of a variable or other expression and the \textbf{dynamic type} of the object that expression represents. The static type of an expression is always known at compile time - it is the type with which a variable is declared or that an expression yields. The dynamic type is the type of the object in memory that the variable or expression represents. The dynamic type may not be known until run time. For example we may know that the static type of \texttt{item} is \texttt{Base\&}. The dynamic type depends on the type of argument to which \texttt{item} is bound. That type cannot be known until a call is executed at run time. If \texttt{item} has been bound to a \texttt{Derived} object, then the static type of \texttt{item} will differ from its dynamic type. As we've seen, the static type of \texttt{item} is \texttt{Base\&}, but in this case the dynamic type is \texttt{Derived}. Note: only expressions that are either a reference or a pointer can have a dynamic type that differ from its static type.
 	\end{itemize}
 \end{itemize}
-\cite{Lippman2013}
+
 
 \begin{itemize}
 	\item In other words: moving only one electron at the time ostensibly halves the required computation cost associated with computing the ratio of the slater determinants.
@@ -2043,6 +2102,10 @@ We now have motivations for using pointers for member data (so that member data 
 	\item Only the upper diagonal part of the inter particle distance matrix $r_{ij}$ needs to be filled, since $r_{ij}=r_{ji}$. 
 \end{itemize}
 \cite{Ledum2017}
+
+\end{comment}
+
+
 
 \section{Computational efficiency}
 Speed ups, optimization, scaling with nparticles, ndim, nh, nSamples. (this might need to be updated/referred back to later when method adjustments introduced)

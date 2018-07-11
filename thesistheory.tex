@@ -48,23 +48,31 @@
 
 \begin{document}
 
-%\maketitle
+\maketitle
 
-%\begin{abstract}
-%This is an abstract text.
-%\end{abstract}
+\begin{abstract}
+This is an abstract text.
+\end{abstract}
 
-%\begin{acknowledgements}
-%  I acknowledge my acknowledgements.
-%\end{acknowledgements}
+\begin{acknowledgements}
+I would like to thank Morten Hjort-Jensen for being an inspiring and helpful supervisor. Thank you for including me in your adventurous research spirit - I think I will remember one of your comments when considering this project for a long time "It will be a bit like throwing yourself into deep water. Personally, I love that."
+
+I want to thank computational physics and Anders Malthe-Sørensen, who provided me and others with exciting summer research projects as first years students and subsequently allowed us to have an office space in your group. I want to thank my office (the Ministry of Silly Imports) mates of four years, Magnus, Alocias and Øyvind. It feels like we have grown up together, from wide-eyed second-year bachelor students to multiple degree- and job-juggling master students. I am lucky to have been around your knowledge, intelligence, enthusiasm, humor and warmth during this time.
+
+I want to thank "FAMinistene" for being such good friends these past five years, demonstrating that a physics degree should not be feared for the lack of excellent girlfriends. Thank you for dinner nights, concerts, trips abroad, evenings at Realistforeningen, coffees at Deilig and Georg and so much more. I hope that some of these traditions will be kept even as we leave Blindern and that new ones will be created. Thank you Helene and Elisabeth for finding as much joy in Llamas as me - this is meant to summarize a lot more than meets the eye. Thank you Ingrid for your never-ending capacity for fun experiences, lots of humor and intense discussions be it about life or physics.
+
+Thank you Sebastian for filling these past few years with memories worth a life-time, be it road tripping in Western Australia, crossing the Mediterranean Sea or climbing blue mountains, to mention a few. Thank you for all your love and support.
+
+Finally, I would like to thank my family in general and in particular my mom, dad and brother Marius for always being there. 
+\end{acknowledgements}
 
 \tableofcontents
 
-%\chapter{Introduction}
+\chapter{Introduction}
 
-%Start your chapter by writing something smart. Then go get coffee.
+Start your chapter by writing something smart. Then go get coffee.
 
-%\part{Theory}
+\part{Theory}
 
 \chapter{The Quantum Many-Body Problem}
 
@@ -2148,6 +2156,206 @@ Small enough to not oscillate or diverge, large enough for speed.
 \section{Algorithm}
 \subsection{Computational efficiency}
 Choosing a constant density $\alpha$ of hidden variables pr physical positions, i.e. $M=\alpha N$, the number of variational parameters scales as $\alpha N^2$.
+
+
+
+
+\part{Implementation and Results}
+\chapter{Implementation}
+\section{Code Structure}
+In developing the structure of the code other libraries with relevant methods have been considered for inspiration. Both QMC packages such as QWALK and QMCPACK and RBM libraries such as Paysage and PyDeep, and finally the NetKet library which provides neural quantum states for spin lattice problems. 
+
+
+
+\begin{figure}
+\centering
+ \includegraphics[width = 0.75\linewidth]{thesisfigures/classes.png}
+ \caption{Class structure. Colored classes are the ones the user interacts with. Colored classes are wrapped around the white ones (instances) placed inside them. Arrows between colored classes indicate which colored classes interact with each other. The direction of the arrow signifies that one class "acts on" the other. Arrows between white classes signifies inheritence. The direction of the arrow signifies the base class.}
+ \label{fig:classes}
+\end{figure}
+
+With inspiration from QMC methods we have a \texttt{Hamiltonian} class and a \texttt{NeuralQuantumState} class (figure \ref{fig:classes}). The former stores information about the Hamiltonian of the system, for example the harmonic oscillator frequency $\omega$ and provides methods for computing kinetic and potential energy. The latter stores information about the NQS wavefunction, such as the weights and bias, and provide methods for a number of tasks like computing the wavefunction and computing its Laplacian and the gradient with respect to the network parameters.
+
+With inspiration from RBM libraries (and machine learning libraries in general) we have a class which represents the \textit{model} called \texttt{QuantumModel}, a class which allows for \textit{sampling} from the model called \texttt{MonteCarloMethod} and a class which \textit{trains} the model called \texttt{Trainer} (figure \ref{fig:classes}). The \texttt{QuantumModel} class controls the \texttt{Hamiltonian} and \texttt{NeuralQuantumState} classes. If a user creates an instance of \texttt{MonteCarloMethod} the \texttt{QuantumModel} is also provided with a \texttt{Sampler} object. While the \texttt{Sampler} object is used by the \texttt{MonteCarloMethod} class and can be made quite general, an efficient implementation is model-dependent to the extent that it was deemed most useful to let it be controlled by the model class. Finally, there is the \texttt{GradientDescent} class of which an instance is controlled by the \texttt{Trainer} class.
+
+While a central goal for the code has been efficiency, another has been extendability. Since there are several parts of the code which solve almost distinct problems implementing distinc methods, a natural choice of programming paradigm is \textbf{object oriented programming (OOP)}. Some of the benefits of OOP is that it allows programmers to focus on parts of the code without taking into account details of how the other parts are implemented. This means extensions or changes can be made within a part of the code without the rest of the program being affected. Some of the means to reach this end inclue \textbf{encapsulation}, which means that by making details of a class private we know that other parts of the code do not depend on them, and \textbf{modularity}, which means organizing the code in a modular structure where it is natural apply encapsulation. The class structure described in the previous paragraph is built on these principles. 
+
+Another important concept in object oriented programming is \textbf{polymorphism}. The greek word translates to "many forms" and is the idea of the same interface having different implementations. This can be extremely useful. 
+A simple example of polymorphism which has been employed is function \textbf{overloading}. This happens when a class implements the same function twice but with different input parameters. When the function is called, it is the implementation which corresponds to the given input parameters that automatically overloads the other. This is for example used in the function \texttt{quantumForce()} in the \texttt{NeuralQuantumState} class where a slightly different implementation is given depending on whether one wants to compute the quantum force for the current state of the system or for a trial state. Function overloading is an example of compile time polymorphism because it is known at compile time which implementation will be executed.
+
+Another example of polymorphism lends itself by considering the implementation of the sampling algorithm. As we have seen, there are several versions of this method to choose between. However, most parts of the code do not need to be aware of this. For example, the \texttt{QuantumModel} class only needs to know that it should call a \texttt{sample()} method, not how this method is implemented. Polymorphism allows for en elegant way of making use of this relationship in the implementation. We have done so by making \texttt{Sampler} a base class with derived classes \texttt{Metropolis} and \texttt{Gibbs}. All of them have the method \texttt{sample()}. While the derived classes inherit the base class method and thus have two implementations of the same method, one implementation will \textbf{override} the other and be the one actually executed. By default it is the derived implementation that overrides the base. Making several implementations of the same function interface is signlaled by the \texttt{virtual} keyword. 
+When the base class represents a general concept of which only more concrete object variants are actually used, we can make it an \textbf{abstract base class (ABCs)} \cite{Lippman2013}. This is done by making the base class' virtual method a \textbf{pure} virtual method by setting it to zero. ABCs are only meant to be used as a base class for subsequent derivations. It is therefore illegal to create objects of ABCs. One can, however, declare \textbf{pointers} to them.
+Pointers allow for efficient use of the polymorphic implementation. If we make the \texttt{QuantumModel} class store the sampler object in a \texttt{Sampler} pointer, it is possible for this pointer to point to an object of either \texttt{Metropolis} or \texttt{Gibbs}. The appropriate implementation to execute is invoked at run-time depending on what derived type the \texttt{Sampler} pointer is pointing to. As opposed to function overloading, then, function overriding is referred to as run-time polymorphism. Using virtual functions adds some time and space overhead to the class size and function invocation time. Using them is thus a trade-off between flexibility and efficiency. 
+
+One should also consider when to use \textbf{dynamic memory allocation}. While often deemed dangerous because it is the programmer's responsibility to ensure that memory is freed at the right time, it is useful in cases where one does not know the size or numbers of objects needed, the precise type or one wants several objects to share data. When using dynamically allocated memory in this project we have used \textbf{smart pointers}, which automatically deletes objects when no pointers are referring to them, making the use more "safe".
+
+
+\section{Overview of Selected Methods}
+
+
+\section{Validation}
+
+
+
+
+
+
+
+
+\chapter{Results}
+
+\section{Method Selection}
+
+\subsection{Sampling Method}
+We first study the different sampling methods, where the implemented methods are Gibbs sampling, Metropolis brute force and Metropolis with importance sampling. The metric of interest is the computational time taken to produce the highest number of independent samples. We must also compare the accuracy of the result since the Gibbs method implements a slightly different wavefunction based on the assumption of positive definiteness. 
+
+\subsubsection{Metropolis Step Size}
+Before we compare each sampling method we must first determine the optimal Metropolis step size. The optimal step size is that which minimize the autocorrelation time $\tau$, or equivalently produces the highest number of independent samples. We begin with the brute force step size and search through different orders of magnitude, see table \ref{tab:BForders}. From the table we see that the must successful step size is of the order $\sim 10^0$. 
+
+\begin{table*}\centering
+\ra{1.3}
+\caption{Caption}
+\label{tab:BForders}
+\begin{tabular}{rrrrrrr}
+\toprule
+\toprule
+Step & Energy [a.u.]  & naive $\sigma$ & blocking $\sigma$ & $\tau$ &  \# ind. samples & accept ratio \\ 
+\midrule 
+$10^{-2}$ & 1.99773 & 0.0000885 & 0.00487 & 32768 & 32   & 0.99783  \\
+$10^{-1}$ & 2.00350 & 0.0000378 & 0.00167 & 4096  & 256  & 0.97798  \\
+$1$       & 2.00096 & 0.0000359 & 0.00022 & 256   & 4096 & 0.78916  \\
+$10$      & 2.00054 & 0.0000355 & 0.00025 & 512   & 2048 & 0.06443 \\
+\bottomrule
+\bottomrule
+\end{tabular}
+\end{table*}
+
+We proceed with a more detailed search within the found order of magnitude for the step size. The result is seen in table \ref{tab:BFdetailed}. Within the limitations of the "resolution" of the automated blocking method we see that the best step size is in the range 2.0-4.0. This corresponds to an acceptance ratio in the range of 30-60\% which is as expected. In the following we will choose the step size to be 2.5.
+
+
+\begin{table*}\centering
+\ra{1.3}
+\caption{Caption}
+\label{tab:BFdetailed}
+\begin{tabular}{rrrrrrr}
+\toprule
+\toprule
+Step & Energy [a.u.] & naive $\sigma$ & blocking $\sigma$ & $\tau$ & \# ind. samples & accept ratio \\ 
+\midrule 
+0.5 & 2.00035 & 0.0000354 & 0.000360 & 512 & 2048 & 0.89 \\
+1.0 & 2.00063 & 0.0000355 & 0.000212 & 256 & 4096 & 0.79 \\
+1.5 & 2.00088 & 0.0000356 & 0.000163 & 256 & 4096 & 0.69 \\
+2.0 & 2.00076 & 0.0000356 & 0.000139 & 128 & 8192 & 0.60 \\
+2.5 & 2.00086 & 0.0000358 & 0.000128 & 128 & 8192 & 0.52 \\
+3.0 & 2.00090 & 0.0000359 & 0.000121 & 128 & 8192 & 0.44 \\
+3.5 & 2.00087 & 0.0000358 & 0.000118 & 128 & 8192 & 0.38 \\
+4.0 & 2.00070 & 0.0000359 & 0.000123 & 128 & 8192 & 0.32 \\
+4.5 & 2.00076 & 0.0000358 & 0.000129 & 256 & 4096 & 0.27 \\
+5.0 & 2.00081 & 0.0000360 & 0.000137 & 256 & 4096 & 0.23 \\
+5.5 & 2.00065 & 0.0000357 & 0.000142 & 256 & 4096 & 0.20 \\
+6.0 & 2.00058 & 0.0000355 & 0.000148 & 128 & 8192 & 0.17 \\
+6.5 & 2.00081 & 0.0000359 & 0.000162 & 256 & 4096 & 0.15 \\
+7.0 & 2.00055 & 0.0000354 & 0.000176 & 256 & 4096 & 0.13 \\
+7.5 & 2.00051 & 0.0000353 & 0.000182 & 256 & 4096 & 0.11 \\
+8.0 & 2.00050 & 0.0000356 & 0.000197 & 256 & 4096 & 0.10 \\
+8.5 & 2.00039 & 0.0000355 & 0.000213 & 512 & 2048 & 0.09 \\
+9.0 & 2.00099 & 0.0000358 & 0.000230 & 512 & 2048 & 0.08 \\
+\bottomrule
+\bottomrule
+\end{tabular}
+\end{table*}
+
+A similar search for the best time step $\Delta t$ for Metropolis importance sampling yields $\Delta t \sim 0.05 $ as the best choice.
+
+\subsubsection{Comparing Gibbs, Metropolis Brute Force and Metropolis Importance Sampling}
+
+\begin{table*}\centering
+\ra{1.3}
+\caption{Caption}
+\label{tab:SamplingCompare}
+\begin{tabular}{rrrrrr}
+\toprule
+\toprule
+Method & Energy [a.u.]  & blocking $\sigma$  & $\tau$ &  \# ind. samples & Time [s] \\ 
+\midrule 
+Gibbs         & 2.4999  & $7\times10^{-4}$ &  32 & 65536 & 5.7 \\
+Metropolis BF & 2.000000 & $4\times10^{-6}$ & 256 & 8912 & 2.9 \\
+Metropolis IS & 2.000000 & $8\times10^{-6}$ & 512 & 4096 & 4.1 \\
+\bottomrule
+\bottomrule
+\end{tabular}
+\end{table*}
+
+
+
+
+
+\subsection{Optimization Method}
+Next, we study the optimization methods. The implementations considered are the simple gradient descent, the simple gradient descent with momentum and the ADAM optimizer. 
+
+
+
+\subsubsection{Simple Gradient Descent Learning Rate}
+
+
+
+\begin{figure}
+\centering
+ \includegraphics[width = 0.9\linewidth]{thesisfigures/ValidationDifferentLR.png}
+ \caption{The learning rate of simple gradient descent without interaction}
+ \label{fig:ValidationDifferentLR}
+\end{figure}
+
+\subsubsection{Simple Gradient Descent with Momentum}
+
+
+
+\begin{figure}
+\centering
+ \includegraphics[width = 0.9\linewidth]{thesisfigures/gdMomentum.png}
+ \caption{The learning rate of simple gradient descent without interaction}
+ \label{fig:gdMomentum}
+\end{figure}
+
+
+
+
+\subsubsection{ADAM Learning Rate}
+
+\begin{figure}
+\centering
+ \includegraphics[width = 0.9\linewidth]{thesisfigures/gdAdam.png}
+ \caption{The learning rate of simple gradient descent without interaction}
+ \label{fig:gdAdam}
+\end{figure}
+
+
+
+\subsubsection{Comparing Simple Gradient Descent, Momentum and ADAM}
+
+
+
+
+\subsection{Initialization of Weights and Biases}
+
+
+
+
+\subsection{Number of Hidden Units}
+
+
+
+\begin{figure}
+\centering
+ \includegraphics[width = 0.9\linewidth]{thesisfigures/AdamAndHidden.png}
+ \caption{With interaction. Going back to study the effect of different hidden nodes, now with ADAM. $\eta=0.05$.}
+ \label{fig:AdamAndHidden}
+\end{figure}
+
+
+
+
+\section{Results}
 
 
 
